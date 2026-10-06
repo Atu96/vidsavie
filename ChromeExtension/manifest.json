@@ -1,0 +1,82 @@
+{
+  "manifest_version": 3,
+  "name": "VideoFetch Flow",
+  "version": "2.2.42",
+  "description": "Detect videos and images on supported sites and send them to the local menu bar downloader.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "video-batch-companion@gemst.local",
+      "strict_min_version": "109.0"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["storage", "scripting", "activeTab", "alarms"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:17832/*",
+    "*://*.youtube.com/*",
+    "*://youtu.be/*",
+    "*://*.douyin.com/*",
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*",
+    "*://bilibili.com/*",
+    "*://*.bilibili.com/*",
+    "*://b23.tv/*",
+    "*://www.google.com/*",
+    "*://www.google.com.vn/*"
+  ],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.douyin.com/*",
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.facebook.com/*",
+        "*://*.instagram.com/*",
+        "*://bilibili.com/*",
+        "*://*.bilibili.com/*",
+        "*://b23.tv/*",
+        "*://www.google.com/*",
+        "*://www.google.com.vn/*"
+      ],
+      "js": [
+        "lib/settings.js",
+        "lib/url-tools.js",
+        "overlay-core.js",
+        "adapters/youtube.js",
+        "adapters/douyin.js",
+        "adapters/x.js",
+        "adapters/facebook.js",
+        "adapters/instagram.js",
+        "adapters/bilibili.js",
+        "adapters/google-images.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["video-overlay.css"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "action": {
+    "default_title": "VideoFetch Flow settings",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  }
+}

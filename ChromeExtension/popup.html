@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VideoFetch Flow Companion</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="ambient one"></div><div class="ambient two"></div>
+  <header>
+    <img class="brand" src="icons/icon-128.png" alt="VideoFetch Flow" />
+    <div class="brand-copy"><h1>VideoFetch Flow</h1><p data-i18n="companion">Browser Companion</p></div>
+    <div id="connection" class="connection checking" role="status"><i></i><b data-i18n="checking">Checking</b></div>
+  </header>
+
+  <section id="offline-card" class="offline-card" hidden>
+    <span class="offline-icon ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.5 2 5 13h6l-.5 9L19 11h-6l.5-9Z"/></svg></span>
+    <div><strong data-i18n="appOffline">Mac app isn’t running</strong><small data-i18n="appOfflineHint">Open it in the background to enable downloads and sync.</small></div>
+    <button id="open-app" type="button" data-i18n="openApp">Open App</button>
+  </section>
+
+  <nav aria-label="Extension sections" data-i18n-aria="sections">
+    <button class="tab active" data-tab="settings" type="button"><span class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19 13.5 1.4 1.1-1.8 3.1-1.7-.7a7.6 7.6 0 0 1-2.4 1.4l-.3 1.8h-3.6l-.3-1.8A7.6 7.6 0 0 1 7.9 17l-1.7.7-1.8-3.1 1.4-1.1a7.8 7.8 0 0 1 0-2.9L4.4 9.5l1.8-3.1 1.7.7a7.6 7.6 0 0 1 2.4-1.4l.3-1.8h3.6l.3 1.8a7.6 7.6 0 0 1 2.4 1.4l1.7-.7 1.8 3.1-1.4 1.1a7.8 7.8 0 0 1 0 2.9Z"/></svg></span><b data-i18n="settings">Settings</b></button>
+    <button class="tab" data-tab="appearance" type="button"><span class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18V3Z"/><circle cx="12" cy="12" r="9"/></svg></span><b data-i18n="appearance">Appearance</b></button>
+    <button class="tab" data-tab="about" type="button"><span class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.2"/></svg></span><b data-i18n="about">About</b></button>
+  </nav>
+
+  <main>
+    <section class="panel active" data-panel="settings">
+      <div class="hero-card">
+        <div><span class="eyebrow" data-i18n="extension">EXTENSION</span><h2 data-i18n="detection">Browser detection</h2><p data-i18n="detectionHint">Recognize supported video and image cards as you browse.</p></div>
+        <label class="switch large" aria-label="Browser detection" data-i18n-aria="detection"><input id="enabled" type="checkbox" checked /><span></span></label>
+      </div>
+      <div class="settings-card">
+        <div class="card-heading"><span data-i18n="quickControls">Quick controls</span><b data-i18n="localSync">Local sync</b></div>
+        <label class="setting-row">
+          <span class="setting-icon rose ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M9 9h6M9 13h4"/></svg></span><span class="setting-copy"><strong data-i18n="floatingButton">Floating download button</strong><small data-i18n="floatingHint">Only appears near visible media</small></span>
+          <span class="switch"><input id="showOverlay" type="checkbox" /><span></span></span>
+        </label>
+        <label class="setting-row">
+          <span class="setting-icon violet ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v12M7.5 12.5 12 17l4.5-4.5"/><path d="M5 20h14"/></svg></span><span class="setting-copy"><strong data-i18n="quality">Default quality</strong><small data-i18n="qualityHint">Used when you press quick download</small></span>
+          <select id="defaultQuality" aria-label="Default quality" data-i18n-aria="quality"><option value="best" data-i18n="best">Best</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select>
+        </label>
+        <label class="setting-row last">
+          <span class="setting-icon blue ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3"/></svg></span><span class="setting-copy"><strong data-i18n="scanRegion">Detection region</strong><small data-i18n="scanRegionHint">Focus on the middle or use the full screen</small></span>
+          <select id="scanRegion" aria-label="Detection region" data-i18n-aria="scanRegion"><option value="middle" data-i18n="middle">Middle</option><option value="full" data-i18n="full">Full screen</option></select>
+        </label>
+      </div>
+      <div id="site-card" class="settings-card site-card" hidden>
+        <div class="card-heading"><span data-i18n="thisWebsite">This website</span><b data-i18n="optIn">OPT-IN</b></div>
+        <label class="setting-row last">
+          <span class="setting-icon blue ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span><span class="setting-copy"><strong id="site-name">Website</strong><small data-i18n="siteHint">Detect large media only on this domain</small></span>
+          <span class="switch"><input id="currentSiteEnabled" type="checkbox" /><span></span></span>
+        </label>
+      </div>
+      <p class="sync-note"><span class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7h8a4 4 0 0 1 4 4M16 17H8a4 4 0 0 1-4-4"/><path d="m17 8 3 3 3-3M7 16l-3-3-3 3"/></svg></span><span data-i18n="syncNote">Changes sync with the Mac app when connected.</span></p>
+    </section>
+
+    <section class="panel" data-panel="appearance">
+      <div class="settings-card language-card">
+        <div class="card-heading"><span data-i18n="language">Language</span><b>10</b></div>
+        <label class="setting-row last">
+          <span class="setting-icon blue ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span><span class="setting-copy"><strong data-i18n="interfaceLanguage">Interface language</strong><small data-i18n="languageHint">Popup and media controls</small></span>
+          <select id="language" aria-label="Interface language" data-i18n-aria="interfaceLanguage"><option value="auto" data-i18n="auto">Auto</option><option value="en">English</option><option value="vi">Tiếng Việt</option><option value="zh">简体中文</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="pt">Português</option><option value="ja">日本語</option><option value="ko">한국어</option></select>
+        </label>
+      </div>
+      <div class="theme-heading"><strong data-i18n="theme">Glass theme</strong><small data-i18n="themeHint">Synced with the Mac app</small></div>
+      <div class="theme-grid">
+        <label class="theme-option auto"><input name="theme" type="radio" value="auto" /><span class="preview"><i></i><i></i><i></i></span><b data-i18n="system">System</b></label>
+        <label class="theme-option dark"><input name="theme" type="radio" value="dark" /><span class="preview"><i></i><i></i><i></i></span><b data-i18n="darkGlass">Dark</b></label>
+        <label class="theme-option light"><input name="theme" type="radio" value="light" /><span class="preview"><i></i><i></i><i></i></span><b data-i18n="lightGlass">Light</b></label>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="about">
+      <div class="about-hero"><img src="icons/icon-128.png" alt="VideoFetch Flow" /><h2>VideoFetch Flow Companion</h2><p><span data-i18n="version">Version</span> <span id="version">2.2.42</span></p><div><span>YouTube</span><span>Douyin</span><span>X</span><span>Facebook</span><span>Instagram</span><span>Bilibili</span></div></div>
+      <div class="about-card">
+        <div><i class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7h8a4 4 0 0 1 4 4M16 17H8a4 4 0 0 1-4-4"/><path d="m17 8 3 3 3-3M7 16l-3-3-3 3"/></svg></i><span><strong data-i18n="localFirst">Local-first connection</strong><small data-i18n="localFirstHint">Settings and download requests stay on your Mac.</small></span></div>
+        <div><i class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.5 2 5 13h6l-.5 9L19 11h-6l.5-9Z"/></svg></i><span><strong data-i18n="fast">Fast companion</strong><small data-i18n="fastHint">Lightweight detection near visible media only.</small></span></div>
+        <div><i class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7h8a4 4 0 0 1 4 4M16 17H8a4 4 0 0 1-4-4"/><path d="m17 8 3 3 3-3M7 16l-3-3-3 3"/></svg></i><span><strong data-i18n="twoWay">Two-way sync</strong><small data-i18n="twoWayHint">Change settings here or in the menu bar app.</small></span></div>
+      </div>
+    </section>
+    <div id="saved" class="saved" role="status" aria-live="polite"><span class="ui-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span><b data-i18n="saved">Settings saved</b></div>
+  </main>
+  <footer><span data-i18n="localOnly">Secure local connection</span><b id="footer-version">v2.2.42</b></footer>
+  <script src="lib/settings.js"></script>
+  <script src="lib/popup-i18n.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

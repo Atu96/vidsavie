@@ -1,0 +1,178 @@
+:host { all: initial; }
+
+.vbd-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.vbd-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  color: #f7f9fc;
+  pointer-events: auto;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.26));
+}
+
+.vbd-overlay[hidden] { display: none !important; }
+
+.vbd-action {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  background: rgba(22, 27, 39, 0.94);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 1px 0 rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.vbd-overlay button {
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  font: 700 11px/1 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: background-color 140ms ease, color 140ms ease, opacity 140ms ease;
+}
+
+.vbd-overlay button:focus-visible {
+  outline: 2px solid #72afff;
+  outline-offset: -3px;
+}
+
+.vbd-main-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+}
+
+.vbd-image-overlay .vbd-main-button {
+  min-width: 60px;
+  justify-content: center;
+}
+
+.vbd-main-button:hover { background: rgba(255, 255, 255, 0.10); }
+.vbd-main-button:active { background: rgba(255, 255, 255, 0.15); }
+.vbd-main-button:disabled { cursor: wait; opacity: 0.82; }
+
+.vbd-download-icon {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  color: #fff;
+  background: #287fe9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.vbd-download-icon svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.vbd-menu-button {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  padding: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #c5cede !important;
+}
+
+.vbd-menu-button svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.vbd-menu-button:hover { color: #fff !important; background: rgba(255, 255, 255, 0.10); }
+
+.vbd-quality-menu {
+  display: none;
+  gap: 3px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(18, 22, 32, 0.97);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.vbd-quality-menu.vbd-open { display: flex; }
+
+.vbd-quality-menu button {
+  min-width: 42px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  color: #c5cede;
+}
+
+.vbd-quality-menu button.vbd-audio-option {
+  min-width: 92px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.vbd-quality-menu button:hover { color: #fff; background: rgba(255, 255, 255, 0.09); }
+.vbd-quality-menu button.vbd-selected { color: #fff; background: #287fe9; }
+.vbd-main-button.vbd-success { background: #16815b; }
+.vbd-main-button.vbd-error { background: #a7354d; }
+
+.vbd-overlay.vbd-theme-light {
+  color: #172033;
+  filter: drop-shadow(0 7px 18px rgba(38, 54, 82, 0.18));
+}
+
+.vbd-theme-light .vbd-action {
+  border-color: rgba(28, 45, 73, 0.16);
+  background: rgba(250, 252, 255, 0.95);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 1px 0 rgba(31, 48, 77, 0.08);
+}
+
+.vbd-theme-light .vbd-menu-button {
+  color: #5e6a7d !important;
+  border-left-color: rgba(28, 45, 73, 0.13) !important;
+}
+
+.vbd-theme-light .vbd-menu-button:hover,
+.vbd-theme-light .vbd-main-button:hover {
+  color: #172033 !important;
+  background: rgba(40, 127, 233, 0.08);
+}
+
+.vbd-theme-light .vbd-quality-menu {
+  border-color: rgba(28, 45, 73, 0.14);
+  background: rgba(250, 252, 255, 0.98);
+  box-shadow: 0 10px 28px rgba(38, 54, 82, 0.18);
+}
+
+.vbd-theme-light .vbd-quality-menu button { color: #5e6a7d; }
+.vbd-theme-light .vbd-quality-menu button:hover { color: #172033; background: rgba(40, 127, 233, 0.08); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vbd-overlay *, .vbd-overlay *::before, .vbd-overlay *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

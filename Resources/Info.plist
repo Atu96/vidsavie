@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>CFBundleExecutable</key><string>VideoBatchDownloader</string>
+  <key>CFBundleIconFile</key><string>AppIcon.icns</string>
+  <key>CFBundleIdentifier</key><string>com.gemst.VideoBatchDownloader</string>
+  <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+  <key>CFBundleName</key><string>VideoFetch Flow</string>
+  <key>CFBundleDisplayName</key><string>VideoFetch Flow</string>
+  <key>CFBundlePackageType</key><string>APPL</string>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLName</key><string>com.gemst.VideoBatchDownloader.open</string>
+      <key>CFBundleURLSchemes</key><array><string>videobatch</string></array>
+    </dict>
+  </array>
+  <key>CFBundleShortVersionString</key><string>2.2.42</string>
+  <key>CFBundleVersion</key><string>144</string>
+  <key>LSMinimumSystemVersion</key><string>13.0</string>
+  <key>LSUIElement</key><true/>
+  <key>NSServices</key>
+  <array>
+    <dict>
+      <key>NSMenuItem</key>
+      <dict><key>default</key><string>✂︎ Cut Video with VideoFetch Flow</string></dict>
+      <key>NSMessage</key><string>cutVideo</string>
+      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSSendTypes</key>
+      <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
+      <key>NSSendFileTypes</key>
+      <array><string>public.movie</string></array>
+    </dict>
+    <dict>
+      <key>NSMenuItem</key>
+      <dict><key>default</key><string>↻ Convert with VideoFetch Flow</string></dict>
+      <key>NSMessage</key><string>convertMedia</string>
+      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSSendTypes</key>
+      <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
+      <key>NSSendFileTypes</key>
+      <array><string>public.movie</string><string>public.audio</string><string>public.image</string></array>
+    </dict>
+    <dict>
+      <key>NSMenuItem</key>
+      <dict><key>default</key><string>♫ Master Audio with VideoFetch Flow</string></dict>
+      <key>NSMessage</key><string>masterAudio</string>
+      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSSendTypes</key>
+      <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
+      <key>NSSendFileTypes</key>
+      <array><string>public.movie</string><string>public.audio</string></array>
+    </dict>
+  </array>
+  <key>NSAppTransportSecurity</key>
+  <dict><key>NSAllowsLocalNetworking</key><true/></dict>
+</dict>
+</plist>

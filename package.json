@@ -1,0 +1,7 @@
+{
+  "name": "video-batch-downloader-extension-tests",
+  "private": true,
+  "scripts": {
+    "test:extension": "node --test Tests/Extension/*.test.js"
+  }
+}

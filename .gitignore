@@ -1,0 +1,14 @@
+.DS_Store
+.build/
+dist/
+node_modules/
+.swiftpm/
+.env
+.env.*
+cookies.txt
+*.cookies
+*.part
+*.ytdl
+*.dmg
+*.zip
+*.log

@@ -1,5 +1,9 @@
 # Current checkpoint
 
+## English README — 2026-10-06
+
+- Converted the user-facing README to plain conversational English, retaining candid Developer ID/notarization status and a short optional Ko-fi invitation. Updated release link to current `Atu96` owner. Product name remains VideoFetch Flow; alternative names were discussed but no rename authorized. Documentation-only change.
+
 ## Reader-friendly README — 2026-10-06
 
 - Rewrote README in natural Vietnamese with user-facing capabilities, Apple Silicon/release availability, Chrome setup, platform limitations, short personal AI-assisted project introduction and separate voluntary Ko-fi invitation. Apple Developer budget note explains missing Developer ID/notarization without quoting membership cost or promising a funded outcome. Removed stale artwork/version internals and unverified Firefox parity. Documentation-only; no app/version change or deployment.

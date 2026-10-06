@@ -1,68 +1,68 @@
 # VideoFetch Flow
 
-Ứng dụng nhỏ trên thanh menu macOS để tải video, âm thanh và ảnh. Bạn có thể dán nhiều liên kết vào app, hoặc dùng nút tải ngay trên trang đang xem qua tiện ích Chrome.
+A small macOS menu bar app for downloading videos, audio, and images. Paste a few links into the app, or use the download button on the page you're watching with the Chrome companion.
 
-Mình làm app này với sự hỗ trợ của AI, trước hết để dùng cho công việc của mình, rồi chia sẻ miễn phí cho ai cũng cần. App vẫn đang được cải thiện; nếu gặp lỗi, bạn cứ báo lại nhé.
+I built this with help from AI for my own day-to-day work, and I'm sharing it for free with anyone who finds it useful. It's still a work in progress, so let me know if something doesn't work.
 
-## App làm được gì?
+## What it does
 
-- Tải từ YouTube, Douyin, Bilibili, X, Facebook, Instagram và một số trang khác. Mức hỗ trợ tùy trang và nội dung.
-- Xếp nhiều liên kết vào hàng đợi, tải lần lượt từng mục.
-- Giữ phần đã tải khi lượt tải bị gián đoạn, để có thể thử tiếp nếu nguồn còn cho phép.
-- Lưu lịch sử, mở file hoặc tìm lại file trong Finder.
-- Cắt video, chuyển đổi định dạng và xử lý âm thanh bằng các công cụ đi kèm.
-- Đổi ngôn ngữ và giao diện sáng/tối; đồng bộ cài đặt với tiện ích trình duyệt.
+- Downloads from YouTube, Douyin, Bilibili, X, Facebook, Instagram, and some other sites. Support varies by site and content.
+- Queues multiple links and downloads them one at a time.
+- Keeps partial downloads after an interruption so you can try continuing, when the source allows it.
+- Saves download history and lets you open files or reveal them in Finder.
+- Includes tools for cutting video, converting media, and processing audio.
+- Offers multiple interface languages and light/dark themes, with settings synced to the browser companion.
 
-Bản cài có sẵn yt-dlp, FFmpeg và FFprobe. Người dùng không cần cài Homebrew để dùng app; công cụ hỗ trợ có thể được cập nhật trong Cài đặt.
+The packaged app includes yt-dlp, FFmpeg, and FFprobe. You don't need Homebrew to use it, and you can update the support tools from Settings.
 
-## Tải và cài đặt
+## Download and installation
 
-Bản đóng gói hiện dành cho **Mac Apple Silicon (M1, M2, M3… / arm64)**. Chưa có bản cài cho Mac Intel.
+The current package is for **Apple Silicon Macs (M1, M2, M3… / arm64)**. There isn't an Intel build yet.
 
-**Hiện kho này mới có mã nguồn, chưa có bộ cài trong [Releases](https://github.com/NgocTu96/videofetch-flow/releases).** Khi có DMG, bạn mở file và kéo VideoFetch Flow vào Applications. Nếu muốn tự build, xem phần cuối README.
+**This repository currently contains the source code only. There is no installer in [Releases](https://github.com/Atu96/videofetch-flow/releases) yet.** Once a DMG is available, open it and drag VideoFetch Flow into Applications. To build it yourself, see the section below.
 
-### Về cảnh báo của macOS
+### About the macOS warning
 
-Mình chưa có ngân sách đăng ký Apple Developer Program, nên bản cài hiện chưa có chữ ký Developer ID và chưa được Apple notarize. macOS có thể hiện cảnh báo khi bạn mở app.
+I haven't been able to budget for the Apple Developer Program yet, so the current app isn't signed with a Developer ID or notarized by Apple. macOS may show a warning when you try to open it.
 
-Mình ghi rõ ở đây để bạn biết trước khi cài. Chỉ mở bản tải từ nguồn bạn tin tưởng; không cần tắt Gatekeeper cho toàn bộ máy. Nếu chưa yên tâm, bạn có thể xem mã nguồn trước hoặc chờ bản phát hành sau.
+I wanted to make that clear before you install it. Only open a copy from a source you trust, and don't disable Gatekeeper across your Mac. If you're unsure, you're welcome to look through the source or wait for a later release.
 
-## Nút tải trên Chrome
+## Download buttons in Chrome
 
-1. Mở Cài đặt trong app, tìm mục Tiện ích trình duyệt và chọn cài cho Chrome. App sẽ mở trang quản lý tiện ích cùng thư mục chứa `ChromeExtension`.
-2. Bật **Developer mode** trong `chrome://extensions`.
-3. Chọn **Load unpacked** rồi chọn thư mục `ChromeExtension` đi kèm app.
-4. Giữ app chạy nền và mở lại trang video để dùng nút tải.
+1. Open the app's Settings, find Browser Companion, and choose the Chrome setup option. The app opens the extensions page and the folder containing `ChromeExtension`.
+2. Turn on **Developer mode** at `chrome://extensions`.
+3. Choose **Load unpacked** and select the `ChromeExtension` folder bundled with the app.
+4. Keep the Mac app running in the background, then reload the video page.
 
-Sau khi cập nhật app có thay đổi tiện ích, bấm **Reload** trên thẻ VideoFetch Flow trong trang Extensions. Tiện ích chưa được phát hành trên Chrome Web Store. Luồng cài đặt chính hiện được kiểm tra trên Chrome; Firefox chưa được kiểm chứng tương đương.
+When an app update changes the companion, click **Reload** on its card in the Extensions page. It isn't on the Chrome Web Store yet. Chrome is the main tested setup; Firefox hasn't been verified to the same extent.
 
-## Một vài điều cần biết
+## A few things to know
 
-Các trang video thay đổi khá thường xuyên. Một video tải được không có nghĩa mọi video trên cùng trang đều tải được; một số nội dung cần phiên đăng nhập, bị giới hạn khu vực hoặc không còn khả dụng.
+Video sites change often. One successful download doesn't mean every video on that site will work. Some content needs a signed-in browser session, is region-restricted, or is no longer available.
 
-App xử lý lượt tải và media trên máy Mac của bạn, nhưng vẫn cần kết nối với trang nguồn để lấy nội dung và tải công cụ khi cập nhật. Không có tài khoản dịch vụ riêng của app.
+Downloads and media processing run on your Mac. The app still connects to the source sites to fetch content and downloads tools when you update them. You don't need a separate account for this app.
 
-Chỉ tải nội dung bạn có quyền tải và sử dụng. Nếu gặp lỗi, dùng nút chép log trong app để báo lại; nhớ bỏ thông tin riêng tư trước khi chia sẻ, và đừng gửi cookie hay mật khẩu.
+Please only download content you have permission to save and use. If something fails, you can copy the error log from the app when reporting it. Remove any personal information first, and never share cookies or passwords.
 
-## Nếu bạn muốn ủng hộ
+## If you'd like to support it
 
-Nếu app giúp bạn bớt vài thao tác mỗi ngày, bạn có thể [mời mình một ly cà phê trên Ko-fi](https://ko-fi.com/atu1202). Mình sẽ dùng sự ủng hộ đó để duy trì và làm app tốt hơn.
+If the app saves you a few clicks each day, you can [buy me a coffee on Ko-fi](https://ko-fi.com/atu1202). It helps me keep working on fixes and improvements.
 
-Không ủng hộ cũng không sao. Cảm ơn bạn đã dùng app và góp ý cho mình. ❤️
+No pressure. Thanks for trying the app and sharing your feedback. ❤️
 
-## Build từ mã nguồn
+## Building from source
 
-Cần môi trường build Swift 6, macOS SDK và Node.js/npm để chạy kiểm thử. Mã nguồn đặt mức macOS tối thiểu là 13; việc chạy thực tế trên từng phiên bản macOS vẫn cần được kiểm tra.
+You'll need a Swift 6 build environment, a macOS SDK, and Node.js/npm for the tests. The source targets macOS 13 or later; compatibility still needs testing on individual macOS versions.
 
-Từ thư mục dự án:
+From the project folder:
 
 ```sh
 ./Scripts/test.sh
 ./Scripts/build-app.sh
 ```
 
-App được tạo tại `.build/app/VideoFetch Flow.app`. Có thể tạo DMG arm64 bằng `./Scripts/build-dmg.sh`; kết quả nằm trong `dist/`. Bước đóng gói tải và kiểm tra các công cụ hỗ trợ, nên cần mạng. Kiểm thử tự động không tải video thật và không đọc cookie trình duyệt.
+The app is created at `.build/app/VideoFetch Flow.app`. Run `./Scripts/build-dmg.sh` to create an arm64 DMG in `dist/`. Packaging needs an internet connection to download and verify the bundled tools. Automated tests don't download real videos or read browser cookies.
 
-Thông tin về công cụ đi kèm: [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md). Kho hiện chưa chọn giấy phép cho mã nguồn của app; giấy phép của các công cụ bên thứ ba được giữ riêng.
+See [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md) for the bundled tools. A license for the app's source hasn't been selected yet; third-party tools retain their own licenses.
 
-Nếu sửa nguồn, đọc [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md) và [ARCHITECTURE](ARCHITECTURE.md) trước. Các tài liệu này ghi lại cấu trúc app, lỗi đã xử lý và những phần cần giữ tương thích.
+Before changing the code, read [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md), and [ARCHITECTURE](ARCHITECTURE.md). They cover the app's structure, previous fixes, and compatibility constraints.

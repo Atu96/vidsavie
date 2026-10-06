@@ -1,5 +1,11 @@
 # System map
 
+Release visuals: README owns user-facing screenshot instructions; `docs/images/README.md` owns actual capture versions, third-party attribution and privacy/proof boundaries. Do not upload whole-desktop/account/history captures or fabricate controls/status. v2.2.46 arm64 DMG prepared and mount-verified; publishing result belongs in the checkpoint.
+
+Tool onboarding 2.2.46: `hasAvailableTools` counts bundled tools as ready. `DownloadManager` checks metadata on fresh startup/24-hour maintenance; `SupportToolsInstaller.updateIsAvailable` compares effective tool provenance without installing. `SupportToolsPromptCopy` owns nine-language Update/Later alert copy; only consent calls the staged installer. `Toolchain` bundle records preserve pre-sign source checksums. Tests: Swift checksum/scheduling cases and `tool-update-onboarding.test.js` safety/resource/localization contracts. Actual native alert layout remains user verification.
+
+Build/cleanup: `Scripts/build-app.sh` → Swift release build → `prepare-portable-tools.sh` → checksum-verified cached/downloaded binaries → signed app. `build-dmg.sh` packages it; neither routine path rebuilds FFmpeg. `build-media-toolchain.sh` is separate maintainer work only for a deliberate media-profile change. Preserve incremental Swift cache, portable tools, current installer and matching binary/source release assets when trimming obsolete intermediates. Installed app is 2.2.45 (147), public Latest app DMG is 2.2.44 (146); do not confuse these states.
+
 Use this map to route a task or failure to the correct owner.
 
 Licensing: `LICENSE` and `COPYRIGHT` cover original project source under GPL-3.0-or-later. `Resources/ThirdParty` preserves external license texts/notices; `LICENSING-AUDIT.md` owns verified tool evidence and unresolved corresponding-source/artwork items. Do not equate source-license selection with completed binary redistribution compliance. The old 9.0 provider mismatch remains historical; the new reviewed 9.0.2 profile supplies exact source inputs and notices, while yt-dlp/artwork audit remains separate.

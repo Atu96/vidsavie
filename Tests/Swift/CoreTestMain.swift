@@ -516,6 +516,11 @@ struct CoreTestMain {
         )
 
         let now = Date(timeIntervalSince1970: 2_000_000)
+        suite.expect(!SupportToolsUpdatePolicy.hasChangedTools(current: ["yt", "ff", "fp"], latest: ["yt", "ff", "fp"]), "matching bundled checksums do not prompt")
+        suite.expect(SupportToolsUpdatePolicy.hasChangedTools(current: ["old", "ff", "fp"], latest: ["new", "ff", "fp"]), "changed yt-dlp prompts independently of media")
+        suite.expect(SupportToolsUpdatePolicy.hasChangedTools(current: ["yt", "old", "fp"], latest: ["yt", "new", "fp"]), "changed FFmpeg prompts")
+        suite.expect(SupportToolsUpdatePolicy.hasChangedTools(current: [nil, "ff", "fp"], latest: ["yt", "ff", "fp"]), "unknown provenance offers repair update")
+        suite.expect(SupportToolsUpdatePolicy.shouldStart(enabled: true, forced: false, taskIsRunning: false, lastCheck: nil, now: now), "fresh installation checks immediately")
         suite.expect(
             SupportToolsUpdatePolicy.shouldStart(
                 enabled: true,

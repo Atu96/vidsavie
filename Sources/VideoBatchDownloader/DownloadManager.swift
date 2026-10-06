@@ -48,7 +48,7 @@ final class DownloadManager: ObservableObject {
     }
     @Published private(set) var supportToolsStatus = ""
     @Published private(set) var isUpdatingSupportTools = false
-    @Published private(set) var supportToolsInstalled = SupportToolsInstaller.hasManagedTools()
+    @Published private(set) var supportToolsInstalled = SupportToolsInstaller.hasAvailableTools()
     @Published private(set) var supportToolsInstallPhase: SupportToolsInstallPhase?
     @Published private(set) var supportToolsLastUpdateFailed = false
     @Published private(set) var browserSessionStatus = ""
@@ -107,7 +107,6 @@ final class DownloadManager: ObservableObject {
         do {
             try newServer.start()
             serverMessage = "Chrome connected on this Mac"
-            refreshSupportToolsState()
             if supportToolsInstalled { scheduleSupportToolsUpdate() }
             startSupportToolsMaintenanceLoop()
         } catch {
@@ -150,11 +149,21 @@ final class DownloadManager: ObservableObject {
         supportToolsUpdateTask = Task { [weak self] in
             guard let self else { return }
             do {
-                let snapshot = try await supportToolsInstaller.installOrUpdate { [weak self] phase in
-                    Task { @MainActor [weak self] in self?.supportToolsInstallPhase = phase }
+                if force {
+                    let snapshot = try await supportToolsInstaller.installOrUpdate { [weak self] phase in
+                        Task { @MainActor [weak self] in self?.supportToolsInstallPhase = phase }
+                    }
+                    supportToolsInstalled = true
+                    supportToolsStatus = snapshot.displayText
+                } else if try await supportToolsInstaller.updateIsAvailable() {
+                    // Release the task state before offering the explicit user action.
+                    supportToolsInstallPhase = nil
+                    isUpdatingSupportTools = false
+                    supportToolsUpdateTask = nil
+                    UserDefaults.standard.set(Date(), forKey: Self.lastSupportToolsUpdateCheckKey)
+                    presentSupportToolsUpdatePrompt()
+                    return
                 }
-                supportToolsInstalled = true
-                supportToolsStatus = snapshot.displayText
                 UserDefaults.standard.set(Date(), forKey: Self.lastSupportToolsUpdateCheckKey)
             } catch {
                 supportToolsLastUpdateFailed = true
@@ -172,7 +181,7 @@ final class DownloadManager: ObservableObject {
 
     private func refreshSupportToolsState() {
         guard supportToolsUpdateTask == nil else { return }
-        supportToolsInstalled = SupportToolsInstaller.hasManagedTools()
+        supportToolsInstalled = SupportToolsInstaller.hasAvailableTools()
         guard supportToolsInstalled, supportToolsStatus.isEmpty else { return }
         supportToolsUpdateTask = Task { [weak self] in
             guard let self else { return }
@@ -181,6 +190,23 @@ final class DownloadManager: ObservableObject {
             }
             supportToolsUpdateTask = nil
         }
+    }
+
+    private func presentSupportToolsUpdatePrompt() {
+        let language = interfaceLanguage
+        let copy = SupportToolsPromptCopy.text(language: language)
+        let alert = NSAlert()
+        alert.messageText = copy.title
+        alert.informativeText = copy.detail
+        alert.addButton(withTitle: AppText.value("updateSupportTools", language: language, fallback: "Update tools"))
+        alert.addButton(withTitle: copy.later)
+        alert.buttons[0].keyEquivalent = ""
+        alert.buttons[1].keyEquivalent = "\r"
+        alert.layout()
+        alert.buttons[1].keyEquivalent = "\u{1b}"
+        alert.window.defaultButtonCell = alert.buttons[1].cell as? NSButtonCell
+        NSApp.activate(ignoringOtherApps: true)
+        if alert.runModal() == .alertFirstButtonReturn { scheduleSupportToolsUpdate(force: true) }
     }
 
     func testBrowserSession() {

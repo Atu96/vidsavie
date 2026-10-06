@@ -73,6 +73,11 @@ struct DownloadHistoryStore {
 enum SupportToolsUpdatePolicy {
     static let interval: TimeInterval = 24 * 60 * 60
 
+    static func hasChangedTools(current: [String?], latest: [String]) -> Bool {
+        guard current.count == latest.count else { return true }
+        return zip(current, latest).contains { $0 != $1 }
+    }
+
     static func shouldStart(
         enabled: Bool,
         forced: Bool,

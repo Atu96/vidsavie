@@ -282,6 +282,40 @@ actor SupportToolsInstaller {
         return try? await snapshot(in: destinationToolsDirectory)
     }
 
+    static func hasAvailableTools() -> Bool {
+        MediaBinaryLocator.ytDlp() != nil && MediaBinaryLocator.ffmpeg() != nil && MediaBinaryLocator.ffprobe() != nil
+    }
+
+    /// Reads release metadata only. Never installs tools or modifies the signed bundle.
+    func updateIsAvailable() async throws -> Bool {
+        let latest = try await fetchManifest()
+        let resources = Bundle.main.resourceURL
+        let bundledMedia = resources.flatMap { try? Data(contentsOf: $0.appendingPathComponent("Toolchain/media-release.json")) }
+            .flatMap { try? JSONDecoder().decode(ReviewedMediaRelease.self, from: $0) }
+        let bundledYt = resources.flatMap { try? String(contentsOf: $0.appendingPathComponent("Toolchain/bundled-yt-dlp.sha256"), encoding: .utf8) }?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let metadata = destinationToolsDirectory.flatMap { try? Data(contentsOf: $0.appendingPathComponent("versions.json")) }
+            .flatMap { try? JSONDecoder().decode(SupportToolsMetadata.self, from: $0) }
+        func checksum(name: String, path: String?, bundled: String?, original: String?, installed: String?) throws -> String? {
+            guard let path else { return nil }
+            if let directory = destinationToolsDirectory,
+               path == directory.appendingPathComponent(name).path,
+               let installed, try sha256(of: URL(fileURLWithPath: path)) == installed {
+                return original
+            }
+            if let resources, path == resources.appendingPathComponent("Tools/\(name)").path { return bundled }
+            return nil
+        }
+        let yt = try checksum(name: "yt-dlp", path: MediaBinaryLocator.ytDlp(), bundled: bundledYt,
+                              original: metadata?.ytDlpChecksum, installed: metadata?.installedYtDlpChecksum)
+        let ff = try checksum(name: "ffmpeg", path: MediaBinaryLocator.ffmpeg(), bundled: bundledMedia?.ffmpegSHA256,
+                              original: metadata?.ffmpegChecksum, installed: metadata?.installedFFmpegChecksum)
+        let fp = try checksum(name: "ffprobe", path: MediaBinaryLocator.ffprobe(), bundled: bundledMedia?.ffprobeSHA256,
+                              original: metadata?.ffprobeChecksum, installed: metadata?.installedFFprobeChecksum)
+        return SupportToolsUpdatePolicy.hasChangedTools(current: [yt, ff, fp],
+            latest: [latest.ytDlpChecksum, latest.ffmpegChecksum, latest.ffprobeChecksum])
+    }
+
     func installOrUpdate(
         onPhase: @escaping @Sendable (SupportToolsInstallPhase) -> Void = { _ in }
     ) async throws -> SupportToolsSnapshot {

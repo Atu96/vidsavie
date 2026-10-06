@@ -17,8 +17,8 @@
       <key>CFBundleURLSchemes</key><array><string>videobatch</string></array>
     </dict>
   </array>
-  <key>CFBundleShortVersionString</key><string>2.2.45</string>
-  <key>CFBundleVersion</key><string>147</string>
+  <key>CFBundleShortVersionString</key><string>2.2.46</string>
+  <key>CFBundleVersion</key><string>148</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
   <key>NSServices</key>

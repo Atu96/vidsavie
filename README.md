@@ -19,6 +19,26 @@ I built this with help from AI for my own day-to-day work, and I'm sharing it fo
 
 The packaged app includes yt-dlp, FFmpeg, and FFprobe. You don't need Homebrew to use it, and you can update the support tools from Settings.
 
+## A quick look
+
+### Download without leaving the video
+
+![VidSavie floating Video button on a YouTube video](docs/images/floating-download.jpg)
+
+Keep VidSavie running, open a supported video, and press **Video** on the floating button. Use the arrow beside it to choose quality or an available media type. The button appears only near eligible media; it isn't a guarantee that every source can be downloaded.
+
+The example shows *Big Buck Bunny* on Blender's official YouTube channel. Video content and platform branding belong to their respective creators, not VidSavie. This is a real interface capture, not a download-success claim.
+
+### Connect the Chrome companion
+
+![VidSavie Browser Companion settings](docs/images/browser-companion.png)
+
+Open **Settings → Browser Companion → Google Chrome → Set Up**, then follow the four steps below. Chrome is the verified companion workflow; the Firefox entry is not a claim of equivalent tested support.
+
+<img src="docs/images/extension-popup.png" alt="VidSavie Chrome companion connected, version 2.2.46" width="420">
+
+Click the companion's lightning icon in Chrome to check the connection, toggle the floating button, and choose your default quality. The Mac app needs to stay running for downloads.
+
 ## Download and installation
 
 The current package is for **Apple Silicon Macs (M1, M2, M3… / arm64)**. There isn't an Intel build yet.
@@ -26,6 +46,8 @@ The current package is for **Apple Silicon Macs (M1, M2, M3… / arm64)**. There
 Download the arm64 DMG and matching checksum from [Releases](https://github.com/Atu96/vidsavie/releases). Open the DMG and drag VidSavie into Applications. To build it yourself, see the section below.
 
 Fresh installations start in English. You can choose another language or System mode in Settings; updates keep your saved language preference.
+
+The included tools are ready to use immediately. On first launch, the app checks for tool updates in the background. If an update or revised build is available, choose **Update tools** or **Later**; it won't install tools without your approval. Later checks run on a 24-hour schedule. An offline check doesn't stop you using the bundled tools. FFmpeg updates currently follow VidSavie's published media profiles, not every upstream release automatically.
 
 ### About the macOS warning
 

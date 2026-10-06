@@ -34,6 +34,7 @@ cp "$PROJECT_DIR/.build/portable-tools/yt-dlp" "$APP_DIR/Contents/Resources/Tool
 cp "$PROJECT_DIR/.build/portable-tools/ffmpeg" "$APP_DIR/Contents/Resources/Tools/ffmpeg"
 cp "$PROJECT_DIR/.build/portable-tools/ffprobe" "$APP_DIR/Contents/Resources/Tools/ffprobe"
 cp -R "$PROJECT_DIR/Resources/ThirdParty" "$APP_DIR/Contents/Resources/ThirdParty"
+cp -R "$PROJECT_DIR/Resources/Toolchain" "$APP_DIR/Contents/Resources/Toolchain"
 chmod 755 "$APP_DIR/Contents/Resources/Tools/yt-dlp" "$APP_DIR/Contents/Resources/Tools/ffmpeg" "$APP_DIR/Contents/Resources/Tools/ffprobe"
 xattr -cr "$APP_DIR/Contents/Resources/Tools"
 codesign --force --sign - "$APP_DIR/Contents/Resources/Tools/yt-dlp"

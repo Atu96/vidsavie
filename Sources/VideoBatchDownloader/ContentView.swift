@@ -221,7 +221,7 @@ struct ContentView: View {
                     .font(.caption.weight(.semibold))
                     .padding(.horizontal, 3).padding(.vertical, 8)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(AppHoverButtonStyle(tint: .red, cornerRadius: 8))
                 .help("\(t("supportAction", "Support")) · Ko-fi")
                 .accessibilityLabel(t("donateAccessibility", "Donate on Ko-fi (opens in browser)"))
     }
@@ -430,7 +430,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .background(AppSurface(cornerRadius: 11, level: .control, tint: color))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(AppHoverButtonStyle(tint: color, cornerRadius: 11))
         .help(title)
         .accessibilityLabel(title)
     }
@@ -449,7 +449,7 @@ struct ContentView: View {
                 .frame(width: VBDDesign.iconButtonSize, height: VBDDesign.iconButtonSize)
                 .background(AppSurface(cornerRadius: 19, level: .control, tint: isDestructive ? .red : tint))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(AppHoverButtonStyle(tint: isDestructive ? .red : tint, cornerRadius: 19))
         .help(label)
         .accessibilityLabel(label)
     }

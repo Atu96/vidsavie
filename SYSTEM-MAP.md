@@ -1,5 +1,9 @@
 # System map
 
+Main hover ownership: AppVisuals.AppHoverButtonStyle wraps ContentView header actions, Support and media launchers. Pointer brightness is tint/theme aware, no scale/offset/layout mutation; disabled and Reduce Motion respected. Coverage: main-hover.test.js. Keep click routing separate.
+
+Quit-copy local change 2.2.49 (151): alert heading is VidSavie, no greeting in any language. Support/interruption copy and safe buttons unchanged. Public release remains 2.2.48 until separately requested.
+
 Current verified state: local app and Public Latest release are 2.2.48 (150), tag source `6cfca40`, DMG SHA-256 `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. README has user-supplied main/Appearance screenshots; private-path General screenshot excluded. Earlier version statements below are historical.
 
 Current local app 2.2.47 (149) fixes filename chip localization; public Latest DMG remains 2.2.46 (148). Release history below is historical, not a claim that this local fix has been published.

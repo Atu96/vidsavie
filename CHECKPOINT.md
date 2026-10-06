@@ -1,5 +1,19 @@
 # Current checkpoint
 
+## Source upload authorized — 2026-10-06
+
+- User confirmed main hover behavior looks good and requested GitHub update. Upload includes 2.2.49 greeting removal and 2.2.50 hover feedback, their tests and system docs. Local installed app is 2.2.50 (152); public Latest installer remains 2.2.48. This is a source update, not a new DMG/Release. No private data or generated build artifacts staged.
+
+## Main-action hover feedback 2.2.50 (152) — 2026-10-06
+
+- User requested tint-matched hover brightness in Light/Dark without enlargement/layout motion. Shared AppHoverButtonStyle adds tinted fill, border and restrained glow to main history/settings/quit, Support and the three media launchers. Geometry/hit target unchanged; disabled buttons suppress hover, Reduce Motion disables animation. Existing quit/support/module actions unchanged. Added source contract for geometry, tint/theme/accessibility behavior; native appearance remains user verification. No DMG/Release/GitHub push requested.
+- Verified 176 Swift assertions, 49 extension tests, release build/tool smoke/deep-strict signature; installed 2.2.50 (152) with ready health. Backup `/private/tmp/VidSavieUpgrade152.JD8LLt/VidSavie.app`; no media downloads running before replacement. Public Latest remains 2.2.48. No UI automation or saved-theme changes.
+
+## Quit dialog without greeting 2.2.49 (151) — 2026-10-06
+
+- User requested removal of “Hi there”. Removed the greeting field from all nine localized quit copies; alert heading is the unchanged product name VidSavie. Support message, interruption question, No/Yes/Support behavior and safe default unchanged. No new DMG/Release or GitHub push requested in this task.
+- 176 Swift assertions, 48 extension tests, added no-greeting/safe-button contract, release build/tool smoke/signature passed. App was not running before deployment; installed 2.2.49 (151), health ready, backup `/private/tmp/VidSavieUpgrade151.DdnOVJ/VidSavie.app`. Actual new dialog appearance remains user verification. Public Latest stays 2.2.48.
+
 ## 2.2.48 release and user-supplied demo images — 2026-10-06
 
 - Published Latest `https://github.com/Atu96/vidsavie/releases/tag/v2.2.48`, source tag commit `6cfca40c4f59116a8f315e4b91a059f7e6acaadd`, draft=false/prerelease=false. Both DMG and portable checksum uploaded; GitHub DMG digest matches `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. Local installed app and public installer now both 2.2.48 (150). Old Release assets retained. Source and README demo images pushed to main.

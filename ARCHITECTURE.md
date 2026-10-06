@@ -18,6 +18,8 @@ Media profile from 2.2.45: both bootstrap and managed updater use `Resources/Too
 
 ### macOS presentation
 
+Main header/Support/media launchers use AppHoverButtonStyle from 2.2.50: tint-aware overlays and glow only, stable geometry, no scale/offset, no overlay hit interception. Disabled controls suppress feedback; Reduce Motion avoids animation. Keep these semantics when revising visual chrome.
+
 Settings split-column hosts are keyed by effective `settingsColorScheme` from 2.2.48, to refresh AppKit-backed environment snapshots during theme transitions. Keep section and filename-toggle state in enclosing AppSettingsView; do not key the entire settings owner or generate random identities. Root and column environments share one resolved scheme. This addresses reported mixed light surfaces/dark text; static tests do not certify live transitions.
 
 - `VideoBatchDownloaderApp.swift`: process entry point and MenuBarExtra.

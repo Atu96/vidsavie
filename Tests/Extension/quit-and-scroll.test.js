@@ -15,6 +15,9 @@ test('popup has one constrained scroll owner, not nested browser and main scroll
 test('quit confirmation is centralized, staying is safe, and support does not terminate', () => {
   const app = read('Sources/VideoBatchDownloader/VideoBatchDownloaderApp.swift');
   const quit = read('Sources/VideoBatchDownloader/QuitConfirmation.swift');
+  assert.ok(quit.includes('alert.messageText = "VidSavie"'));
+  assert.ok(!quit.includes('Hi there'));
+  assert.ok(!quit.includes('👋'));
   assert.ok(app.includes('@NSApplicationDelegateAdaptor(QuitConfirmationDelegate.self)'));
   assert.ok(quit.includes('applicationShouldTerminate'));
   assert.match(quit, /response == \.alertSecondButtonReturn \{ return \.terminateNow \}/);

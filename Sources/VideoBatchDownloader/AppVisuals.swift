@@ -269,3 +269,43 @@ struct AppSecondaryButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.72 : 1)
     }
 }
+
+/// Pointer feedback only: never changes a control's geometry or hit target.
+struct AppHoverButtonStyle: ButtonStyle {
+    let tint: Color
+    var cornerRadius: CGFloat = 11
+
+    func makeBody(configuration: Configuration) -> some View {
+        HoverBody(configuration: configuration, tint: tint, cornerRadius: cornerRadius)
+    }
+
+    private struct HoverBody: View {
+        let configuration: ButtonStyleConfiguration
+        let tint: Color
+        let cornerRadius: CGFloat
+        @State private var hovering = false
+        @Environment(\.colorScheme) private var colorScheme
+        @Environment(\.isEnabled) private var isEnabled
+        @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+        private var highlighted: Bool { hovering && isEnabled }
+
+        var body: some View {
+            configuration.label
+                .overlay {
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .fill(tint.opacity(highlighted ? (colorScheme == .dark ? 0.18 : 0.12) : 0))
+                        .allowsHitTesting(false)
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .stroke(tint.opacity(highlighted ? 0.65 : 0), lineWidth: 1)
+                        .allowsHitTesting(false)
+                }
+                .shadow(color: tint.opacity(highlighted ? (colorScheme == .dark ? 0.24 : 0.14) : 0), radius: 5)
+                .opacity(configuration.isPressed && isEnabled ? 0.85 : 1)
+                .onHover { hovering = $0 }
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: highlighted)
+        }
+    }
+}

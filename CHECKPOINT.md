@@ -1,5 +1,11 @@
 # Current checkpoint
 
+## Private GitHub source backup — 2026-10-06
+
+- Authenticated as `NgocTu96` through GitHub CLI browser/device flow; no token printed or committed. Created `https://github.com/NgocTu96/videofetch-flow` as Private and pushed 2.2.42 source to `main`, initial commit `1ec858f`. Local repository now tracks `origin/main`.
+- Staged source/assets/tests/docs only; `.build`, `dist`, DMGs and common secret/temp paths excluded. Filename/common credential-pattern checks found no matches; this is not a guarantee of exhaustive secret detection. Used GitHub noreply author identity.
+- Repository privacy and default branch verified through GitHub. No Public conversion, LICENSE selection, release creation or new DMG performed. GitHub CLI verified against official release checksum and runs from `/private/tmp/VideoFetchGitHubCLI.uR7gaN/gh_2.102.0_macOS_arm64/bin/gh`; Homebrew catalogue fetch was interrupted when stalled.
+
 Updated: 2026-10-05 (Asia/Ho_Chi_Minh)
 
 ## Chrome popup height collapse fix 2.2.42 (144)

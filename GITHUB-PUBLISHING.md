@@ -1,6 +1,6 @@
 # Đưa VideoFetch Flow lên GitHub
 
-Chưa có thao tác đăng công khai nào được thực hiện.
+Mã nguồn 2.2.42 đã tải lên repository **Private** `NgocTu96/videofetch-flow` ngày 06/10/2026: https://github.com/NgocTu96/videofetch-flow. Nhánh mặc định `main`, remote `origin`. Chưa chuyển Public, chưa chọn LICENSE và chưa đăng bản DMG lên Releases. Các bước Desktop bên dưới là hướng dẫn cho lần thiết lập mới; kho hiện tại đã được tạo bằng GitHub CLI.
 
 ## Mã nguồn
 

@@ -12,3 +12,9 @@ cookies.txt
 *.dmg
 *.zip
 *.log
+
+# Local agent handoff and owner-specific publishing notes (not public docs).
+/AGENTS.md
+/CHECKPOINT.md
+/GENTLE-SUPPORT-DESIGN.md
+/GITHUB-PUBLISHING.md

@@ -112,4 +112,4 @@ yt-dlp, FFmpeg, FFprobe, and their dependencies retain their own copyrights and 
 
 New 2.2.45 builds use an app-specific FFmpeg/FFprobe profile built from pinned source archives, with component notices and a [matching source package](https://github.com/Atu96/vidsavie/releases/tag/media-9.0.2-v1). This does not change the old 2.2.44 installer. **Binary licensing review is still pending** for the yt-dlp standalone dependency-source set and other items detailed in the audit; no comprehensive compliance certification is claimed.
 
-Before changing the code, read [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md), and [ARCHITECTURE](ARCHITECTURE.md). They cover the app's structure, previous fixes, and compatibility constraints.
+For architecture, testing boundaries, and contribution guidance, see the [developer guide](docs/development/README.md).

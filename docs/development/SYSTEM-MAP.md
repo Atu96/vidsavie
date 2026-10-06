@@ -1,30 +1,20 @@
 # System map
 
-Main hover ownership: AppVisuals.AppHoverButtonStyle wraps ContentView header actions, Support and media launchers. Pointer brightness is tint/theme aware, no scale/offset/layout mutation; disabled and Reduce Motion respected. Coverage: main-hover.test.js. Keep click routing separate.
+Use this map to route a task or failure to the correct owner. Source paths are relative to the repository root. Version-specific statements describe when a behavior was introduced, not the current public installer. See GitHub Releases for published builds.
 
-Quit-copy local change 2.2.49 (151): alert heading is VidSavie, no greeting in any language. Support/interruption copy and safe buttons unchanged. Public release remains 2.2.48 until separately requested.
-
-Current verified state: local app and Public Latest release are 2.2.48 (150), tag source `6cfca40`, DMG SHA-256 `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. README has user-supplied main/Appearance screenshots; private-path General screenshot excluded. Earlier version statements below are historical.
-
-Current local app 2.2.47 (149) fixes filename chip localization; public Latest DMG remains 2.2.46 (148). Release history below is historical, not a claim that this local fix has been published.
-
-Filename label localization: SettingsView's naming component chips use `AppText.filenameTranslations` for nine languages, English fallback; tests in `filename-localization.test.js`. These are UI labels only; do not change filename toggle values/output policy to fix translation.
-
-Release visuals: README owns user-facing screenshot instructions; `docs/images/README.md` owns actual capture versions, third-party attribution and privacy/proof boundaries. Do not upload whole-desktop/account/history captures or fabricate controls/status. v2.2.46 arm64 DMG prepared and mount-verified; publishing result belongs in the checkpoint.
-
-Tool onboarding 2.2.46: `hasAvailableTools` counts bundled tools as ready. `DownloadManager` checks metadata on fresh startup/24-hour maintenance; `SupportToolsInstaller.updateIsAvailable` compares effective tool provenance without installing. `SupportToolsPromptCopy` owns nine-language Update/Later alert copy; only consent calls the staged installer. `Toolchain` bundle records preserve pre-sign source checksums. Tests: Swift checksum/scheduling cases and `tool-update-onboarding.test.js` safety/resource/localization contracts. Actual native alert layout remains user verification.
-
-Build/cleanup: `Scripts/build-app.sh` → Swift release build → `prepare-portable-tools.sh` → checksum-verified cached/downloaded binaries → signed app. `build-dmg.sh` packages it; neither routine path rebuilds FFmpeg. `build-media-toolchain.sh` is separate maintainer work only for a deliberate media-profile change. Preserve incremental Swift cache, portable tools, current installer and matching binary/source release assets when trimming obsolete intermediates. Installed app is 2.2.45 (147), public Latest app DMG is 2.2.44 (146); do not confuse these states.
-
-Use this map to route a task or failure to the correct owner.
+Public contributor guidance: README.md in this directory; architecture: ARCHITECTURE.md. Local owner handoff notes are not required for a fresh clone.
 
 Licensing: `LICENSE` and `COPYRIGHT` cover original project source under GPL-3.0-or-later. `Resources/ThirdParty` preserves external license texts/notices; `LICENSING-AUDIT.md` owns verified tool evidence and unresolved corresponding-source/artwork items. Do not equate source-license selection with completed binary redistribution compliance. The old 9.0 provider mismatch remains historical; the new reviewed 9.0.2 profile supplies exact source inputs and notices, while yt-dlp/artwork audit remains separate.
 
 Current media source: new 2.2.45 builds use the reviewed source-built profile in `Resources/Toolchain/media-release.json`; the old 9.0/provider source mismatch above applies to historical 2.2.44 binaries. `build-media-toolchain.sh` owns source inputs/configuration, `test-media-toolchain.sh` owns generated-media compatibility checks, and `SupportToolsInstaller` owns restricted feed/hash/source validation and atomic managed activation. Legal review of yt-dlp and old distributions remains distinct.
 
-Current brand: VidSavie. Latest release and installed app: 2.2.46 (148), fresh installs default to English; valid saved language choices remain unchanged. GitHub: `Atu96/vidsavie` (Public, user-authorized 2026-10-06). Release tag source `968cd10`, DMG SHA-256 `d0250ea15c25acb29c82c72d87e3aafdcf22533eff6d49d15f55d1d3d33e5ffd`. The old VideoFetch Flow and Video Batch Downloader installed paths remain compatibility aliases; technical identities and user data are unchanged. Earlier entries below document historical state.
+Current brand: VidSavie. Fresh installations default to English; valid saved language choices are preserved. Legacy visible names may remain as compatibility aliases; technical identities and user data must stay stable across upgrades. Published installers are listed in GitHub Releases, separately from the current source tree.
 
-Donation: SettingsView About support card and ContentView's inline Support action immediately right of Completed own the Ko-fi link and red heart; AppText owns localized `Ủng hộ` / `Support` copy. QuitConfirmationDelegate owns the localized normal-termination prompt: only explicit Yes quits; No/Return/Escape stay; Support opens Ko-fi and cancels termination. These are user-initiated external browser links only, independent of download/session logic. Branding and quit/scroll tests guard the supplied destination and wiring. See `GENTLE-SUPPORT-DESIGN.md` for reusable UX principles, copy, flows, privacy boundaries and release checklist; do not treat recommended future opt-outs as implemented features.
+Presentation ownership: AppHoverButtonStyle wraps main header actions, Support and media launchers with theme/tint-aware feedback and stable geometry. Settings split-column hosts use effective color-scheme identity to refresh native host environments without discarding enclosing section/toggle state. Filename labels use centralized nine-language keys with English fallback.
+
+Tool readiness includes bundled tools. Automatic startup/24-hour checks read metadata only; changed provenance offers Update tools / Later. Only explicit approval installs. See architecture for the restricted feed and fallback boundaries.
+
+Donation: SettingsView About support card and ContentView's inline Support action immediately right of Completed own the Ko-fi link and red heart; AppText owns localized `Ủng hộ` / `Support` copy. QuitConfirmationDelegate owns the localized normal-termination prompt: only explicit Yes quits; No/Return/Escape stay; Support opens Ko-fi and cancels termination. These are user-initiated external browser links only, independent of download/session logic. Branding and quit/scroll tests guard the supplied destination and wiring. Support is voluntary and independent of licensing or download functionality.
 
 Branding: VideoFetch Flow (2.2.33) changes visible names and artwork in presentation, Info.plist, companion manifest/popup and package scripts. `Scripts/render-brand.swift` owns artwork generation. Preserve the legacy bundle ID, executable, `videobatch://`, UserDefaults, managed-tools directory and resumable-cache names for upgrade continuity. `Tests/Extension/branding.test.js` guards these boundaries.
 
@@ -69,7 +59,7 @@ For platform extraction failures, start with `PLATFORM-DOWNLOAD-TROUBLESHOOTING.
 | Menu-bar canvas color, paste-field emphasis, empty-workspace continuity, menu-header status wrapping, footer-tool treatment, button prominence, or text/card contrast is weak | `AppVisuals.swift`, `ContentView.swift`, plus owning presentation view | Theme → MenuBarGlassCanvas → Light Quick Add uses bright glass; Dark Quick Add uses smoked blue-black glass → Light footer uses white–pale-blue controls; Dark footer uses blue-black glass plus explicit white labels and white-to-black edges → unframed continuous Quick Add/ready flow → screen composition | Release build; user visual test |
 | Pasted links do not auto-queue or use the wrong defaults | `ContentView.swift`, `SettingsView.swift`, `DownloadManager.swift`, `AppPreferences.swift` | Focused paste field → clipboard match → configured Video/Audio + quality → FIFO queue | Release build; user paste test |
 | Icon or packaged extension is stale | `Resources/`, `Scripts/build-app.sh`, `Info.plist` | Build script → app Resources → installed bundle/cache | Release build and installed checksum |
-| Version is inconsistent | `Resources/Info.plist`, `ChromeExtension/manifest.json`, `popup.html`, `CHECKPOINT.md` | Package/build metadata → UI and browser | Manual release checklist |
+| Version is inconsistent | `Resources/Info.plist`, `ChromeExtension/manifest.json`, `popup.html`, release metadata | Package/build metadata → UI and browser | Manual release checklist |
 | A recipient Mac has no Homebrew, yt-dlp, FFmpeg, or FFprobe | `SupportToolsInstaller.swift`, `MediaToolCore.swift`, `DownloadEngine.swift`, `Scripts/prepare-portable-tools.sh`, `Scripts/build-app.sh`, `Resources/ThirdParty/` | Bundled fallback works immediately → one-click managed install without admin rights → managed-first lookup → bundled fallback → external fallback | Core parser/locator tests; isolated full installer smoke test; signed release build; mounted-DMG tool smoke test |
 
 ## Runtime flows

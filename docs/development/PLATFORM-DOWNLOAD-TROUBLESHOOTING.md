@@ -33,9 +33,9 @@ Response sizes and script positions are observations, not stable platform contra
 
 `Tests/Extension/douyin-resolver.test.js` includes synthetic regressions for late script index 155, invalid percent escapes outside SSR, escaped JSON wrappers without executing code, rejecting another ID when the target occurs elsewhere, and HTML API replies followed by valid canonical SSR. Existing exact-clicked-source priority and wrong-ID tests remain.
 
-Validation: 154 Swift assertions, 24 extension tests, JS syntax checks, release build, strict/deep signature verification, and bundled-tool smoke tests passed. Real downloads remain user-run per `AGENTS.md`; successful user feedback is separate from deterministic test coverage.
+Validation: 154 Swift assertions, 24 extension tests, JS syntax checks, release build, strict/deep signature verification, and bundled-tool smoke tests passed. Real downloads remain user-run under the documented testing boundaries; successful user feedback is separate from deterministic test coverage.
 
-Chrome loaded its unpacked companion from the installed app's Resources directory. Updating workspace files alone was insufficient. The signed app bundle was backed up and replaced as a unit, restarted, checked via `/health`, then the extension was reloaded and its displayed version verified. Never patch the installed signed bundle in place. Existing tabs need a refresh to obtain fresh content scripts. See `CHECKPOINT.md` for installed version, backup, and distribution/mirror caveats.
+Chrome loaded its unpacked companion from the installed app's Resources directory. Updating workspace files alone was insufficient. The signed app bundle was backed up and replaced as a unit, restarted, checked via `/health`, then the extension was reloaded and its displayed version verified. Never patch the installed signed bundle in place. Existing tabs need a refresh to obtain fresh content scripts. Verify the installed version and companion reload separately from the published Release.
 
 ## Reusable method for other platforms
 

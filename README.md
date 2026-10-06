@@ -1,12 +1,16 @@
 # VideoFetch Flow
 
-A small macOS menu bar app for downloading videos, audio, and images. Paste a few links into the app, or use the download button on the page you're watching with the Chrome companion.
+Save your favorite videos from supported sites, right on your Mac.
+
+A small menu bar app for downloading videos, audio, and images. Paste multiple links to queue downloads, or use the Chrome companion to save supported content from the page you're watching.
+
+Current support includes YouTube, Douyin, Bilibili, X, Facebook, and Instagram. Available download options vary by site; not every video or post can be downloaded.
 
 I built this with help from AI for my own day-to-day work, and I'm sharing it for free with anyone who finds it useful. It's still a work in progress, so let me know if something doesn't work.
 
 ## What it does
 
-- Downloads from YouTube, Douyin, Bilibili, X, Facebook, Instagram, and some other sites. Support varies by site and content.
+- Downloads supported content from the sites listed above. Other websites are available through limited, opt-in media detection, not guaranteed download support.
 - Queues multiple links and downloads them one at a time.
 - Keeps partial downloads after an interruption so you can try continuing, when the source allows it.
 - Saves download history and lets you open files or reveal them in Finder.

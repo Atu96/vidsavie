@@ -1,5 +1,9 @@
 # Current checkpoint
 
+## Scoped README introduction — 2026-10-06
+
+- Added a short English favorite-video tagline limited to supported sites, an immediate list of current platforms and a clear not-every-video/post caveat. Clarified generic-site detection is limited opt-in, not universal support. No product rename: VidKeep remains an unverified candidate. Documentation-only change.
+
 ## English README — 2026-10-06
 
 - Converted the user-facing README to plain conversational English, retaining candid Developer ID/notarization status and a short optional Ko-fi invitation. Updated release link to current `Atu96` owner. Product name remains VideoFetch Flow; alternative names were discussed but no rename authorized. Documentation-only change.

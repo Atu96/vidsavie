@@ -4,7 +4,7 @@ enum AppText {
     private static let vi: [String: String] = [
         "supportAction":"Ủng hộ",
         "donateTitle":"Thích ứng dụng này?",
-        "donateDetail":"Sự ủng hộ của bạn giúp VideoFetch Flow ngày càng tốt hơn. Cảm ơn bạn!",
+        "donateDetail":"Sự ủng hộ của bạn giúp VidSavie ngày càng tốt hơn. Cảm ơn bạn!",
         "donateAccessibility":"Ủng hộ trên Ko-fi (mở trong trình duyệt)",
         "quickAdd":"Thêm nhanh", "pasteMany":"Dán một hoặc nhiều liên kết", "linkPlaceholder":"Liên kết YouTube, Douyin hoặc X…", "quality":"Chất lượng", "best":"Tốt nhất", "type":"Loại", "video":"Video", "audio":"Âm thanh", "active":"Đang tải", "waiting":"Đang chờ", "done":"Hoàn tất", "ready":"Sẵn sàng", "starting":"Đang mở", "downloadComplete":"Tải xuống hoàn tất", "mediaReady":"Nội dung đã sẵn sàng", "open":"Mở", "readyWhen":"Sẵn sàng khi bạn cần", "emptyHint":"Dán liên kết phía trên hoặc dùng nút tải nổi trên YouTube, Douyin hay X.", "folder":"Thư mục", "location":"Vị trí", "clear":"Dọn xong", "general":"Chung", "appearance":"Giao diện", "about":"Giới thiệu", "browserCompanion":"Tiện ích trình duyệt", "browserCompanionSub":"Tiện ích trình duyệt tự động đồng bộ các cài đặt này", "browserDetection":"Nhận diện trên trình duyệt", "browserDetectionDetail":"Bật nhận diện nội dung trên trình duyệt", "floatingButton":"Nút tải nổi", "floatingDetail":"Chỉ hiện cạnh nội dung đang nhìn thấy", "installCompanion":"Cài tiện ích trình duyệt", "included":"Tiện ích được đi kèm với app Mac", "chromeDetail":"Mở trang Extensions và hiện thư mục tiện ích", "firefoxDetail":"Mở trang gỡ lỗi Add-on và hiện thư mục tiện ích", "setup":"Cài đặt", "downloads":"Tải xuống", "downloadsSub":"Áp dụng cho lượt tải nhanh từ trình duyệt", "defaultQuality":"Chất lượng mặc định", "defaultQualityDetail":"Bạn vẫn có thể chọn chất lượng khác", "localSync":"Các thay đổi được đồng bộ nội bộ, không cần tài khoản hay đám mây.", "language":"Ngôn ngữ", "languageSub":"App và nút tải trên trình duyệt", "interfaceLanguage":"Ngôn ngữ giao diện", "interfaceLanguageDetail":"Chọn ngôn ngữ hoặc dùng theo hệ thống", "glassTheme":"Giao diện kính", "glassThemeSub":"Đồng thời đổi nút tải nổi trên trình duyệt", "system":"Hệ thống", "followMac":"Theo macOS", "darkGlass":"Kính tối", "lightGlass":"Kính sáng", "neonGlass":"Kính neon", "version":"Phiên bản", "workflow":"Quy trình media chạy nội bộ", "workflowSub":"App menu bar nhẹ dành cho Mac", "private":"Riêng tư từ thiết kế", "privateDetail":"Liên kết và cookie trình duyệt chỉ nằm trên máy Mac này", "performance":"Hiệu năng ổn định", "performanceDetail":"Tải tuần tự từng mục và chuyển đổi bằng GPU Apple", "replaceable":"Tiện ích có thể thay thế", "replaceableDetail":"App Mac vẫn hoạt động khi không có Chrome", "stop":"Dừng", "retry":"Thử lại", "show":"Hiện file", "gpuOptimizing":"GPU Apple đang tối ưu tương thích", "gpuQueue":"Đang chờ GPU", "queued":"Đang chờ", "reading":"Đang đọc", "downloading":"Đang tải", "convertingVideo":"Đang chuyển video bằng GPU", "convertingAudio":"Đang tạo MP3", "completed":"Hoàn tất", "failed":"Thất bại", "stopped":"Đã dừng", "added":"Đã thêm %d mục vào hàng đợi", "noLinks":"Không tìm thấy liên kết mới được hỗ trợ"
     ]
@@ -273,7 +273,7 @@ enum AppText {
         "vi": [
             "finderQuickActions":"Tác vụ nhanh Finder",
             "finderQuickActionsSub":"Gửi file đang chọn trong Finder thẳng vào công cụ media của app",
-            "finderQuickActionsDetail":"Bấm chuột phải file được hỗ trợ và mở đúng công cụ VideoFetch Flow",
+            "finderQuickActionsDetail":"Bấm chuột phải file được hỗ trợ và mở đúng công cụ VidSavie",
             "quickCutVideo":"Cắt video",
             "quickCutVideoDetail":"Dùng cho file video",
             "quickConvert":"Chuyển đổi media",
@@ -283,14 +283,14 @@ enum AppText {
             "enableFinderActions":"Bật trong Finder",
             "enableFinderActionsDetail":"macOS cần bạn cấp quyền thủ công một lần cho các dịch vụ chuột phải",
             "quickActionsIncluded":"Tác vụ nhanh đã được tích hợp trong app",
-            "quickActionsApproval":"Bấm Cài đặt → Services → bung Files and Folders, bật ba dịch vụ VideoFetch Flow rồi dùng menu chuột phải của Finder.",
+            "quickActionsApproval":"Bấm Cài đặt → Services → bung Files and Folders, bật ba dịch vụ VidSavie rồi dùng menu chuột phải của Finder.",
             "finderGuideTitle":"Bật tác vụ nhanh Finder",
             "finderGuideSub":"Chỉ cấp quyền macOS một lần, sau đó dùng công cụ từ mọi cửa sổ Finder",
             "openServicesList":"Bấm Phím tắt bàn phím… → Dịch vụ",
             "openServicesListDetail":"Cài đặt hệ thống mở trang Bàn phím. Bấm Phím tắt bàn phím…, rồi chọn Dịch vụ ở cột trái.",
             "expandFilesFolders":"Bung Tệp và thư mục",
             "expandFilesFoldersDetail":"Bấm mũi tên cạnh Tệp và thư mục để hiện các hàng dịch vụ bên trong.",
-            "enableBatchActions":"Bật ba tác vụ VideoFetch Flow",
+            "enableBatchActions":"Bật ba tác vụ VidSavie",
             "enableBatchActionsDetail":"Tick Cắt video, Chuyển đổi và Chỉnh âm. Sau đó bấm chuột phải file trong Finder → Tác vụ nhanh hoặc Dịch vụ.",
             "openSystemSettings":"Mở Bàn phím",
             "openFinder":"Mở Finder"
@@ -303,7 +303,7 @@ enum AppText {
             "quickMasterAudio":"音频处理",
             "enableFinderActions":"在 Finder 中启用",
             "openServicesList":"打开服务 → 文件与文件夹",
-            "enableBatchActions":"启用三个 VideoFetch Flow 操作",
+            "enableBatchActions":"启用三个 VidSavie 操作",
             "openSystemSettings":"打开系统设置",
             "openFinder":"打开 Finder"
         ]

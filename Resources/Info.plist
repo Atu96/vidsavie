@@ -7,8 +7,8 @@
   <key>CFBundleIconFile</key><string>AppIcon.icns</string>
   <key>CFBundleIdentifier</key><string>com.gemst.VideoBatchDownloader</string>
   <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
-  <key>CFBundleName</key><string>VideoFetch Flow</string>
-  <key>CFBundleDisplayName</key><string>VideoFetch Flow</string>
+  <key>CFBundleName</key><string>VidSavie</string>
+  <key>CFBundleDisplayName</key><string>VidSavie</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleURLTypes</key>
   <array>
@@ -17,17 +17,17 @@
       <key>CFBundleURLSchemes</key><array><string>videobatch</string></array>
     </dict>
   </array>
-  <key>CFBundleShortVersionString</key><string>2.2.42</string>
-  <key>CFBundleVersion</key><string>144</string>
+  <key>CFBundleShortVersionString</key><string>2.2.43</string>
+  <key>CFBundleVersion</key><string>145</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
   <key>NSServices</key>
   <array>
     <dict>
       <key>NSMenuItem</key>
-      <dict><key>default</key><string>✂︎ Cut Video with VideoFetch Flow</string></dict>
+      <dict><key>default</key><string>✂︎ Cut Video with VidSavie</string></dict>
       <key>NSMessage</key><string>cutVideo</string>
-      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSPortName</key><string>VidSavie</string>
       <key>NSSendTypes</key>
       <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
       <key>NSSendFileTypes</key>
@@ -35,9 +35,9 @@
     </dict>
     <dict>
       <key>NSMenuItem</key>
-      <dict><key>default</key><string>↻ Convert with VideoFetch Flow</string></dict>
+      <dict><key>default</key><string>↻ Convert with VidSavie</string></dict>
       <key>NSMessage</key><string>convertMedia</string>
-      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSPortName</key><string>VidSavie</string>
       <key>NSSendTypes</key>
       <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
       <key>NSSendFileTypes</key>
@@ -45,9 +45,9 @@
     </dict>
     <dict>
       <key>NSMenuItem</key>
-      <dict><key>default</key><string>♫ Master Audio with VideoFetch Flow</string></dict>
+      <dict><key>default</key><string>♫ Master Audio with VidSavie</string></dict>
       <key>NSMessage</key><string>masterAudio</string>
-      <key>NSPortName</key><string>VideoFetch Flow</string>
+      <key>NSPortName</key><string>VidSavie</string>
       <key>NSSendTypes</key>
       <array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
       <key>NSSendFileTypes</key>

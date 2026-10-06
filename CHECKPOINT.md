@@ -1,5 +1,11 @@
 # Current checkpoint
 
+## VidSavie rebrand — 2026-10-06 · 2.2.43 (145)
+
+- User approved VidSavie. Replaced visible app/companion/window/error/report labels, package names and current README with VidSavie; artwork unchanged. Preserved executable, bundle identifier, URL scheme, preference keys, tool storage and partial-cache paths. Tests assert visible name/version alignment and stable identities.
+- Verified 154 Swift assertions, 35 extension tests, release build, tool smoke and strict/deep signing. Installed `/Applications/VidSavie.app` launched and health returned `VidSavie` / `ready`. Previous bundle retained at `/private/tmp/VidSavieUpgrade145.K9mwWW/VideoFetch Flow.app`. `/Applications/VideoFetch Flow.app` is now a compatibility symlink to VidSavie; older Video Batch Downloader alias continues through it. Chrome Reload remains user action; no UI automation, new DMG or deployment-mirror sync.
+- Renamed GitHub repository to `https://github.com/Atu96/vidsavie`, verified still Private. Naming discussion of “Vid Savie” with a space is not approval to change the chosen VidSavie spelling.
+
 ## Scoped README introduction — 2026-10-06
 
 - Added a short English favorite-video tagline limited to supported sites, an immediate list of current platforms and a clear not-every-video/post caveat. Clarified generic-site detection is limited opt-in, not universal support. No product rename: VidKeep remains an unverified candidate. Documentation-only change.
@@ -101,12 +107,12 @@ Updated: 2026-10-05 (Asia/Ho_Chi_Minh)
 
 ## Release state
 
-- macOS app: `2.2.39`
-- macOS build: `141`
-- Browser extension: `2.2.39`
+- macOS app: `2.2.43`
+- macOS build: `145`
+- Browser extension: `2.2.43`
 - Bundle identifier: `com.gemst.VideoBatchDownloader`
 - Local bridge: `127.0.0.1:17832`
-- Target installed app: `/Applications/VideoFetch Flow.app`
+- Target installed app: `/Applications/VidSavie.app` (legacy names are compatibility aliases)
 - Source mirror: `/Users/gemst/Documents/Tools/VideoBatchDownloader`
 - Chrome development extension ID on this Mac: `idaddflfhaaianmfnjclgmmlbgcmdoac`
 

@@ -1,4 +1,4 @@
-# VideoFetch Flow
+# VidSavie
 
 Save your favorite videos from supported sites, right on your Mac.
 
@@ -23,7 +23,7 @@ The packaged app includes yt-dlp, FFmpeg, and FFprobe. You don't need Homebrew t
 
 The current package is for **Apple Silicon Macs (M1, M2, M3… / arm64)**. There isn't an Intel build yet.
 
-**This repository currently contains the source code only. There is no installer in [Releases](https://github.com/Atu96/videofetch-flow/releases) yet.** Once a DMG is available, open it and drag VideoFetch Flow into Applications. To build it yourself, see the section below.
+**This repository currently contains the source code only. There is no installer in [Releases](https://github.com/Atu96/vidsavie/releases) yet.** Once a DMG is available, open it and drag VidSavie into Applications. To build it yourself, see the section below.
 
 ### About the macOS warning
 
@@ -65,7 +65,7 @@ From the project folder:
 ./Scripts/build-app.sh
 ```
 
-The app is created at `.build/app/VideoFetch Flow.app`. Run `./Scripts/build-dmg.sh` to create an arm64 DMG in `dist/`. Packaging needs an internet connection to download and verify the bundled tools. Automated tests don't download real videos or read browser cookies.
+The app is created at `.build/app/VidSavie.app`. Run `./Scripts/build-dmg.sh` to create an arm64 DMG in `dist/`. Packaging needs an internet connection to download and verify the bundled tools. Automated tests don't download real videos or read browser cookies.
 
 See [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md) for the bundled tools. A license for the app's source hasn't been selected yet; third-party tools retain their own licenses.
 

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROJECT_DIR="${0:A:h:h}"
-APP_DIR="$PROJECT_DIR/.build/app/VideoFetch Flow.app"
+APP_DIR="$PROJECT_DIR/.build/app/VidSavie.app"
 EXECUTABLE="$PROJECT_DIR/.build/release/VideoBatchDownloader"
 TASK_SDK="/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk"
 

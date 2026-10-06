@@ -9,7 +9,7 @@ enum DownloadErrorReport {
         error: String
     ) -> String {
         [
-            "VideoFetch Flow \(appVersion) (\(build))",
+            "VidSavie \(appVersion) (\(build))",
             "Title: \(title)",
             "URL: \(url)",
             "Error: \(error)",

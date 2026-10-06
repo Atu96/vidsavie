@@ -86,8 +86,8 @@ private struct FinderQuickActionGuideView: View {
                 )
                 guideStep(
                     number: "3",
-                    title: t("enableBatchActions", "Enable the three VideoFetch Flow actions"),
-                    detail: t("enableBatchActionsDetail", "Tick the three VideoFetch Flow rows. Their symbols also appear in Finder’s right-click Services menu.")
+                    title: t("enableBatchActions", "Enable the three VidSavie actions"),
+                    detail: t("enableBatchActionsDetail", "Tick the three VidSavie rows. Their symbols also appear in Finder’s right-click Services menu.")
                 )
             }
 
@@ -230,9 +230,9 @@ private struct FinderServicesWalkthroughAnimation: View {
                     .padding(.bottom, 2)
                 filesAndFoldersRow
                 if phase >= 3 {
-                    serviceRow("↻  Convert with VideoFetch Flow", isEnabled: phase >= 4)
-                    serviceRow("♫  Master Audio with VideoFetch Flow", isEnabled: phase >= 5)
-                    serviceRow("✂︎  Cut Video with VideoFetch Flow", isEnabled: phase >= 6)
+                    serviceRow("↻  Convert with VidSavie", isEnabled: phase >= 4)
+                    serviceRow("♫  Master Audio with VidSavie", isEnabled: phase >= 5)
+                    serviceRow("✂︎  Cut Video with VidSavie", isEnabled: phase >= 6)
                 }
             }
             .padding(12)

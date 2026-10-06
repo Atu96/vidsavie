@@ -2,6 +2,8 @@
 
 Tài liệu dùng lại cho các ứng dụng khác · 05/10/2026
 
+Cập nhật tên ngày 06/10/2026: ứng dụng tham chiếu nay là **VidSavie**, phiên bản 2.2.43 (145). Các ví dụ mang tên VideoFetch Flow bên dưới ghi lại luồng được thiết kế trước khi đổi tên; nguyên tắc và hành vi không thay đổi.
+
 ## 1. Mục tiêu
 
 Giúp người dùng biết họ có thể ủng hộ tác giả sau khi nhận được giá trị từ ứng dụng, nhưng không làm họ cảm thấy phải trả tiền, bị làm phiền hoặc bị chặn thao tác.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "VideoFetch Flow",
-  "version": "2.2.42",
+  "name": "VidSavie",
+  "version": "2.2.43",
   "description": "Detect videos and images on supported sites and send them to the local menu bar downloader.",
   "browser_specific_settings": {
     "gecko": {
@@ -72,7 +72,7 @@
     }
   ],
   "action": {
-    "default_title": "VideoFetch Flow settings",
+    "default_title": "VidSavie settings",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon-16.png",

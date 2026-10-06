@@ -74,7 +74,7 @@ final class LocalHTTPServer {
         if method == "OPTIONS" {
             send(status: "204 No Content", body: Data(), origin: origin, on: connection)
         } else if method == "GET", path == "/health" {
-            send(status: "200 OK", json: ["status": "ready", "app": "VideoFetch Flow"], origin: origin, on: connection)
+            send(status: "200 OK", json: ["status": "ready", "app": "VidSavie"], origin: origin, on: connection)
         } else if method == "GET", path == "/preferences" {
             send(status: "200 OK", json: AppPreferences.response, origin: origin, on: connection)
         } else if method == "POST", path == "/preferences" {

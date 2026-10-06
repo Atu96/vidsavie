@@ -2,13 +2,13 @@
 set -euo pipefail
 
 PROJECT_DIR="${0:A:h:h}"
-APP_NAME="VideoFetch Flow"
+APP_NAME="VidSavie"
 APP_PATH="$PROJECT_DIR/.build/app/$APP_NAME.app"
 INFO_PLIST="$PROJECT_DIR/Resources/Info.plist"
 VERSION="$(plutil -extract CFBundleShortVersionString raw "$INFO_PLIST")"
 BUILD="$(plutil -extract CFBundleVersion raw "$INFO_PLIST")"
 OUTPUT_DIR="$PROJECT_DIR/dist"
-DMG_PATH="$OUTPUT_DIR/VideoFetch-Flow-$VERSION-arm64.dmg"
+DMG_PATH="$OUTPUT_DIR/VidSavie-$VERSION-arm64.dmg"
 CHECKSUM_PATH="$DMG_PATH.sha256"
 STAGING_DIR="$(mktemp -d "${TMPDIR%/}/VideoBatchDMG.XXXXXX")"
 

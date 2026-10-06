@@ -21,7 +21,7 @@ struct AppSettingsView: View {
                         .frame(width: 42, height: 42)
                         .shadow(color: VBDDesign.brandViolet.opacity(0.16), radius: 6, y: 3)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("VideoFetch Flow")
+                        Text("VidSavie")
                             .font(.system(size: 15, weight: .bold, design: .rounded))
                         Text(t("settingsTitle", "Settings"))
                             .font(.caption2).foregroundStyle(.secondary)
@@ -332,7 +332,7 @@ struct AppSettingsView: View {
         VStack(spacing: 14) {
             SettingsCard(
                 title: t("finderQuickActions", "Finder Quick Actions"),
-                subtitle: t("finderQuickActionsDetail", "Right-click supported files and open the matching VideoFetch Flow tool")
+                subtitle: t("finderQuickActionsDetail", "Right-click supported files and open the matching VidSavie tool")
             ) {
                 SettingsLabel(
                     icon: "scissors",
@@ -366,7 +366,7 @@ struct AppSettingsView: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(t("quickActionsIncluded", "Quick Actions are included with this app"))
                             .font(.caption.weight(.semibold))
-                        Text(t("quickActionsApproval", "Press Setup, enable the VideoFetch Flow services, then use Finder’s right-click menu."))
+                        Text(t("quickActionsApproval", "Press Setup, enable the VidSavie services, then use Finder’s right-click menu."))
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
@@ -435,7 +435,7 @@ struct AppSettingsView: View {
                 .resizable().scaledToFit().frame(width: 96, height: 96)
                 .shadow(color: .purple.opacity(0.28), radius: 16, y: 8)
             VStack(spacing: 3) {
-                Text("VideoFetch Flow").font(.title3.bold())
+                Text("VidSavie").font(.title3.bold())
                 Text("\(t("version", "Version")) \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.6.0")")
                     .font(.caption).foregroundStyle(.secondary)
             }
@@ -451,7 +451,7 @@ struct AppSettingsView: View {
                 Divider().opacity(0.45)
                 SettingsLabel(icon: "puzzlepiece.extension.fill", title: t("replaceable", "Replaceable companion"), detail: t("replaceableDetail", "The Mac app keeps working without Chrome"))
             }
-            SettingsCard(title: t("donateTitle", "Enjoying the app?"), subtitle: t("donateDetail", "Your support helps keep VideoFetch Flow improving. Thank you!")) {
+            SettingsCard(title: t("donateTitle", "Enjoying the app?"), subtitle: t("donateDetail", "Your support helps keep VidSavie improving. Thank you!")) {
                 HStack {
                     Text("Ko-fi · atu1202")
                         .font(.subheadline).foregroundStyle(.secondary)

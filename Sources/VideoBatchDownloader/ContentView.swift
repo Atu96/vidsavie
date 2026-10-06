@@ -150,7 +150,7 @@ struct ContentView: View {
                     .shadow(color: VBDDesign.brandViolet.opacity(0.18), radius: 7, y: 3)
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("VideoFetch Flow").font(.system(size: 18, weight: .bold, design: .rounded))
+                    Text("VidSavie").font(.system(size: 18, weight: .bold, design: .rounded))
                         .lineLimit(1).minimumScaleFactor(0.85)
                     HStack(spacing: 7) {
                         Text("YouTube · Douyin · X · Social")

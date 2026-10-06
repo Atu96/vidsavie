@@ -49,7 +49,7 @@ private struct WindowCenteringView: NSViewRepresentable {
     private func configure(_ window: NSWindow?, coordinator: Coordinator) {
         guard let window else { return }
         window.appearance = AppAppearance.windowAppearance(for: theme)
-        window.title = "VideoFetch Flow"
+        window.title = "VidSavie"
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
         window.styleMask.remove(.fullSizeContentView)

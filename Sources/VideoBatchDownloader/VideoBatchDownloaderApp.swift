@@ -7,7 +7,7 @@ private let menuBarStatusIcon: NSImage = {
        let bundled = NSImage(contentsOf: url) {
         image = bundled
     } else {
-        image = NSImage(systemSymbolName: "bolt.fill", accessibilityDescription: "VideoFetch Flow") ?? NSImage()
+        image = NSImage(systemSymbolName: "bolt.fill", accessibilityDescription: "VidSavie") ?? NSImage()
     }
     image.size = NSSize(width: 18, height: 18)
     image.isTemplate = true
@@ -37,7 +37,7 @@ struct VideoBatchDownloaderApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        Window("VideoFetch Flow", id: "settings") {
+        Window("VidSavie", id: "settings") {
             SettingsWindowView(manager: manager)
         }
         .defaultSize(width: 820, height: 610)

@@ -2,7 +2,7 @@
 
 ## Product boundary
 
-The visible product name is VideoFetch Flow from 2.2.33. Technical identity remains `com.gemst.VideoBatchDownloader` with the existing executable, URL scheme, preference keys, tool-storage and resumable-cache paths. Renaming those persistence boundaries is not part of a visual rebrand. App and companion artwork is reproducible through `Scripts/render-brand.swift`.
+The visible product name is VidSavie from 2.2.43 (previously VideoFetch Flow from 2.2.33). Technical identity remains `com.gemst.VideoBatchDownloader` with the existing executable, URL scheme, preference keys, tool-storage and resumable-cache paths. Renaming those persistence boundaries is not part of a visual rebrand. App and companion artwork is reproducible through `Scripts/render-brand.swift`.
 
 The macOS menu bar app is the product and download engine. The browser extension is a replaceable companion that detects focused media and sends normalized requests to the app. No Raycast component is part of the runtime.
 

@@ -25,11 +25,11 @@ test('About donation link uses the supplied HTTPS destination and red heart', ()
 test('rebrand preserves identity while aligning visible package names and versions', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'ChromeExtension/manifest.json'), 'utf8'));
   const plist = fs.readFileSync(path.join(root, 'Resources/Info.plist'), 'utf8');
-  assert.equal(manifest.name, 'VideoFetch Flow');
+  assert.equal(manifest.name, 'VidSavie');
   assert.match(plist, /CFBundleIdentifier<\/key><string>com.gemst.VideoBatchDownloader<\/string>/);
-  assert.match(plist, /CFBundleName<\/key><string>VideoFetch Flow<\/string>/);
+  assert.match(plist, /CFBundleName<\/key><string>VidSavie<\/string>/);
   assert.ok(plist.includes(`<string>${manifest.version}</string>`));
   assert.ok(plist.includes('<string>videobatch</string>'));
-  assert.match(fs.readFileSync(path.join(root, 'Scripts/build-app.sh'), 'utf8'), /VideoFetch Flow\.app/);
+  assert.match(fs.readFileSync(path.join(root, 'Scripts/build-app.sh'), 'utf8'), /VidSavie\.app/);
   assert.match(fs.readFileSync(path.join(root, 'Sources/VideoBatchDownloader/SupportToolsInstaller.swift'), 'utf8'), /appendingPathComponent\("Video Batch Downloader"/);
 });

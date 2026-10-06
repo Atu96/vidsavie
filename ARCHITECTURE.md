@@ -8,6 +8,8 @@ The macOS menu bar app is the product and download engine. The browser extension
 
 ## Layers and dependency direction
 
+Media profile from 2.2.45: both bootstrap and managed updater use `Resources/Toolchain/media-release.json`, a reviewed pair with exact executable/archive/source hashes. The updater only accepts matching owned GitHub release assets, keeps component notices and verified corresponding-source archive, checks executable versions, then activates atomically. Legacy managed FFmpeg/probe without this provenance are bypassed for the new bundle, not removed; yt-dlp precedence is unchanged. FFmpeg is compiled from pinned sources with LAME/dav1d and system VideoToolbox/SecureTransport, without autodetection/GPL/nonfree add-ons. Source/build recipe and generated-media checks are separate from real platform/hardware verification.
+
 ### macOS presentation
 
 - `VideoBatchDownloaderApp.swift`: process entry point and MenuBarExtra.

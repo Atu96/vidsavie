@@ -53,7 +53,9 @@ enum MediaBinaryLocator {
         resourceURL: URL?,
         external: [String]
     ) -> [String] {
-        let managed = managedToolsURL?.appendingPathComponent(name).path
+        let needsReviewedMedia = name == "ffmpeg" || name == "ffprobe"
+        let mayUseManaged = !needsReviewedMedia || managedToolsURL.map(ReviewedMediaPolicy.isReviewedDirectory) == true
+        let managed = mayUseManaged ? managedToolsURL?.appendingPathComponent(name).path : nil
         let bundled = resourceURL?
             .appendingPathComponent("Tools", isDirectory: true)
             .appendingPathComponent(name)

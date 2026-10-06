@@ -71,18 +71,62 @@ struct CoreTestMain {
             MediaBinaryLocator.isManaged(bundledYtDlp.path, managedToolsURL: locatorTools),
             "tool locator recognizes an app-managed executable"
         )
+        let mediaFixture: [String: Any] = [
+            "schema": 1, "provider": "vidsavie-source-build",
+            "packageID": "media-9.0.2-v1", "version": "9.0.2",
+            "archiveURL": "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-arm64.zip",
+            "sourceURL": "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-sources.tar.gz",
+            "archiveSHA256": String(repeating: "d", count: 64),
+            "sourceSHA256": String(repeating: "e", count: 64),
+            "ffmpegSHA256": String(repeating: "b", count: 64),
+            "ffprobeSHA256": String(repeating: "c", count: 64)
+        ]
         let parsedSupportTools = try SupportToolsReleaseParser.parse(
             ytDlpChecksums: String(repeating: "a", count: 64) + "  yt-dlp_macos\n",
-            ffmpegHTML: """
-                <a href="https://www.osxexperts.net/ffmpeg9arm.zip">Download ffmpeg 9.0 (Apple Silicon)</a>
-                SHA256 checksum of FFmpeg file : \(String(repeating: "b", count: 64))
-                <a href="https://www.osxexperts.net/ffprobe9arm.zip">Download ffprobe 9.0 (Apple Silicon)</a>
-                SHA256 checksum of ffprobe file : \(String(repeating: "c", count: 64))
-                """
+            mediaJSON: JSONSerialization.data(withJSONObject: mediaFixture)
         )
         suite.expect(parsedSupportTools.ytDlpChecksum == String(repeating: "a", count: 64), "support tools parse official yt-dlp checksum")
-        suite.expect(parsedSupportTools.ffmpegVersion == "9.0", "support tools parse FFmpeg Apple Silicon release")
+        suite.expect(parsedSupportTools.ffmpegVersion == "9.0.2", "support tools parse reviewed source-build release")
         suite.expect(parsedSupportTools.ffprobeChecksum == String(repeating: "c", count: 64), "support tools parse FFprobe checksum")
+        suite.expect(parsedSupportTools.mediaArchiveChecksum == String(repeating: "d", count: 64), "media archive hash is mandatory")
+        suite.expect(parsedSupportTools.mediaSourceChecksum == String(repeating: "e", count: 64), "corresponding-source hash is mandatory")
+        for (key, value) in [
+            ("archiveURL", "https://evil.example/tool.zip"),
+            ("sourceURL", "http://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-sources.tar.gz"),
+            ("archiveURL", "https://github.com/SomeoneElse/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-arm64.zip"),
+            ("archiveURL", "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-8.0.0-v1-arm64.zip"),
+            ("sourceSHA256", "invalid"),
+            ("provider", "osxexperts")
+        ] {
+            var invalid = mediaFixture; invalid[key] = value
+            let result = try? SupportToolsReleaseParser.parse(
+                ytDlpChecksums: String(repeating: "a", count: 64) + " yt-dlp_macos\n",
+                mediaJSON: JSONSerialization.data(withJSONObject: invalid)
+            )
+            suite.expect(result == nil, "reject unreviewed media manifest: \(key)")
+        }
+        suite.expect(!ReviewedMediaPolicy.isReviewedDirectory(locatorTools), "legacy managed FFmpeg has no source-build provenance")
+        let locatorMedia = locatorTools.appendingPathComponent("ffmpeg")
+        FileManager.default.createFile(atPath: locatorMedia.path, contents: Data())
+        try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: locatorMedia.path)
+        let legacyMediaDir = locatorFixture.appendingPathComponent("LegacyManaged", isDirectory: true)
+        try FileManager.default.createDirectory(at: legacyMediaDir, withIntermediateDirectories: true)
+        let legacyExecutable = legacyMediaDir.appendingPathComponent("ffmpeg")
+        FileManager.default.createFile(atPath: legacyExecutable.path, contents: Data())
+        try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: legacyExecutable.path)
+        suite.expect(MediaBinaryLocator.ffmpeg(managedToolsURL: legacyMediaDir, resourceURL: locatorFixture) == locatorMedia.path, "legacy managed media falls back to a distinct bundled executable")
+        let reviewedMetadata = SupportToolsMetadata(
+            ytDlpChecksum: String(repeating: "a", count: 64), ffmpegChecksum: String(repeating: "b", count: 64), ffprobeChecksum: String(repeating: "c", count: 64),
+            installedYtDlpChecksum: String(repeating: "a", count: 64), installedFFmpegChecksum: String(repeating: "b", count: 64), installedFFprobeChecksum: String(repeating: "c", count: 64),
+            ffmpegVersion: "9.0.2", ffprobeVersion: "9.0.2", updatedAt: Date(timeIntervalSince1970: 0), mediaPackageID: "media-9.0.2-v1",
+            mediaSourceURL: "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-sources.tar.gz", mediaSourceChecksum: String(repeating: "e", count: 64)
+        )
+        try JSONEncoder().encode(reviewedMetadata).write(to: legacyMediaDir.appendingPathComponent("versions.json"))
+        suite.expect(!ReviewedMediaPolicy.isReviewedDirectory(legacyMediaDir), "metadata alone does not claim reviewed managed media without source archive")
+        try FileManager.default.createDirectory(at: legacyMediaDir.appendingPathComponent("ThirdParty"), withIntermediateDirectories: true)
+        try Data([1]).write(to: legacyMediaDir.appendingPathComponent("ThirdParty/media-9.0.2-v1-sources.tar.gz"))
+        suite.expect(ReviewedMediaPolicy.isReviewedDirectory(legacyMediaDir), "approved managed source provenance is recognized")
+        suite.expect(MediaBinaryLocator.ffmpeg(managedToolsURL: legacyMediaDir, resourceURL: locatorFixture) == legacyExecutable.path, "reviewed managed media retains normal first priority")
         suite.expect(
             MachOArchitectureInspector.containsArm64(in: Data([0xCF, 0xFA, 0xED, 0xFE, 0x0C, 0x00, 0x00, 0x01])),
             "support tools recognize a thin arm64 Mach-O without Command Line Tools"

@@ -1,6 +1,6 @@
 # Portable tool notices
 
-VidSavie's arm64 distribution includes third-party command-line tools so a recipient does not need Homebrew or a separate Terminal setup. These are not authored by the VidSavie project. Source licensing, component notices and binary corresponding-source requirements are separate; see the root `LICENSING-AUDIT.md`. Current binary compliance review remains pending.
+VidSavie's arm64 distribution includes third-party command-line tools so a recipient does not need Homebrew or a separate Terminal setup. Their implementation is not authored by VidSavie. New builds use the project-built media profile described in `MEDIA-TOOLCHAIN.md`; source and notices accompany its reviewed tool release. yt-dlp standalone dependency-source review remains separate; see the root `LICENSING-AUDIT.md`. Do not interpret a successful build or checksum check as comprehensive legal certification.
 
 ## yt-dlp 2026.08.19
 
@@ -10,7 +10,14 @@ VidSavie's arm64 distribution includes third-party command-line tools so a recip
 - Official macOS standalone release: https://github.com/yt-dlp/yt-dlp/releases/tag/2026.08.19
 - Bundled file SHA-256: `0f192b7ec147ab6288885d6351d9ab67367640029b4377576ef46dd79cf7b202`
 
-## FFmpeg / FFprobe 9.0 arm64 static builds
+## Current FFmpeg / FFprobe 9.0.2 arm64 source build
+
+- Project-built from pinned FFmpeg, LAME and dav1d inputs; only platform/system dynamic libraries are needed at runtime.
+- FFmpeg/FFprobe report LGPL-2.1-or-later under the controlled configuration; LAME is LGPL-2.0-or-later, dav1d BSD-2-Clause. Read the preserved component texts and `MEDIA-TOOLCHAIN.md`.
+- Release, executable/source/archive hashes: https://github.com/Atu96/vidsavie/releases/tag/media-9.0.2-v1 and `Resources/Toolchain/media-release.json`.
+- The managed updater verifies and retains the exact matching source archive and component notices before activating the reviewed media pair. It no longer parses/downloads OSXExperts media releases.
+
+## Historical FFmpeg / FFprobe 9.0 profile in app 2.2.44
 
 - The actual bundled tools report GPLv2-or-later (`-L`) and `--enable-gpl`. Preserve `GPL-2.0.txt` / `GPL-3.0.txt` as applicable; statically included components keep their own copyrights and source obligations.
 - The provider's current source link resolves to release/6.1 rather than the bundled 9.0. Exact corresponding source, static dependency versions and build inputs remain unverified. A generic source URL is not a certification of complete compliance.

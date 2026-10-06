@@ -10,6 +10,10 @@ struct SupportToolsReleaseManifest: Equatable, Sendable {
     let ffprobeURL: URL
     let ffprobeChecksum: String
     let ffprobeVersion: String
+    let mediaArchiveChecksum: String
+    let mediaPackageID: String
+    let mediaSourceURL: URL
+    let mediaSourceChecksum: String
 }
 
 struct SupportToolsMetadata: Codable, Equatable, Sendable {
@@ -22,6 +26,9 @@ struct SupportToolsMetadata: Codable, Equatable, Sendable {
     let ffmpegVersion: String
     let ffprobeVersion: String
     let updatedAt: Date
+    let mediaPackageID: String?
+    let mediaSourceURL: String?
+    let mediaSourceChecksum: String?
 }
 
 struct SupportToolsSnapshot: Equatable, Sendable {
@@ -39,6 +46,7 @@ enum SupportToolsInstallPhase: Equatable, Sendable {
     case downloadingYtDlp
     case downloadingFFmpeg
     case downloadingFFprobe
+    case downloadingMediaSource
     case verifying
     case activating
 
@@ -48,6 +56,7 @@ enum SupportToolsInstallPhase: Equatable, Sendable {
         case .downloadingYtDlp: "supportToolsDownloadingYtDlp"
         case .downloadingFFmpeg: "supportToolsDownloadingFFmpeg"
         case .downloadingFFprobe: "supportToolsDownloadingFFprobe"
+        case .downloadingMediaSource: "supportToolsDownloadingMediaSource"
         case .verifying: "supportToolsVerifying"
         case .activating: "supportToolsActivating"
         }
@@ -59,6 +68,7 @@ enum SupportToolsInstallPhase: Equatable, Sendable {
         case .downloadingYtDlp: "Downloading the video engine…"
         case .downloadingFFmpeg: "Downloading the media engine…"
         case .downloadingFFprobe: "Downloading the media inspector…"
+        case .downloadingMediaSource: "Downloading the matching media source archive…"
         case .verifying: "Verifying downloaded tools…"
         case .activating: "Finishing setup…"
         }
@@ -87,58 +97,87 @@ enum SupportToolsInstallerError: LocalizedError {
     }
 }
 
+struct ReviewedMediaRelease: Decodable {
+    let schema: Int
+    let provider: String
+    let packageID: String
+    let version: String
+    let archiveURL: String
+    let archiveSHA256: String
+    let sourceURL: String
+    let sourceSHA256: String
+    let ffmpegSHA256: String
+    let ffprobeSHA256: String
+}
+
+enum ReviewedMediaPolicy {
+    static func validChecksum(_ value: String) -> Bool {
+        value.range(of: #"^[a-f0-9]{64}$"#, options: .regularExpression) != nil
+    }
+
+    static func approvedURL(_ value: String, source: Bool) -> URL? {
+        guard let parts = URLComponents(string: value), parts.scheme == "https",
+              parts.host == "github.com", parts.port == nil,
+              parts.user == nil, parts.password == nil, parts.query == nil, parts.fragment == nil,
+              let url = parts.url else { return nil }
+        let suffix = source ? #"-sources\.tar\.gz$"# : #"-arm64\.zip$"#
+        let pattern = #"^/Atu96/vidsavie/releases/download/media-[0-9]+\.[0-9]+\.[0-9]+-v[0-9]+/vidsavie-media-[0-9]+\.[0-9]+\.[0-9]+-v[0-9]+"# + suffix
+        guard url.path.range(of: pattern, options: .regularExpression) != nil,
+              !parts.percentEncodedPath.contains("%") else { return nil }
+        return url
+    }
+
+    static func isReviewedDirectory(_ directory: URL) -> Bool {
+        let file = directory.appendingPathComponent("versions.json")
+        guard let size = try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize,
+              size <= 16_384, let data = try? Data(contentsOf: file),
+              let metadata = try? JSONDecoder().decode(SupportToolsMetadata.self, from: data),
+              let packageID = metadata.mediaPackageID,
+              packageID.hasPrefix("media-\(metadata.ffmpegVersion)-v"),
+              metadata.ffmpegVersion == metadata.ffprobeVersion,
+              let sourceURL = metadata.mediaSourceURL,
+              let source = approvedURL(sourceURL, source: true),
+              source.deletingLastPathComponent().lastPathComponent == packageID,
+              source.lastPathComponent == "vidsavie-\(packageID)-sources.tar.gz",
+              let checksum = metadata.mediaSourceChecksum, validChecksum(checksum),
+              validChecksum(metadata.installedFFmpegChecksum), validChecksum(metadata.installedFFprobeChecksum)
+        else { return false }
+        let sourceArchive = directory.appendingPathComponent("ThirdParty/\(packageID)-sources.tar.gz")
+        let values = try? sourceArchive.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+        return values?.isRegularFile == true && values?.isSymbolicLink != true && (values?.fileSize ?? 0) > 0
+    }
+}
+
 enum SupportToolsReleaseParser {
-    static func parse(ytDlpChecksums: String, ffmpegHTML: String) throws -> SupportToolsReleaseManifest {
-        guard let ytDlpChecksum = ytDlpChecksums
-            .split(separator: "\n")
+    static func parse(ytDlpChecksums: String, mediaJSON: Data) throws -> SupportToolsReleaseManifest {
+        guard let ytDlpChecksum = ytDlpChecksums.split(separator: "\n")
             .compactMap({ line -> (String, String)? in
                 let fields = line.split(whereSeparator: { $0.isWhitespace }).map(String.init)
                 guard fields.count >= 2 else { return nil }
                 return (fields[0].lowercased(), fields[fields.count - 1])
-            })
-            .first(where: { $0.1 == "yt-dlp_macos" })?.0,
-              ytDlpChecksum.range(of: #"^[a-f0-9]{64}$"#, options: .regularExpression) != nil
-        else { throw SupportToolsInstallerError.invalidManifest("yt-dlp") }
-
-        let ffmpeg = try parseFFmpegTool(named: "ffmpeg", html: ffmpegHTML)
-        let ffprobe = try parseFFmpegTool(named: "ffprobe", html: ffmpegHTML)
-        guard let ytDlpURL = URL(string: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos") else {
-            throw SupportToolsInstallerError.invalidManifest("yt-dlp")
-        }
+            }).first(where: { $0.1 == "yt-dlp_macos" })?.0,
+              ReviewedMediaPolicy.validChecksum(ytDlpChecksum),
+              mediaJSON.count <= 16_384,
+              let media = try? JSONDecoder().decode(ReviewedMediaRelease.self, from: mediaJSON),
+              media.schema == 1, media.provider == "vidsavie-source-build",
+              media.version.range(of: #"^[0-9]+\.[0-9]+\.[0-9]+$"#, options: .regularExpression) != nil,
+              media.packageID.hasPrefix("media-\(media.version)-v"),
+              let archive = ReviewedMediaPolicy.approvedURL(media.archiveURL, source: false),
+              let source = ReviewedMediaPolicy.approvedURL(media.sourceURL, source: true),
+              archive.deletingLastPathComponent() == source.deletingLastPathComponent(),
+              archive.deletingLastPathComponent().lastPathComponent == media.packageID,
+              archive.lastPathComponent == "vidsavie-\(media.packageID)-arm64.zip",
+              source.lastPathComponent == "vidsavie-\(media.packageID)-sources.tar.gz",
+              [media.archiveSHA256, media.sourceSHA256, media.ffmpegSHA256, media.ffprobeSHA256]
+                .allSatisfy(ReviewedMediaPolicy.validChecksum),
+              let ytDlpURL = URL(string: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos")
+        else { throw SupportToolsInstallerError.invalidManifest("support tools") }
         return SupportToolsReleaseManifest(
-            ytDlpURL: ytDlpURL,
-            ytDlpChecksum: ytDlpChecksum,
-            ffmpegURL: ffmpeg.url,
-            ffmpegChecksum: ffmpeg.checksum,
-            ffmpegVersion: ffmpeg.version,
-            ffprobeURL: ffprobe.url,
-            ffprobeChecksum: ffprobe.checksum,
-            ffprobeVersion: ffprobe.version
-        )
-    }
-
-    private static func parseFFmpegTool(named name: String, html: String) throws -> (url: URL, checksum: String, version: String) {
-        let label = name == "ffmpeg" ? "FFmpeg" : "ffprobe"
-        let pattern = #"href=[\"']([^\"']*"# + name + #"[^\"']*arm\.zip)[\"'][^>]*>[^<]*"#
-            + name + #"\s+([0-9][^< ]*)\s+\(Apple Silicon\)</a>.{0,1000}?SHA256 checksum of "#
-            + label + #" file\s*:\s*([a-f0-9]{64})"#
-        let expression = try NSRegularExpression(
-            pattern: pattern,
-            options: [.caseInsensitive, .dotMatchesLineSeparators]
-        )
-        let range = NSRange(html.startIndex..<html.endIndex, in: html)
-        guard let match = expression.firstMatch(in: html, range: range),
-              let urlRange = Range(match.range(at: 1), in: html),
-              let versionRange = Range(match.range(at: 2), in: html),
-              let checksumRange = Range(match.range(at: 3), in: html),
-              let url = URL(string: String(html[urlRange])),
-              url.scheme == "https",
-              url.host == "www.osxexperts.net"
-        else { throw SupportToolsInstallerError.invalidManifest(name) }
-        return (
-            url,
-            String(html[checksumRange]).lowercased(),
-            String(html[versionRange])
+            ytDlpURL: ytDlpURL, ytDlpChecksum: ytDlpChecksum,
+            ffmpegURL: archive, ffmpegChecksum: media.ffmpegSHA256, ffmpegVersion: media.version,
+            ffprobeURL: archive, ffprobeChecksum: media.ffprobeSHA256, ffprobeVersion: media.version,
+            mediaArchiveChecksum: media.archiveSHA256, mediaPackageID: media.packageID,
+            mediaSourceURL: source, mediaSourceChecksum: media.sourceSHA256
         )
     }
 }
@@ -207,7 +246,7 @@ actor SupportToolsInstaller {
     private let runner = ProcessRunner()
     private let destinationToolsDirectory: URL?
     private let ytDlpChecksumsURL = URL(string: "https://github.com/yt-dlp/yt-dlp/releases/latest/download/SHA2-256SUMS")!
-    private let ffmpegManifestURL = URL(string: "https://www.osxexperts.net/")!
+    private let ffmpegManifestURL = URL(string: "https://raw.githubusercontent.com/Atu96/vidsavie/main/Resources/Toolchain/media-release.json")!
     private let maximumBinaryBytes: Int64 = 120 * 1024 * 1024
     private let maximumArchiveBytes: Int64 = 220 * 1024 * 1024
 
@@ -222,7 +261,7 @@ actor SupportToolsInstaller {
     }
 
     static func hasManagedTools(fileManager: FileManager = .default, toolsDirectory: URL? = defaultToolsDirectory) -> Bool {
-        guard let toolsDirectory else { return false }
+        guard let toolsDirectory, ReviewedMediaPolicy.isReviewedDirectory(toolsDirectory) else { return false }
         return ["yt-dlp", "ffmpeg", "ffprobe"].allSatisfy {
             fileManager.isExecutableFile(atPath: toolsDirectory.appendingPathComponent($0).path)
         }
@@ -253,7 +292,7 @@ actor SupportToolsInstaller {
         } else {
             currentMetadata = nil
         }
-        let currentIsComplete = Self.hasManagedTools()
+        let currentIsComplete = Self.hasManagedTools(toolsDirectory: toolsDirectory)
         let currentYtDlpIsTrusted = currentIsComplete && installedBinaryMatches(
             named: "yt-dlp", expected: currentMetadata?.installedYtDlpChecksum, in: toolsDirectory
         )
@@ -263,7 +302,12 @@ actor SupportToolsInstaller {
         let currentFFprobeIsTrusted = currentIsComplete && installedBinaryMatches(
             named: "ffprobe", expected: currentMetadata?.installedFFprobeChecksum, in: toolsDirectory
         )
+        let sourceName = "\(manifest.mediaPackageID)-sources.tar.gz"
+        let existingSource = toolsDirectory.appendingPathComponent("ThirdParty/\(sourceName)")
+        let sameMediaProfile = currentMetadata?.mediaPackageID == manifest.mediaPackageID && currentMetadata?.mediaSourceChecksum == manifest.mediaSourceChecksum
+        let currentSourceIsTrusted = sameMediaProfile && (try? sha256(of: existingSource)) == manifest.mediaSourceChecksum
         if currentYtDlpIsTrusted, currentFFmpegIsTrusted, currentFFprobeIsTrusted,
+           currentSourceIsTrusted,
            currentMetadata?.ytDlpChecksum == manifest.ytDlpChecksum,
            currentMetadata?.ffmpegChecksum == manifest.ffmpegChecksum,
            currentMetadata?.ffprobeChecksum == manifest.ffprobeChecksum {
@@ -280,6 +324,7 @@ actor SupportToolsInstaller {
             sourceURL: manifest.ytDlpURL,
             expectedChecksum: manifest.ytDlpChecksum,
             archive: false,
+            archiveChecksum: nil,
             reuse: currentYtDlpIsTrusted && currentMetadata?.ytDlpChecksum == manifest.ytDlpChecksum,
             currentTools: toolsDirectory,
             stagingTools: stagingTools,
@@ -290,7 +335,8 @@ actor SupportToolsInstaller {
             sourceURL: manifest.ffmpegURL,
             expectedChecksum: manifest.ffmpegChecksum,
             archive: true,
-            reuse: currentFFmpegIsTrusted && currentMetadata?.ffmpegChecksum == manifest.ffmpegChecksum,
+            archiveChecksum: manifest.mediaArchiveChecksum,
+            reuse: currentFFmpegIsTrusted && sameMediaProfile && currentMetadata?.ffmpegChecksum == manifest.ffmpegChecksum,
             currentTools: toolsDirectory,
             stagingTools: stagingTools,
             onDownload: { onPhase(.downloadingFFmpeg) }
@@ -300,12 +346,24 @@ actor SupportToolsInstaller {
             sourceURL: manifest.ffprobeURL,
             expectedChecksum: manifest.ffprobeChecksum,
             archive: true,
-            reuse: currentFFprobeIsTrusted && currentMetadata?.ffprobeChecksum == manifest.ffprobeChecksum,
+            archiveChecksum: manifest.mediaArchiveChecksum,
+            reuse: currentFFprobeIsTrusted && sameMediaProfile && currentMetadata?.ffprobeChecksum == manifest.ffprobeChecksum,
             currentTools: toolsDirectory,
             stagingTools: stagingTools,
             onDownload: { onPhase(.downloadingFFprobe) }
         )
 
+        let stagedSource = stagingTools.appendingPathComponent("ThirdParty/\(sourceName)")
+        if (try? sha256(of: stagedSource)) != manifest.mediaSourceChecksum {
+            onPhase(.downloadingMediaSource)
+            if fileManager.fileExists(atPath: stagedSource.path) {
+                try fileManager.removeItem(at: stagedSource) // UUID-owned staging copy only; current tools are untouched.
+            }
+            try await download(manifest.mediaSourceURL, to: stagedSource, name: "media source", maximumBytes: maximumArchiveBytes)
+            guard try sha256(of: stagedSource) == manifest.mediaSourceChecksum else {
+                throw SupportToolsInstallerError.checksumMismatch("media source")
+            }
+        }
         onPhase(.verifying)
         for name in ["yt-dlp", "ffmpeg", "ffprobe"] {
             let path = stagingTools.appendingPathComponent(name).path
@@ -318,6 +376,10 @@ actor SupportToolsInstaller {
         }
 
         let stagedSnapshot = try await snapshot(in: stagingTools)
+        guard stagedSnapshot.ffmpegVersion == manifest.ffmpegVersion,
+              stagedSnapshot.ffprobeVersion == manifest.ffprobeVersion else {
+            throw SupportToolsInstallerError.toolFailed("media version")
+        }
         let metadata = SupportToolsMetadata(
             ytDlpChecksum: manifest.ytDlpChecksum,
             ffmpegChecksum: manifest.ffmpegChecksum,
@@ -327,7 +389,10 @@ actor SupportToolsInstaller {
             installedFFprobeChecksum: try sha256(of: stagingTools.appendingPathComponent("ffprobe")),
             ffmpegVersion: manifest.ffmpegVersion,
             ffprobeVersion: manifest.ffprobeVersion,
-            updatedAt: Date()
+            updatedAt: Date(),
+            mediaPackageID: manifest.mediaPackageID,
+            mediaSourceURL: manifest.mediaSourceURL.absoluteString,
+            mediaSourceChecksum: manifest.mediaSourceChecksum
         )
         let metadataData = try JSONEncoder().encode(metadata)
         try metadataData.write(to: stagingTools.appendingPathComponent("versions.json"), options: .atomic)
@@ -352,10 +417,9 @@ actor SupportToolsInstaller {
     private func fetchManifest() async throws -> SupportToolsReleaseManifest {
         async let ytDlpData = fetchData(from: ytDlpChecksumsURL, name: "yt-dlp")
         async let ffmpegData = fetchData(from: ffmpegManifestURL, name: "FFmpeg")
-        guard let ytDlpText = String(data: try await ytDlpData, encoding: .utf8),
-              let ffmpegHTML = String(data: try await ffmpegData, encoding: .utf8)
+        guard let ytDlpText = String(data: try await ytDlpData, encoding: .utf8)
         else { throw SupportToolsInstallerError.invalidManifest("support tools") }
-        return try SupportToolsReleaseParser.parse(ytDlpChecksums: ytDlpText, ffmpegHTML: ffmpegHTML)
+        return try SupportToolsReleaseParser.parse(ytDlpChecksums: ytDlpText, mediaJSON: try await ffmpegData)
     }
 
     private func fetchData(from url: URL, name: String) async throws -> Data {
@@ -366,7 +430,8 @@ actor SupportToolsInstaller {
         } catch {
             throw SupportToolsInstallerError.invalidResponse(name)
         }
-        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
+              http.url?.scheme == "https" else {
             throw SupportToolsInstallerError.invalidResponse(name)
         }
         return data
@@ -377,6 +442,7 @@ actor SupportToolsInstaller {
         sourceURL: URL,
         expectedChecksum: String,
         archive: Bool,
+        archiveChecksum: String?,
         reuse: Bool,
         currentTools: URL,
         stagingTools: URL,
@@ -385,6 +451,9 @@ actor SupportToolsInstaller {
         let destination = stagingTools.appendingPathComponent(name)
         if reuse {
             try fileManager.copyItem(at: currentTools.appendingPathComponent(name), to: destination)
+            if name == "ffmpeg", fileManager.fileExists(atPath: currentTools.appendingPathComponent("ThirdParty").path) {
+                try fileManager.copyItem(at: currentTools.appendingPathComponent("ThirdParty"), to: stagingTools.appendingPathComponent("ThirdParty"))
+            }
             return
         }
 
@@ -392,6 +461,9 @@ actor SupportToolsInstaller {
         let payload = stagingTools.deletingLastPathComponent().appendingPathComponent("\(name).download")
         try await download(sourceURL, to: payload, name: name, maximumBytes: archive ? maximumArchiveBytes : maximumBinaryBytes)
         if archive {
+            guard let archiveChecksum, try sha256(of: payload) == archiveChecksum else {
+                throw SupportToolsInstallerError.checksumMismatch(name)
+            }
             let unpacked = stagingTools.deletingLastPathComponent().appendingPathComponent("\(name)-unpacked", isDirectory: true)
             try fileManager.createDirectory(at: unpacked, withIntermediateDirectories: true)
             try await requireSuccess(name, executable: "/usr/bin/ditto", arguments: ["-x", "-k", payload.path, unpacked.path])
@@ -402,6 +474,17 @@ actor SupportToolsInstaller {
                 throw SupportToolsInstallerError.checksumMismatch(name)
             }
             try fileManager.copyItem(at: extracted, to: destination)
+            if name == "ffmpeg" {
+                let notices = unpacked.appendingPathComponent("licenses", isDirectory: true)
+                for file in ["FFMPEG-LGPL-2.1.txt", "LAME-LGPL-2.0.txt", "DAV1D-BSD-2-Clause.txt", "MEDIA-TOOLCHAIN.md"] {
+                    let url = notices.appendingPathComponent(file)
+                    let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+                    guard values.isRegularFile == true, values.isSymbolicLink != true else {
+                        throw SupportToolsInstallerError.archiveMissingTool("license notices")
+                    }
+                }
+                try fileManager.copyItem(at: notices, to: stagingTools.appendingPathComponent("ThirdParty", isDirectory: true))
+            }
         } else {
             guard try sha256(of: payload) == expectedChecksum else {
                 throw SupportToolsInstallerError.checksumMismatch(name)
@@ -418,7 +501,8 @@ actor SupportToolsInstaller {
         } catch {
             throw SupportToolsInstallerError.invalidResponse(name)
         }
-        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
+              http.url?.scheme == "https" else {
             throw SupportToolsInstallerError.invalidResponse(name)
         }
         let size = try temporaryURL.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0

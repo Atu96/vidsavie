@@ -10,6 +10,7 @@ fi
 
 cd "$PROJECT_DIR"
 zsh -n Scripts/prepare-portable-tools.sh
+zsh -n Scripts/build-media-toolchain.sh Scripts/test-media-toolchain.sh
 swiftc \
   -sdk "$TASK_SDK" \
   -parse-as-library \

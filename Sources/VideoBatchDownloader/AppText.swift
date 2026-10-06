@@ -1,6 +1,17 @@
 import Foundation
 
 enum AppText {
+    private static let mediaSourceTranslations: [String: String] = [
+        "en": "Downloading the matching media source archive…",
+        "vi": "Đang tải mã nguồn tương ứng của công cụ media…",
+        "zh": "正在下载对应的媒体工具源代码…",
+        "es": "Descargando el código fuente de las herramientas multimedia…",
+        "fr": "Téléchargement des sources des outils multimédias…",
+        "de": "Passender Quellcode der Medienwerkzeuge wird geladen…",
+        "pt": "Baixando o código-fonte correspondente das ferramentas de mídia…",
+        "ja": "メディアツールに対応するソースをダウンロード中…",
+        "ko": "미디어 도구에 해당하는 소스 코드를 다운로드하는 중…"
+    ]
     private static let vi: [String: String] = [
         "supportAction":"Ủng hộ",
         "donateTitle":"Thích ứng dụng này?",
@@ -326,6 +337,7 @@ enum AppText {
 
     static func value(_ key: String, language: String, fallback: String) -> String {
         let code = resolvedLanguage(language)
+        if key == "supportToolsDownloadingMediaSource" { return mediaSourceTranslations[code] ?? fallback }
         return linkActionTranslations[code]?[key]
             ?? finderQuickActionTranslations[code]?[key]
             ?? mediaToolTranslations[code]?[key]

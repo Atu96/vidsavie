@@ -2,6 +2,14 @@
 
 Checked: 2026-10-06. This is an evidence-based inventory, not a legal opinion or a certification of complete compliance.
 
+## Current FFmpeg replacement profile
+
+App source 2.2.45 (147) replaces the OSXExperts media binaries with the project-built **9.0.2-v1** profile. The exact FFmpeg 9.0.2, LAME 4.0 and dav1d 1.5.4 archives, recipe, configuration and component notices are in the corresponding-source asset named by `Resources/Toolchain/media-release.json`. See `Resources/ThirdParty/MEDIA-TOOLCHAIN.md` for source and binary hashes and configure choices. The two executables were checked for arm64 and only system dynamic dependencies; synthetic app-operation tests passed. Bit-for-bit reproducibility, every operating system/hardware model and all codec/patent obligations are not certified.
+
+The configuration disables autodetected, GPL and nonfree libraries; the FFmpeg executable reports LGPL-2.1-or-later. LAME retains LGPL-2.0-or-later and dav1d retains BSD-2-Clause. This replaces the unmatched-source FFmpeg profile for new app builds, not the old 2.2.44 installer. The earlier 9.0/GPL inventory and unresolved provider source link below are historical evidence for that old distribution. yt-dlp standalone dependency-source review and historical artwork provenance remain separate pending items, so this document still does not certify every component of every app installer.
+
+Managed media updates accept only the reviewed owner/repository/package schema, require archive and executable hashes plus a source archive hash, verify actual media versions, retain component notices and download the matching source archive before activation. Legacy managed media without this provenance is bypassed in favor of the new bundled media; it is not deleted. Checksums authenticate content relative to the approved feed, not ownership of a compromised publisher account.
+
 ## 1. Scope of the project's GPL grant
 
 The owner selected **GPL-3.0-or-later** for project-authored source. The unmodified GPLv3 text is in `LICENSE`; the copyright, version choice and scope are in `COPYRIGHT`. Commercial use and sale are allowed subject to the license. There is no non-commercial restriction, donation requirement, or additional restriction added to GPL.

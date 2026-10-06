@@ -1,2 +1,3 @@
 # Preserve upstream legal text byte-for-byte, including its original spaces.
 Resources/ThirdParty/YTDLP-THIRD-PARTY-LICENSES.txt whitespace=-blank-at-eol
+Resources/ThirdParty/LAME-LGPL-2.0.txt whitespace=-blank-at-eol

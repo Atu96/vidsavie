@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "provider": "vidsavie-source-build",
+  "packageID": "media-9.0.2-v1",
+  "version": "9.0.2",
+  "archiveURL": "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-arm64.zip",
+  "archiveSHA256": "cb8b610f176887d7131125effe97065b83c42d29e40b8541ddb62fac6e42ac5b",
+  "sourceURL": "https://github.com/Atu96/vidsavie/releases/download/media-9.0.2-v1/vidsavie-media-9.0.2-v1-sources.tar.gz",
+  "sourceSHA256": "77365625c73d4468f4e64ed7339e31e9de1036d0b7296a8164b511edd9ee6326",
+  "ffmpegSHA256": "a969e652f635257b4d2728bf27ed5509665f798b8b722403c5f6e0dec3f341bb",
+  "ffprobeSHA256": "e254e810b2f9b5b176290e0d270f1ce1ce13bfd7087645aacae55fbfb1ec5a31"
+}

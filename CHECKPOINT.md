@@ -1,5 +1,13 @@
 # Current checkpoint
 
+## Reviewed source-built media profile 2.2.45 (147) — 2026-10-06
+
+- User requested safe replacement of embedded FFmpeg and its update source. Built FFmpeg/FFprobe 9.0.2 locally from checksum-pinned upstream FFmpeg, LAME 4.0 (encoding only) and dav1d 1.5.4; recipe `Scripts/build-media-toolchain.sh`. No GPL/nonfree/auto-detected FFmpeg components; executables report LGPL-2.1-or-later, static deps retain LGPL/BSD. Only system frameworks/libraries linked dynamically. Corresponding-source package includes exact source archives, recipe, config and notices; this is not a claim of bit-identical reproducibility or comprehensive legal certification.
+- Candidate unsigned FFmpeg hash `a969e652f635257b4d2728bf27ed5509665f798b8b722403c5f6e0dec3f341bb`; FFprobe `e254e810b2f9b5b176290e0d270f1ce1ce13bfd7087645aacae55fbfb1ec5a31`. Pair archive SHA-256 `cb8b610f176887d7131125effe97065b83c42d29e40b8541ddb62fac6e42ac5b`; source archive `77365625c73d4468f4e64ed7339e31e9de1036d0b7296a8164b511edd9ee6326`.
+- Replaced bootstrap/update HTML parsing with restricted reviewed JSON feed. Updater verifies whole archive plus both executable hashes, exact version and matching source archive; stores source/notices before activation. Legacy managed FFmpeg/probe without reviewed provenance falls back to bundled profile, while legacy yt-dlp resolution stays independent. Existing tools remain untouched until a successful manual managed install; staged activation retains rollback on failure.
+- 171 Swift assertions and 42 extension tests passed at the current integration stage; app build/sign/tool-smoke passed before the final staging-source repair fix. Packaged binaries passed synthetic local checks for H264/AAC, copy/precise cut, conversion, MP3, mastering, PNG/JPEG, AV1/VP9 decode, HTTPS capability and ffprobe. Test fixtures were generated, not downloaded/user media. Real platform downloads, all older macOS/hardware and network updater activation remain separate verification tasks.
+- Old media build-cache copies retained at `.build/MediaBinaryBackup.5evgd4`; installed app/user tools not yet replaced at this checkpoint. Tool asset publication, isolated updater verification and deployment are recorded after completion. No new app DMG/Release has been published.
+
 ## GPL source licensing and tool audit — 2026-10-06
 
 - Owner selected GPL-3.0-or-later after withdrawing a possible non-commercial condition. Added unmodified GPLv3 text in LICENSE, scoped COPYRIGHT (also covers original source at v2.2.44), README explanation and a separate LICENSING-AUDIT.md. No restriction on sale or donation requirement added.

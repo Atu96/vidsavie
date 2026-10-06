@@ -75,6 +75,6 @@ VidSavie's project-authored source is licensed under **GPL-3.0-or-later**. You m
 
 yt-dlp, FFmpeg, FFprobe, and their dependencies retain their own copyrights and licenses; they are not original VidSavie code. See [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md) and the [licensing audit](LICENSING-AUDIT.md).
 
-**Binary licensing review is still pending:** the exact corresponding-source package for the bundled FFmpeg/FFprobe and standalone dependencies has not been verified. Adding this source license does not establish complete compliance for the existing 2.2.44 installer. The audit explains the outstanding items.
+New 2.2.45 builds use an app-specific FFmpeg/FFprobe profile built from pinned source archives, with component notices and a [matching source package](https://github.com/Atu96/vidsavie/releases/tag/media-9.0.2-v1). This does not change the old 2.2.44 installer. **Binary licensing review is still pending** for the yt-dlp standalone dependency-source set and other items detailed in the audit; no comprehensive compliance certification is claimed.
 
 Before changing the code, read [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md), and [ARCHITECTURE](ARCHITECTURE.md). They cover the app's structure, previous fixes, and compatibility constraints.

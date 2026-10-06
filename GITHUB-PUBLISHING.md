@@ -1,6 +1,6 @@
 # Đưa VidSavie lên GitHub
 
-Mã nguồn 2.2.42 đã tải lên repository **Private** `Atu96/vidsavie` ngày 06/10/2026: https://github.com/Atu96/vidsavie. Nhánh mặc định `main`, remote `origin`. Chưa chuyển Public, chưa chọn LICENSE và chưa đăng bản DMG lên Releases. Các bước Desktop bên dưới là hướng dẫn cho lần thiết lập mới; kho hiện tại đã được tạo bằng GitHub CLI.
+Repository **Private** hiện tại: https://github.com/Atu96/vidsavie. Nhánh mặc định `main`, remote `origin`. Release `v2.2.44` có DMG arm64 và SHA-256, cài mới mặc định tiếng Anh. Kho chưa chuyển Public và chưa chọn LICENSE. Các bước Desktop bên dưới là hướng dẫn cho lần thiết lập mới; kho hiện tại đã được tạo bằng GitHub CLI.
 
 ## Mã nguồn
 
@@ -18,7 +18,7 @@ Trong trang repository chọn **Releases → Draft a new release**. Tạo tag t�
 
 Đính kèm DMG arm64 và file SHA-256 do `Scripts/build-dmg.sh` tạo trong `dist/`. Không đưa DMG vào lịch sử mã nguồn. GitHub tự tạo gói mã nguồn cho tag. Ghi rõ hỗ trợ Apple Silicon; bản hiện tại ký ad-hoc, chưa được Apple notarize. Không yêu cầu người dùng vô hiệu hóa Gatekeeper toàn hệ thống.
 
-Chỉ phát hành sau khi test, build, kiểm tra chữ ký và mount-test DMG thành công. Giữ các thông báo giấy phép của công cụ nhúng. Bản 2.2.40 hiện đã build và kiểm thử app; chưa tạo DMG mới trong lượt này.
+Chỉ phát hành sau khi test, build, kiểm tra chữ ký và mount-test DMG thành công. Giữ các thông báo giấy phép của công cụ nhúng. DMG 2.2.44 đã qua các bước này; Release nằm tại https://github.com/Atu96/vidsavie/releases/tag/v2.2.44. Vì kho vẫn Private, người nhận cần quyền truy cập để tải từ GitHub.
 
 Nút Sponsor dùng Ko-fi của bạn: https://ko-fi.com/atu1202.
 

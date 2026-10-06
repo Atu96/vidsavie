@@ -4,7 +4,7 @@
 
 - New app and companion installations default to English. Existing valid languages, including explicit `auto`, remain unchanged; invalid stored values fall back to English. Centralized native preference resolution and covered with pure tests, without accessing real user preferences in tests.
 - Verified 158 Swift assertions, 36 companion tests, JavaScript syntax, release build, bundled-tool smoke and strict/deep signing. Built `dist/VidSavie-2.2.44-arm64.dmg` (SHA-256 `16330e112f6e3699ff5482b2d2ed1692e3b7535f3e686e84a4f7975a3124794d`); image checksum and read-only mount checks passed, including arm64 main executable, app/build/companion versions, nested tools and Applications shortcut.
-- Checksum asset uses a relative filename for portable verification without disclosing local paths. Release notes explain Apple Silicon-only support, ad-hoc/not-notarized status, English defaults, Chrome setup and content limitations. Private GitHub release publication and local deployment recorded separately after verification.
+- Checksum asset uses a relative filename for portable verification without disclosing local paths. Release notes explain Apple Silicon-only support, ad-hoc/not-notarized status, English defaults, Chrome setup and content limitations. Published Latest release `v2.2.44` at `https://github.com/Atu96/vidsavie/releases/tag/v2.2.44`, with both uploaded assets; GitHub's DMG SHA-256 matches the local image. Repository remains Private. Release tag targets source commit `b24ae42`; no local installed-app replacement was requested/performed in this release turn, so this Mac remains on 2.2.43 (145). Real download/UI verification remains user-run.
 
 ## VidSavie rebrand — 2026-10-06 · 2.2.43 (145)
 
@@ -113,9 +113,10 @@ Updated: 2026-10-05 (Asia/Ho_Chi_Minh)
 
 ## Release state
 
-- macOS app: `2.2.43`
-- macOS build: `145`
-- Browser extension: `2.2.43`
+- Release macOS app: `2.2.44`
+- Release macOS build: `146`
+- Release browser extension: `2.2.44`
+- Installed locally: `2.2.43` (145), unchanged during release publication
 - Bundle identifier: `com.gemst.VideoBatchDownloader`
 - Local bridge: `127.0.0.1:17832`
 - Target installed app: `/Applications/VidSavie.app` (legacy names are compatibility aliases)

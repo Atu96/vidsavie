@@ -2,7 +2,7 @@
 
 Use this map to route a task or failure to the correct owner.
 
-Current brand: VidSavie, 2.2.43 (145). GitHub: `Atu96/vidsavie` (Private). The old VideoFetch Flow and Video Batch Downloader installed paths remain compatibility aliases; technical identities and user data are unchanged.
+Current brand: VidSavie. Latest release: 2.2.44 (146), fresh installs default to English; valid saved language choices remain unchanged. GitHub: `Atu96/vidsavie` (Private). The old VideoFetch Flow and Video Batch Downloader installed paths remain compatibility aliases; technical identities and user data are unchanged.
 
 Donation: SettingsView About support card and ContentView's inline Support action immediately right of Completed own the Ko-fi link and red heart; AppText owns localized `Ủng hộ` / `Support` copy. QuitConfirmationDelegate owns the localized normal-termination prompt: only explicit Yes quits; No/Return/Escape stay; Support opens Ko-fi and cancels termination. These are user-initiated external browser links only, independent of download/session logic. Branding and quit/scroll tests guard the supplied destination and wiring. See `GENTLE-SUPPORT-DESIGN.md` for reusable UX principles, copy, flows, privacy boundaries and release checklist; do not treat recommended future opt-outs as implemented features.
 

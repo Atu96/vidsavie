@@ -1,0 +1,13 @@
+VidSavie project-authored application and companion source
+Copyright (C) 2026 Atu96 and contributors
+SPDX-License-Identifier: GPL-3.0-or-later
+
+Original project source is licensed under GPL version 3 or, at your
+option, a later version. See GPL-3.0.txt and the repository COPYRIGHT:
+https://github.com/Atu96/vidsavie/blob/main/COPYRIGHT
+
+This does not relicense yt-dlp, FFmpeg, FFprobe, their dependencies,
+Apple frameworks or artwork belonging to others. Upstream copyright
+and license notices remain applicable. Binary corresponding-source
+verification is pending; see:
+https://github.com/Atu96/vidsavie/blob/main/LICENSING-AUDIT.md

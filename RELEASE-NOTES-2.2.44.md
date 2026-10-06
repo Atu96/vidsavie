@@ -1,5 +1,9 @@
 # VidSavie 2.2.44
 
+## Licensing audit update — 2026-10-06
+
+Project-authored source is now offered under GPL-3.0-or-later; third-party tools retain their own licenses. **Corresponding-source verification for the bundled tools is still pending.** The existing installer predates the new license documents and has not been replaced. In particular, the FFmpeg provider's source link does not match the version reported by the bundled binaries. See the [licensing audit](https://github.com/Atu96/vidsavie/blob/main/LICENSING-AUDIT.md) for evidence, ownership boundaries and unresolved requirements. Do not treat this release as licensing-compliance certified.
+
 Download. Cut. Convert. Your everyday media toolkit for Mac.
 
 ## What's included

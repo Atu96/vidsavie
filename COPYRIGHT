@@ -1,0 +1,25 @@
+VidSavie project-authored source code
+Copyright (C) 2026 Atu96 and contributors
+SPDX-License-Identifier: GPL-3.0-or-later
+
+Except where an existing third-party notice specifies otherwise, the
+project-authored application code in Sources/, the companion code in
+ChromeExtension/ (JavaScript, HTML and CSS), project scripts and tests,
+and the project-authored Bilibili integration plugin are licensed under
+the GNU General Public License, version 3 or (at your option) any later
+version. See LICENSE for the full terms.
+
+The same grant covers project-authored source at tag v2.2.44; the
+third-party and artwork scope limitations below still apply.
+
+This notice does not assert ownership over yt-dlp, FFmpeg, FFprobe,
+their bundled dependencies, Apple frameworks, or external source code.
+Those components retain their original copyright and license terms.
+The root GPL grant does not relicense third-party license documents.
+
+Artwork and binary redistribution are separate audit categories; do not
+infer that all legacy image files or bundled executables are original
+VidSavie material merely because they appear in this repository.
+See LICENSING-AUDIT.md for scope, evidence and unresolved items.
+
+VidSavie is provided without warranty, subject to the terms in LICENSE.

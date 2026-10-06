@@ -69,6 +69,12 @@ From the project folder:
 
 The app is created at `.build/app/VidSavie.app`. Run `./Scripts/build-dmg.sh` to create an arm64 DMG in `dist/`. Packaging needs an internet connection to download and verify the bundled tools. Automated tests don't download real videos or read browser cookies.
 
-See [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md) for the bundled tools. A license for the app's source hasn't been selected yet; third-party tools retain their own licenses.
+## License
+
+VidSavie's project-authored source is licensed under **GPL-3.0-or-later**. You may use, modify, share, and sell it under the GPL's terms. See [LICENSE](LICENSE) and [COPYRIGHT](COPYRIGHT) for the full terms and scope. There is no donation requirement or non-commercial restriction.
+
+yt-dlp, FFmpeg, FFprobe, and their dependencies retain their own copyrights and licenses; they are not original VidSavie code. See [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md) and the [licensing audit](LICENSING-AUDIT.md).
+
+**Binary licensing review is still pending:** the exact corresponding-source package for the bundled FFmpeg/FFprobe and standalone dependencies has not been verified. Adding this source license does not establish complete compliance for the existing 2.2.44 installer. The audit explains the outstanding items.
 
 Before changing the code, read [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md), and [ARCHITECTURE](ARCHITECTURE.md). They cover the app's structure, previous fixes, and compatibility constraints.

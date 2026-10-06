@@ -1,6 +1,6 @@
 # Đưa VidSavie lên GitHub
 
-Repository **Public** hiện tại: https://github.com/Atu96/vidsavie, được người dùng cho phép công khai ngày 06/10/2026. Nhánh mặc định `main`, remote `origin`. Release `v2.2.44` có DMG arm64 và SHA-256, cài mới mặc định tiếng Anh. Kho chưa chọn LICENSE. Các bước Desktop bên dưới là hướng dẫn cho lần thiết lập mới; kho hiện tại đã được tạo bằng GitHub CLI.
+Repository **Public** hiện tại: https://github.com/Atu96/vidsavie, được người dùng cho phép công khai ngày 06/10/2026. Nhánh mặc định `main`, remote `origin`. Mã nguồn do dự án sở hữu dùng GPL-3.0-or-later; công cụ bên thứ ba giữ giấy phép riêng. Release `v2.2.44` có DMG arm64 và SHA-256, nhưng việc xác minh nguồn tương ứng của các binary nhúng còn chưa hoàn tất; đọc `LICENSING-AUDIT.md` trước khi tiếp tục phân phối. Các bước Desktop bên dưới là hướng dẫn cho lần thiết lập mới.
 
 ## Mã nguồn
 
@@ -8,7 +8,7 @@ Repository **Public** hiện tại: https://github.com/Atu96/vidsavie, được 
 2. Chọn **File → Add Local Repository**, chọn thư mục `VideoBatchDownloader` của dự án này. Nếu chưa có repository, chọn tạo repository tại thư mục đó.
 3. Kiểm tra danh sách Changes trước khi commit: không đưa cookie, hồ sơ trình duyệt, token, lịch sử tải hay dữ liệu cá nhân lên. `.gitignore` đã loại thư mục build, dist và một số file tạm; không thay thế việc kiểm tra thủ công.
 4. Commit bản đầu. Chọn **Publish repository**, tên `vidsavie`. Có thể giữ private để kiểm tra trước; bỏ **Keep this code private** khi bạn thật sự muốn công khai.
-5. Chọn giấy phép trước khi gọi dự án là mã nguồn mở. MIT là một lựa chọn cho mã do bạn sở hữu; giấy phép của công cụ bên thứ ba vẫn phải được giữ riêng. Chưa tự thêm LICENSE vì bạn chưa chọn.
+5. Giấy phép đã chốt cho nguồn gốc của VidSavie: GPL-3.0-or-later, xem LICENSE/COPYRIGHT. Không tự áp giấy phép này cho app khác hoặc công cụ bên thứ ba. Có LICENSE không có nghĩa bộ cài đã tuân thủ đầy đủ nghĩa vụ cung cấp nguồn.
 
 Mô tả gợi ý: **A local-first macOS video downloader with a browser companion, resumable downloads, and built-in media tools.**
 

@@ -1,5 +1,13 @@
 # Current checkpoint
 
+## GPL source licensing and tool audit — 2026-10-06
+
+- Owner selected GPL-3.0-or-later after withdrawing a possible non-commercial condition. Added unmodified GPLv3 text in LICENSE, scoped COPYRIGHT (also covers original source at v2.2.44), README explanation and a separate LICENSING-AUDIT.md. No restriction on sale or donation requirement added.
+- Audit separates project Swift/companion/scripts/tests/Bilibili adapter from external executable distributions, nested dependencies, Apple frameworks and uncertain legacy artwork. Package.swift/npm declare no external code dependencies; this is not proof of exhaustive authorship provenance.
+- Original downloaded hashes of yt-dlp/FFmpeg/FFprobe match pinned values. Actual ffmpeg/ffprobe `-L` report GPLv2-or-later and `--enable-gpl`. yt-dlp core is Unlicense while pinned upstream describes standalone distributions as GPLv3+. Preserved unmodified GPLv2/GPLv3/Unlicense plus complete pinned upstream third-party notices; notice SHA-256 matches upstream (`472aefe951c7db35e1657c1d13fd337140511ed6f2b329205105ad441c5a02b7`).
+- Blocking binary-compliance item: provider's advertised 9.0 source link resolves to release/6.1. Exact source, static dependency versions/patches/build inputs remain unverified. yt-dlp combined dependency source route and future managed updates also require review. No complete-compliance certification, producer outreach, new binary release, installed app replacement or old installer alteration performed. Existing DMG remains unchanged; Release notes disclose pending audit.
+- Regression tests verify grant scope and notice integrity, not legal compliance. 158 Swift assertions and 39 extension tests passed. Future release requires a resolved corresponding-source plan; adding license texts alone is insufficient.
+
 ## Public repository — 2026-10-06
 
 - User explicitly authorized making `Atu96/vidsavie` Public. Checked tracked paths and common credential/private-key patterns across all eight current revisions; no matches found, not an exhaustive privacy or security guarantee. Repository history and existing Release are now publicly accessible; source LICENSE remains unselected.

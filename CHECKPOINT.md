@@ -1,5 +1,9 @@
 # Current checkpoint
 
+## Reader-friendly README — 2026-10-06
+
+- Rewrote README in natural Vietnamese with user-facing capabilities, Apple Silicon/release availability, Chrome setup, platform limitations, short personal AI-assisted project introduction and separate voluntary Ko-fi invitation. Apple Developer budget note explains missing Developer ID/notarization without quoting membership cost or promising a funded outcome. Removed stale artwork/version internals and unverified Firefox parity. Documentation-only; no app/version change or deployment.
+
 ## Private GitHub source backup — 2026-10-06
 
 - Authenticated as `NgocTu96` through GitHub CLI browser/device flow; no token printed or committed. Created `https://github.com/NgocTu96/videofetch-flow` as Private and pushed 2.2.42 source to `main`, initial commit `1ec858f`. Local repository now tracks `origin/main`.

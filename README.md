@@ -1,40 +1,68 @@
 # VideoFetch Flow
 
-Local-first macOS menu bar downloader with a Chrome/Firefox companion extension.
+Ứng dụng nhỏ trên thanh menu macOS để tải video, âm thanh và ảnh. Bạn có thể dán nhiều liên kết vào app, hoặc dùng nút tải ngay trên trang đang xem qua tiện ích Chrome.
 
-## Current behavior
+Mình làm app này với sự hỗ trợ của AI, trước hết để dùng cho công việc của mình, rồi chia sẻ miễn phí cho ai cũng cần. App vẫn đang được cải thiện; nếu gặp lỗi, bạn cứ báo lại nhé.
 
-- Downloads video, original audio, and images.
-- Supports focused YouTube and Douyin videos plus X, Facebook, Instagram, Google Images, and opt-in generic websites.
-- Processes one download at a time; later items remain in a FIFO queue.
-- Prefers compatible MP4 media and converts incompatible video with Apple VideoToolbox.
-- Keeps persistent download history with open, reveal, remove, and redownload actions.
-- Shows percentage, speed, ETA, completion notifications, and a glass progress fill.
-- Includes fallback yt-dlp, FFmpeg and FFprobe; offers one-click managed tool updates without Homebrew.
-- Can use a selected local browser session. Smart mode retries YouTube with browser cookies only after an authentication or bot-verification error.
-- Does not use a paid cloud API.
+## App làm được gì?
 
-## Required validation
+- Tải từ YouTube, Douyin, Bilibili, X, Facebook, Instagram và một số trang khác. Mức hỗ trợ tùy trang và nội dung.
+- Xếp nhiều liên kết vào hàng đợi, tải lần lượt từng mục.
+- Giữ phần đã tải khi lượt tải bị gián đoạn, để có thể thử tiếp nếu nguồn còn cho phép.
+- Lưu lịch sử, mở file hoặc tìm lại file trong Finder.
+- Cắt video, chuyển đổi định dạng và xử lý âm thanh bằng các công cụ đi kèm.
+- Đổi ngôn ngữ và giao diện sáng/tối; đồng bộ cài đặt với tiện ích trình duyệt.
+
+Bản cài có sẵn yt-dlp, FFmpeg và FFprobe. Người dùng không cần cài Homebrew để dùng app; công cụ hỗ trợ có thể được cập nhật trong Cài đặt.
+
+## Tải và cài đặt
+
+Bản đóng gói hiện dành cho **Mac Apple Silicon (M1, M2, M3… / arm64)**. Chưa có bản cài cho Mac Intel.
+
+**Hiện kho này mới có mã nguồn, chưa có bộ cài trong [Releases](https://github.com/NgocTu96/videofetch-flow/releases).** Khi có DMG, bạn mở file và kéo VideoFetch Flow vào Applications. Nếu muốn tự build, xem phần cuối README.
+
+### Về cảnh báo của macOS
+
+Mình chưa có ngân sách đăng ký Apple Developer Program, nên bản cài hiện chưa có chữ ký Developer ID và chưa được Apple notarize. macOS có thể hiện cảnh báo khi bạn mở app.
+
+Mình ghi rõ ở đây để bạn biết trước khi cài. Chỉ mở bản tải từ nguồn bạn tin tưởng; không cần tắt Gatekeeper cho toàn bộ máy. Nếu chưa yên tâm, bạn có thể xem mã nguồn trước hoặc chờ bản phát hành sau.
+
+## Nút tải trên Chrome
+
+1. Mở Cài đặt trong app, tìm mục Tiện ích trình duyệt và chọn cài cho Chrome. App sẽ mở trang quản lý tiện ích cùng thư mục chứa `ChromeExtension`.
+2. Bật **Developer mode** trong `chrome://extensions`.
+3. Chọn **Load unpacked** rồi chọn thư mục `ChromeExtension` đi kèm app.
+4. Giữ app chạy nền và mở lại trang video để dùng nút tải.
+
+Sau khi cập nhật app có thay đổi tiện ích, bấm **Reload** trên thẻ VideoFetch Flow trong trang Extensions. Tiện ích chưa được phát hành trên Chrome Web Store. Luồng cài đặt chính hiện được kiểm tra trên Chrome; Firefox chưa được kiểm chứng tương đương.
+
+## Một vài điều cần biết
+
+Các trang video thay đổi khá thường xuyên. Một video tải được không có nghĩa mọi video trên cùng trang đều tải được; một số nội dung cần phiên đăng nhập, bị giới hạn khu vực hoặc không còn khả dụng.
+
+App xử lý lượt tải và media trên máy Mac của bạn, nhưng vẫn cần kết nối với trang nguồn để lấy nội dung và tải công cụ khi cập nhật. Không có tài khoản dịch vụ riêng của app.
+
+Chỉ tải nội dung bạn có quyền tải và sử dụng. Nếu gặp lỗi, dùng nút chép log trong app để báo lại; nhớ bỏ thông tin riêng tư trước khi chia sẻ, và đừng gửi cookie hay mật khẩu.
+
+## Nếu bạn muốn ủng hộ
+
+Nếu app giúp bạn bớt vài thao tác mỗi ngày, bạn có thể [mời mình một ly cà phê trên Ko-fi](https://ko-fi.com/atu1202). Mình sẽ dùng sự ủng hộ đó để duy trì và làm app tốt hơn.
+
+Không ủng hộ cũng không sao. Cảm ơn bạn đã dùng app và góp ý cho mình. ❤️
+
+## Build từ mã nguồn
+
+Cần môi trường build Swift 6, macOS SDK và Node.js/npm để chạy kiểm thử. Mã nguồn đặt mức macOS tối thiểu là 13; việc chạy thực tế trên từng phiên bản macOS vẫn cần được kiểm tra.
+
+Từ thư mục dự án:
 
 ```sh
 ./Scripts/test.sh
 ./Scripts/build-app.sh
 ```
 
-`test.sh` runs deterministic Swift core tests, JavaScript syntax checks, and Node extension tests. It does not download media or contact social platforms.
+App được tạo tại `.build/app/VideoFetch Flow.app`. Có thể tạo DMG arm64 bằng `./Scripts/build-dmg.sh`; kết quả nằm trong `dist/`. Bước đóng gói tải và kiểm tra các công cụ hỗ trợ, nên cần mạng. Kiểm thử tự động không tải video thật và không đọc cookie trình duyệt.
 
-## Installation
+Thông tin về công cụ đi kèm: [Portable tool notices](Resources/ThirdParty/PORTABLE_TOOLS.md). Kho hiện chưa chọn giấy phép cho mã nguồn của app; giấy phép của các công cụ bên thứ ba được giữ riêng.
 
-Copy `.build/app/VideoFetch Flow.app` to `/Applications`.
-
-For Chrome, open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select the bundled `ChromeExtension` directory.
-
-## Branding and compatibility
-
-Utility artwork from 2.2.39 differs from the app: the Chrome companion uses a square near-edge perforated film border, including 16/32 px action icons; the menu bar uses a monochrome circular outline. Both contain a downward lightning-arrow mark. Reload the unpacked companion after installation to refresh Chrome's cached icons.
-
-Settings → About includes an optional Donate action with a red heart, linking to https://ko-fi.com/atu1202 in the default browser. The menu panel also offers a compact localized Support action immediately right of Completed in the metric strip. Donations are handled by Ko-fi, not inside the app.
-
-VideoFetch Flow replaces the visible Video Batch Downloader name in 2.2.33 (135). The existing bundle identifier, executable name, `videobatch://` URL scheme, preferences, managed-tools directory and resumable-cache names remain unchanged for upgrade compatibility. Since 2.2.37 (139), `Scripts/render-brand.swift` reproduces centered lightning inside a tall perforated film strip in app, menu-bar and companion sizes; package the iconset using `iconutil` before building. The status icon is a simplified monochrome template, not a composite play/download symbol.
-
-Read `CHECKPOINT.md`, `SYSTEM-MAP.md`, and `ARCHITECTURE.md` before changing runtime behavior.
+Nếu sửa nguồn, đọc [CHECKPOINT](CHECKPOINT.md), [SYSTEM-MAP](SYSTEM-MAP.md) và [ARCHITECTURE](ARCHITECTURE.md) trước. Các tài liệu này ghi lại cấu trúc app, lỗi đã xử lý và những phần cần giữ tương thích.

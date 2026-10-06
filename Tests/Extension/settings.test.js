@@ -2,6 +2,12 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const settings = require("../../ChromeExtension/lib/settings.js");
 
+test("fresh installs default to English without replacing saved language choices", () => {
+  assert.equal(settings.normalize().language, "en");
+  assert.equal(settings.normalize({ language: "vi" }).language, "vi");
+  assert.equal(settings.normalize({ language: "auto" }).language, "auto");
+});
+
 test("normalizes partial settings", () => {
   assert.deepEqual(settings.normalize({ language: "vi" }), {
     enabled: true,

@@ -10,7 +10,7 @@ final class QuitConfirmationDelegate: NSObject, NSApplicationDelegate {
         isPresenting = true
         defer { isPresenting = false }
 
-        let language = AppText.resolvedLanguage(UserDefaults.standard.string(forKey: PreferenceKeys.interfaceLanguage) ?? "auto")
+        let language = AppText.resolvedLanguage(AppPreferences.language(UserDefaults.standard.string(forKey: PreferenceKeys.interfaceLanguage)))
         let copy = QuitConfirmationCopy.localized(language)
         let alert = NSAlert()
         alert.alertStyle = .informational

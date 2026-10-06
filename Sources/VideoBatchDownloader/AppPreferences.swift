@@ -15,6 +15,11 @@ enum PreferenceKeys {
 }
 
 enum AppPreferences {
+    static let defaultLanguage = "en"
+    static func language(_ stored: String?) -> String {
+        guard let stored, ["auto", "en", "vi", "zh", "es", "fr", "de", "pt", "ja", "ko"].contains(stored) else { return defaultLanguage }
+        return stored
+    }
     static let supportedThemes = Set(["auto", "dark", "light"])
 
     static func theme(_ value: String?) -> String {
@@ -37,7 +42,7 @@ enum AppPreferences {
             "showOverlay": bool(PreferenceKeys.showOverlay, default: true),
             "defaultQuality": string(PreferenceKeys.defaultQuality, default: "best"),
             "scanRegion": string(PreferenceKeys.scanRegion, default: "middle"),
-            "language": string(PreferenceKeys.interfaceLanguage, default: "auto"),
+            "language": language(UserDefaults.standard.string(forKey: PreferenceKeys.interfaceLanguage)),
             "theme": theme(UserDefaults.standard.string(forKey: PreferenceKeys.visualTheme)),
         ]
     }

@@ -4,7 +4,7 @@
     showOverlay: true,
     defaultQuality: "best",
     scanRegion: "middle",
-    language: "auto",
+    language: "en",
     theme: "auto",
   });
   const KEYS = Object.freeze(Object.keys(DEFAULTS));

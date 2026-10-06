@@ -1,5 +1,11 @@
 # Current checkpoint
 
+## English-first release 2.2.44 (146) — 2026-10-06
+
+- New app and companion installations default to English. Existing valid languages, including explicit `auto`, remain unchanged; invalid stored values fall back to English. Centralized native preference resolution and covered with pure tests, without accessing real user preferences in tests.
+- Verified 158 Swift assertions, 36 companion tests, JavaScript syntax, release build, bundled-tool smoke and strict/deep signing. Built `dist/VidSavie-2.2.44-arm64.dmg` (SHA-256 `16330e112f6e3699ff5482b2d2ed1692e3b7535f3e686e84a4f7975a3124794d`); image checksum and read-only mount checks passed, including arm64 main executable, app/build/companion versions, nested tools and Applications shortcut.
+- Checksum asset uses a relative filename for portable verification without disclosing local paths. Release notes explain Apple Silicon-only support, ad-hoc/not-notarized status, English defaults, Chrome setup and content limitations. Private GitHub release publication and local deployment recorded separately after verification.
+
 ## VidSavie rebrand — 2026-10-06 · 2.2.43 (145)
 
 - User approved VidSavie. Replaced visible app/companion/window/error/report labels, package names and current README with VidSavie; artwork unchanged. Preserved executable, bundle identifier, URL scheme, preference keys, tool storage and partial-cache paths. Tests assert visible name/version alignment and stable identities.

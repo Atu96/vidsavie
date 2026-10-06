@@ -15,6 +15,11 @@ struct CoreTestMain {
     static func main() throws {
         var suite = TestSuite()
 
+        suite.expect(AppPreferences.language(nil) == "en", "fresh app language is English")
+        suite.expect(AppPreferences.language("vi") == "vi", "existing Vietnamese preference stays unchanged")
+        suite.expect(AppPreferences.language("auto") == "auto", "explicit System language stays unchanged")
+        suite.expect(AppPreferences.language("invalid") == "en", "invalid app language falls back to English")
+
         suite.expect(
             URLNormalizer.normalize("https://youtu.be/abc123?t=2") == "https://www.youtube.com/watch?v=abc123",
             "youtu.be normalization"

@@ -15,6 +15,7 @@ swiftc \
   -parse-as-library \
   -module-cache-path "${TMPDIR%/}/VideoBatchSwiftCoreTestModuleCache" \
   Sources/VideoBatchDownloader/Models.swift \
+  Sources/VideoBatchDownloader/AppPreferences.swift \
   Sources/VideoBatchDownloader/DownloadStateServices.swift \
   Sources/VideoBatchDownloader/ProcessRunner.swift \
   Sources/VideoBatchDownloader/SupportToolsInstaller.swift \

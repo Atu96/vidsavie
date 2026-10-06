@@ -27,7 +27,7 @@ final class DownloadManager: ObservableObject {
     ) ?? .video {
         didSet { UserDefaults.standard.set(defaultDownloadKind.rawValue, forKey: PreferenceKeys.defaultDownloadKind) }
     }
-    @Published var interfaceLanguage = AppPreferences.string(PreferenceKeys.interfaceLanguage, default: "auto") {
+    @Published var interfaceLanguage = AppPreferences.language(UserDefaults.standard.string(forKey: PreferenceKeys.interfaceLanguage)) {
         didSet { UserDefaults.standard.set(interfaceLanguage, forKey: PreferenceKeys.interfaceLanguage) }
     }
     @Published var visualTheme = AppPreferences.theme(UserDefaults.standard.string(forKey: PreferenceKeys.visualTheme)) {

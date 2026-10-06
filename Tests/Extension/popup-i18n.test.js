@@ -17,5 +17,5 @@ test('automatic and invalid languages resolve safely', () => {
   assert.equal(I18n.resolveLanguage('auto', 'vi-VN'), 'vi');
   assert.equal(I18n.resolveLanguage('auto', 'zh_CN'), 'zh');
   assert.equal(I18n.resolveLanguage('auto', 'ru-RU'), 'en');
-  assert.equal(Settings.normalize({language: 'invalid'}).language, 'auto');
+  assert.equal(Settings.normalize({language: 'invalid'}).language, 'en');
 });

@@ -23,7 +23,9 @@ The packaged app includes yt-dlp, FFmpeg, and FFprobe. You don't need Homebrew t
 
 The current package is for **Apple Silicon Macs (M1, M2, M3… / arm64)**. There isn't an Intel build yet.
 
-**This repository currently contains the source code only. There is no installer in [Releases](https://github.com/Atu96/vidsavie/releases) yet.** Once a DMG is available, open it and drag VidSavie into Applications. To build it yourself, see the section below.
+Download the arm64 DMG and matching checksum from [Releases](https://github.com/Atu96/vidsavie/releases). Open the DMG and drag VidSavie into Applications. This repository is currently private, so downloads require repository access. To build it yourself, see the section below.
+
+Fresh installations start in English. You can choose another language or System mode in Settings; updates keep your saved language preference.
 
 ### About the macOS warning
 

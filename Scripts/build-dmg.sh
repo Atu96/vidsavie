@@ -39,7 +39,7 @@ hdiutil create \
   "$DMG_PATH" >/dev/null
 
 hdiutil verify "$DMG_PATH" >/dev/null
-shasum -a 256 "$DMG_PATH" > "$CHECKSUM_PATH"
+(cd "$OUTPUT_DIR"; shasum -a 256 "${DMG_PATH:t}") > "$CHECKSUM_PATH"
 
 print "$DMG_PATH"
 print "$CHECKSUM_PATH"

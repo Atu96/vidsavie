@@ -112,6 +112,8 @@ Adapters never call localhost and never own settings persistence.
 
 ## Invariants
 
+- Fresh installs default to English in both AppPreferences and companion settings. Valid saved languages, including explicit System/auto, are preserved. Native language selection is centralized in AppPreferences.language; do not restore separate locale-dependent first-run fallbacks.
+
 - Maximum active downloads is one. Queue order is FIFO even though newest cards render first.
 - A missing configured download folder is never recreated implicitly and does not fail the job. The user chooses a session-only folder; this override is not persisted and the configured folder is preferred again after relaunch when available.
 - Menu-bar media launchers open three separate window scenes. Offline media tools use independent runners, collision-safe outputs, and never enter the download FIFO.

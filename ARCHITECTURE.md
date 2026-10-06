@@ -18,6 +18,8 @@ Media profile from 2.2.45: both bootstrap and managed updater use `Resources/Too
 
 ### macOS presentation
 
+Settings split-column hosts are keyed by effective `settingsColorScheme` from 2.2.48, to refresh AppKit-backed environment snapshots during theme transitions. Keep section and filename-toggle state in enclosing AppSettingsView; do not key the entire settings owner or generate random identities. Root and column environments share one resolved scheme. This addresses reported mixed light surfaces/dark text; static tests do not certify live transitions.
+
 - `VideoBatchDownloaderApp.swift`: process entry point and MenuBarExtra.
 - `ContentView.swift`: compact menu-bar shell, history navigation, focused automatic link paste, completion banner that dismisses the panel before Finder reveal, direct Quit App action, and settings-window launch with menu-bar dismissal.
 - `SettingsWindowView.swift`: singleton centered macOS window, standard opaque macOS title bar, compact 860×760 initial/minimum content size, theme, and activation behavior.

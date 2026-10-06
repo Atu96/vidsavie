@@ -88,7 +88,12 @@ struct AppSettingsView: View {
             .foregroundStyle(settingsPrimaryText)
         }
         .navigationSplitViewStyle(.balanced)
+        // AppKit-backed split columns can retain the previous environment on a
+        // theme transition. Recreate their hosts together; section/toggles live
+        // in AppSettingsView above this identity and keep their current values.
+        .id(settingsColorScheme)
         .background(AppGlassCanvas(theme: manager.visualTheme))
+        .environment(\.colorScheme, settingsColorScheme)
         .tint(VBDDesign.brandBlue)
     }
 
@@ -195,11 +200,11 @@ struct AppSettingsView: View {
                         }
                         Divider().opacity(0.45)
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Thành phần").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                            Text(t("filenameComponents", "Filename components")).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                             HStack(spacing: 8) {
-                                nameChip("Tiêu đề", enabled: nameTitle) { nameTitle.toggle() }
-                                nameChip("Tác giả", enabled: nameAuthor) { nameAuthor.toggle() }
-                                nameChip("Ngày đăng", enabled: nameDate) { nameDate.toggle() }
+                                nameChip(t("filenameTitle", "Title"), enabled: nameTitle) { nameTitle.toggle() }
+                                nameChip(t("filenameAuthor", "Author"), enabled: nameAuthor) { nameAuthor.toggle() }
+                                nameChip(t("filenameUploadDate", "Upload date"), enabled: nameDate) { nameDate.toggle() }
                             }
                         }
             }

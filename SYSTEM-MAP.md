@@ -1,5 +1,9 @@
 # System map
 
+Current local app 2.2.47 (149) fixes filename chip localization; public Latest DMG remains 2.2.46 (148). Release history below is historical, not a claim that this local fix has been published.
+
+Filename label localization: SettingsView's naming component chips use `AppText.filenameTranslations` for nine languages, English fallback; tests in `filename-localization.test.js`. These are UI labels only; do not change filename toggle values/output policy to fix translation.
+
 Release visuals: README owns user-facing screenshot instructions; `docs/images/README.md` owns actual capture versions, third-party attribution and privacy/proof boundaries. Do not upload whole-desktop/account/history captures or fabricate controls/status. v2.2.46 arm64 DMG prepared and mount-verified; publishing result belongs in the checkpoint.
 
 Tool onboarding 2.2.46: `hasAvailableTools` counts bundled tools as ready. `DownloadManager` checks metadata on fresh startup/24-hour maintenance; `SupportToolsInstaller.updateIsAvailable` compares effective tool provenance without installing. `SupportToolsPromptCopy` owns nine-language Update/Later alert copy; only consent calls the staged installer. `Toolchain` bundle records preserve pre-sign source checksums. Tests: Swift checksum/scheduling cases and `tool-update-onboarding.test.js` safety/resource/localization contracts. Actual native alert layout remains user verification.

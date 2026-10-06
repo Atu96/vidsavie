@@ -1,5 +1,22 @@
 # Current checkpoint
 
+## 2.2.48 release and user-supplied demo images — 2026-10-06
+
+- User confirmed the reported theme problem is resolved and requested repository/app release plus supplied screenshots. Added main-app and Appearance captures to README; excluded General screenshot containing private volume path. No image manipulation or private history export. Confirmation is specific to the reported issue, not exhaustive cross-device theme verification.
+- Preparing 2.2.48 arm64 DMG from the verified local source, preserving prior Releases and separate external-license audit disclosures. Publication/checksum results recorded below when verified.
+- Local release gate passed: 176 Swift assertions, 48 extension tests, app build/nested smoke/signing, image verification/read-only mount, version 2.2.48/build150, arm64 and Applications shortcut. DMG 62,468,183 bytes; SHA-256 `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. No tools recompiled or user preferences modified.
+
+## Settings theme-host refresh 2.2.48 (150) — 2026-10-06
+
+- User screenshot after switching back to Dark showed dark canvas/white explicit labels with stale light AppSurface and native controls. Recreate NavigationSplitView column hosts on effective color-scheme identity change and apply one root scheme, retaining section/toggle state in the enclosing AppSettingsView. This targets cached host environments rather than changing the palette or persisted preferences. Source-contract test added; live transition appearance remains user verification until checked. No tool/update/download changes, new Release or DMG.
+- Verified 176 Swift assertions, 48 extension tests, release build/tool smoke/signature. Installed 2.2.48 (150), ready health; backup `/private/tmp/VidSavieUpgrade150.lnGpVy/VidSavie.app`. No preferences/theme changed through automation; actual Light → Dark → System transitions remain user verification. Public Latest is still 2.2.46.
+
+## Filename label localization 2.2.47 (149) — 2026-10-06
+
+- User screenshot showed hard-coded Vietnamese filename component chips in English Settings. Replaced the heading and Title/Author/Upload date labels with centralized AppText keys, complete for en/vi/zh/es/fr/de/pt/ja/ko and English fallback. Existing filename toggles, naming behavior, saved language and tools unchanged. Added regression coverage for translation parity and removal of hard-coded UI strings. No claim of native-speaker review or comprehensive localization of every app surface.
+- Public Latest remains 2.2.46; this task does not authorize a new GitHub Release/DMG. Local build/deployment verification recorded after completion.
+- Verified 176 Swift assertions, 47 extension tests, release build, bundled-tool smoke and deep/strict signature. Installed 2.2.47 (149), ready health; backup `/private/tmp/VidSavieUpgrade149.CwoQ4x/VidSavie.app`. No active media processes before replacement, no user preferences changed. No browser UI actions or new DMG/Release.
+
 ## 2.2.46 arm64 release preparation and real screenshots — 2026-10-06
 
 - Published and verified Latest `https://github.com/Atu96/vidsavie/releases/tag/v2.2.46`, tag source commit `968cd102e1fb5ff554770d0c0ebf156dc38997e2`, Public, draft=false/prerelease=false. DMG 62,449,891 bytes, GitHub digest exactly matches local SHA-256; checksum asset uploaded. Three README image assets included in source. No old Release assets removed. Independent publishing guide updated with screenshot privacy/provenance, consent-based tools and release workflow; backup `/private/tmp/VidSavieReleaseGuideBackup.GK74ku`.

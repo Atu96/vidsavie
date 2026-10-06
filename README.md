@@ -21,6 +21,19 @@ The packaged app includes yt-dlp, FFmpeg, and FFprobe. You don't need Homebrew t
 
 ## A quick look
 
+<img src="docs/images/main-app.png" alt="VidSavie menu bar app with Quick Add and media tool shortcuts" width="470">
+
+Paste one or more links into **Quick Add** to queue supported downloads. The bottom shortcuts open **Video Cutter**, **Converter**, and **Audio** in separate windows.
+
+<details>
+<summary>Languages and appearance</summary>
+
+![VidSavie language and appearance settings](docs/images/appearance.png)
+
+Choose your interface language and **System**, **Dark glass**, or **Light glass** in Settings. Fresh installations start in English; existing preferences are preserved.
+
+</details>
+
 ### Download without leaving the video
 
 ![VidSavie floating Video button on a YouTube video](docs/images/floating-download.jpg)

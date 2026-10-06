@@ -1,6 +1,17 @@
 import Foundation
 
 enum AppText {
+    private static let filenameTranslations: [String: [String: String]] = [
+        "en": ["filenameComponents": "Filename components", "filenameTitle": "Title", "filenameAuthor": "Author", "filenameUploadDate": "Upload date"],
+        "vi": ["filenameComponents": "Thành phần tên file", "filenameTitle": "Tiêu đề", "filenameAuthor": "Tác giả", "filenameUploadDate": "Ngày đăng"],
+        "zh": ["filenameComponents": "文件名组成", "filenameTitle": "标题", "filenameAuthor": "作者", "filenameUploadDate": "上传日期"],
+        "es": ["filenameComponents": "Componentes del nombre", "filenameTitle": "Título", "filenameAuthor": "Autor", "filenameUploadDate": "Fecha de subida"],
+        "fr": ["filenameComponents": "Éléments du nom de fichier", "filenameTitle": "Titre", "filenameAuthor": "Auteur", "filenameUploadDate": "Date de mise en ligne"],
+        "de": ["filenameComponents": "Dateinamensbestandteile", "filenameTitle": "Titel", "filenameAuthor": "Autor", "filenameUploadDate": "Upload-Datum"],
+        "pt": ["filenameComponents": "Componentes do nome", "filenameTitle": "Título", "filenameAuthor": "Autor", "filenameUploadDate": "Data de envio"],
+        "ja": ["filenameComponents": "ファイル名の構成", "filenameTitle": "タイトル", "filenameAuthor": "投稿者", "filenameUploadDate": "投稿日"],
+        "ko": ["filenameComponents": "파일 이름 구성", "filenameTitle": "제목", "filenameAuthor": "작성자", "filenameUploadDate": "게시 날짜"]
+    ]
     private static let mediaSourceTranslations: [String: String] = [
         "en": "Downloading the matching media source archive…",
         "vi": "Đang tải mã nguồn tương ứng của công cụ media…",
@@ -338,7 +349,8 @@ enum AppText {
     static func value(_ key: String, language: String, fallback: String) -> String {
         let code = resolvedLanguage(language)
         if key == "supportToolsDownloadingMediaSource" { return mediaSourceTranslations[code] ?? fallback }
-        return linkActionTranslations[code]?[key]
+        return filenameTranslations[code]?[key]
+            ?? linkActionTranslations[code]?[key]
             ?? finderQuickActionTranslations[code]?[key]
             ?? mediaToolTranslations[code]?[key]
             ?? historyTranslations[code]?[key]

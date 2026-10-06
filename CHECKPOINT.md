@@ -2,6 +2,8 @@
 
 ## 2.2.48 release and user-supplied demo images — 2026-10-06
 
+- Published Latest `https://github.com/Atu96/vidsavie/releases/tag/v2.2.48`, source tag commit `6cfca40c4f59116a8f315e4b91a059f7e6acaadd`, draft=false/prerelease=false. Both DMG and portable checksum uploaded; GitHub DMG digest matches `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. Local installed app and public installer now both 2.2.48 (150). Old Release assets retained. Source and README demo images pushed to main.
+
 - User confirmed the reported theme problem is resolved and requested repository/app release plus supplied screenshots. Added main-app and Appearance captures to README; excluded General screenshot containing private volume path. No image manipulation or private history export. Confirmation is specific to the reported issue, not exhaustive cross-device theme verification.
 - Preparing 2.2.48 arm64 DMG from the verified local source, preserving prior Releases and separate external-license audit disclosures. Publication/checksum results recorded below when verified.
 - Local release gate passed: 176 Swift assertions, 48 extension tests, app build/nested smoke/signing, image verification/read-only mount, version 2.2.48/build150, arm64 and Applications shortcut. DMG 62,468,183 bytes; SHA-256 `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. No tools recompiled or user preferences modified.

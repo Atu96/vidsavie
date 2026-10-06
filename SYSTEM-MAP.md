@@ -1,5 +1,7 @@
 # System map
 
+Current verified state: local app and Public Latest release are 2.2.48 (150), tag source `6cfca40`, DMG SHA-256 `23e69ca42be95a393900b6c87f07b291fb4b30ba045a25e029f4c7daff54b447`. README has user-supplied main/Appearance screenshots; private-path General screenshot excluded. Earlier version statements below are historical.
+
 Current local app 2.2.47 (149) fixes filename chip localization; public Latest DMG remains 2.2.46 (148). Release history below is historical, not a claim that this local fix has been published.
 
 Filename label localization: SettingsView's naming component chips use `AppText.filenameTranslations` for nine languages, English fallback; tests in `filename-localization.test.js`. These are UI labels only; do not change filename toggle values/output policy to fix translation.

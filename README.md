@@ -1,6 +1,6 @@
-# VidSavie
+# VidSavie — Video Downloader & Media Tools for Mac
 
-Save your favorite videos from supported sites, right on your Mac.
+Save videos from supported sites, cut clips, convert files, and process audio — all in one small Mac app.
 
 A small menu bar app for downloading videos, audio, and images. Paste multiple links to queue downloads, or use the Chrome companion to save supported content from the page you're watching.
 

@@ -20,6 +20,6 @@ The Chrome companion is bundled with the app, not installed automatically. Use S
 
 Website support varies by content, account access, region, and changes to the source sites. Please only download content you have permission to save. Real platform downloads are not covered by the automated test suite.
 
-The matching `.sha256` file is provided to verify the DMG download. This release belongs to a private repository and is only accessible to authorized users.
+The matching `.sha256` file is provided to verify the DMG download. The repository and this release are publicly accessible.
 
 If the app helps, you can [buy me a coffee on Ko-fi](https://ko-fi.com/atu1202). No pressure — thanks for trying it. ❤️

@@ -1,5 +1,10 @@
 # Current checkpoint
 
+## Public repository — 2026-10-06
+
+- User explicitly authorized making `Atu96/vidsavie` Public. Checked tracked paths and common credential/private-key patterns across all eight current revisions; no matches found, not an exhaustive privacy or security guarantee. Repository history and existing Release are now publicly accessible; source LICENSE remains unselected.
+- Updated README and Release notes to remove Private-access restrictions. No installer rebuild, asset replacement, UI screenshot publication or app changes. README review recommends genuine privacy-safe overview/media-tool screenshots; these were not created or uploaded.
+
 ## English-first release 2.2.44 (146) — 2026-10-06
 
 - New app and companion installations default to English. Existing valid languages, including explicit `auto`, remain unchanged; invalid stored values fall back to English. Centralized native preference resolution and covered with pure tests, without accessing real user preferences in tests.

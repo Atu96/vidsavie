@@ -21,6 +21,9 @@ test('bootstrap and managed updates cannot return to the old FFmpeg provider', (
   assert.ok(updater.indexOf('try sha256(of: payload) == archiveChecksum') < updater.indexOf('arguments: ["-x", "-k", payload.path'));
   assert.ok(updater.includes('stagedSnapshot.ffmpegVersion == manifest.ffmpegVersion'));
   assert.ok(updater.includes('sourceSHA256'));
+  assert.ok(updater.includes('timeoutIntervalForResource = 180'));
+  assert.ok(updater.includes('config.httpShouldSetCookies = false'));
+  assert.ok(updater.includes('archive ? "media.download"'));
   assert.ok(text('Sources/VideoBatchDownloader/MediaToolCore.swift').includes('ReviewedMediaPolicy.isReviewedDirectory'));
 });
 test('source recipe has a controlled LGPL profile and all required app capabilities', () => {

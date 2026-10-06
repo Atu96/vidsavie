@@ -2,7 +2,9 @@
 
 Use this map to route a task or failure to the correct owner.
 
-Licensing: `LICENSE` and `COPYRIGHT` cover original project source under GPL-3.0-or-later. `Resources/ThirdParty` preserves external license texts/notices; `LICENSING-AUDIT.md` owns verified tool evidence and unresolved corresponding-source/artwork items. Do not equate source-license selection with completed binary redistribution compliance. Current FFmpeg/FFprobe source matching remains unresolved.
+Licensing: `LICENSE` and `COPYRIGHT` cover original project source under GPL-3.0-or-later. `Resources/ThirdParty` preserves external license texts/notices; `LICENSING-AUDIT.md` owns verified tool evidence and unresolved corresponding-source/artwork items. Do not equate source-license selection with completed binary redistribution compliance. The old 9.0 provider mismatch remains historical; the new reviewed 9.0.2 profile supplies exact source inputs and notices, while yt-dlp/artwork audit remains separate.
+
+Current media source: new 2.2.45 builds use the reviewed source-built profile in `Resources/Toolchain/media-release.json`; the old 9.0/provider source mismatch above applies to historical 2.2.44 binaries. `build-media-toolchain.sh` owns source inputs/configuration, `test-media-toolchain.sh` owns generated-media compatibility checks, and `SupportToolsInstaller` owns restricted feed/hash/source validation and atomic managed activation. Legal review of yt-dlp and old distributions remains distinct.
 
 Current brand: VidSavie. Latest release: 2.2.44 (146), fresh installs default to English; valid saved language choices remain unchanged. GitHub: `Atu96/vidsavie` (Public, user-authorized 2026-10-06). The old VideoFetch Flow and Video Batch Downloader installed paths remain compatibility aliases; technical identities and user data are unchanged.
 

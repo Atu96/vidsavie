@@ -242,6 +242,14 @@ enum MachOArchitectureInspector {
 }
 
 actor SupportToolsInstaller {
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.ephemeral
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 180
+        config.waitsForConnectivity = false
+        config.httpShouldSetCookies = false
+        return URLSession(configuration: config)
+    }()
     private let fileManager = FileManager.default
     private let runner = ProcessRunner()
     private let destinationToolsDirectory: URL?
@@ -293,7 +301,7 @@ actor SupportToolsInstaller {
             currentMetadata = nil
         }
         let currentIsComplete = Self.hasManagedTools(toolsDirectory: toolsDirectory)
-        let currentYtDlpIsTrusted = currentIsComplete && installedBinaryMatches(
+        let currentYtDlpIsTrusted = installedBinaryMatches(
             named: "yt-dlp", expected: currentMetadata?.installedYtDlpChecksum, in: toolsDirectory
         )
         let currentFFmpegIsTrusted = currentIsComplete && installedBinaryMatches(
@@ -426,7 +434,7 @@ actor SupportToolsInstaller {
         let data: Data
         let response: URLResponse
         do {
-            (data, response) = try await URLSession.shared.data(from: url)
+            (data, response) = try await session.data(from: url)
         } catch {
             throw SupportToolsInstallerError.invalidResponse(name)
         }
@@ -458,8 +466,10 @@ actor SupportToolsInstaller {
         }
 
         onDownload()
-        let payload = stagingTools.deletingLastPathComponent().appendingPathComponent("\(name).download")
-        try await download(sourceURL, to: payload, name: name, maximumBytes: archive ? maximumArchiveBytes : maximumBinaryBytes)
+        let payload = stagingTools.deletingLastPathComponent().appendingPathComponent(archive ? "media.download" : "\(name).download")
+        if !archive || !fileManager.fileExists(atPath: payload.path) {
+            try await download(sourceURL, to: payload, name: name, maximumBytes: archive ? maximumArchiveBytes : maximumBinaryBytes)
+        }
         if archive {
             guard let archiveChecksum, try sha256(of: payload) == archiveChecksum else {
                 throw SupportToolsInstallerError.checksumMismatch(name)
@@ -497,7 +507,7 @@ actor SupportToolsInstaller {
         let temporaryURL: URL
         let response: URLResponse
         do {
-            (temporaryURL, response) = try await URLSession.shared.download(from: url)
+            (temporaryURL, response) = try await session.download(from: url)
         } catch {
             throw SupportToolsInstallerError.invalidResponse(name)
         }

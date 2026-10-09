@@ -16,6 +16,15 @@ enum PreferenceKeys {
 
 enum AppPreferences {
     static let defaultLanguage = "en"
+    static func cookiePolicy(_ stored: String?) -> BrowserCookiePolicy {
+        stored.flatMap(BrowserCookiePolicy.init(rawValue:)) ?? .smart
+    }
+
+    static func browserProfile(_ stored: String?, source: BrowserCookieSource) -> String {
+        // An explicit blank means automatic discovery and must survive upgrades.
+        if let stored { return stored }
+        return source == .chrome ? "Default" : ""
+    }
     static func language(_ stored: String?) -> String {
         guard let stored, ["auto", "en", "vi", "zh", "es", "fr", "de", "pt", "ja", "ko"].contains(stored) else { return defaultLanguage }
         return stored

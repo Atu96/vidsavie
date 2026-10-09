@@ -43,6 +43,7 @@ enum BrowserSessionIssueClassifier {
             "could not copy chrome cookie database",
             "failed to decrypt",
             "cookie database",
+            "cookies database",
             "keyring",
             "cookies-from-browser",
         ]
@@ -177,5 +178,21 @@ enum BrowserSessionRepairTarget {
             return URL(string: failedURL)
         }
         return URL(string: "https://www.youtube.com/")
+    }
+}
+
+enum BrowserSessionDiagnostic: String {
+    case missingProfile, accessDenied, other
+
+    static func classify(_ message: String) -> Self {
+        let text = message.lowercased()
+        if text.contains("permission denied") || text.contains("operation not permitted") || text.contains("failed to decrypt") {
+            return .accessDenied
+        }
+        if text.contains("access denied") { return .accessDenied }
+        if (text.contains("could not find") || text.contains("not found")) && (text.contains("cookie") || text.contains("profile")) {
+            return .missingProfile
+        }
+        return .other
     }
 }

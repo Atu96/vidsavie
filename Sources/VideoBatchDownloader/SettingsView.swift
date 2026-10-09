@@ -33,6 +33,7 @@ struct AppSettingsView: View {
                 List(selection: $section) {
                     settingsLink("general", title: t("general", "General"), icon: "gearshape.fill")
                     settingsLink("browser", title: t("browserCompanion", "Browser Companion"), icon: "puzzlepiece.extension.fill")
+                    settingsLink("session", title: BrowserSessionCopy.value("session", language: manager.interfaceLanguage), icon: "person.badge.key.fill")
                     settingsLink("finder", title: t("finderQuickActions", "Finder Quick Actions"), icon: "cursorarrow.click.2")
                     settingsLink("appearance", title: t("appearance", "Appearance"), icon: "paintpalette.fill")
                     settingsLink("about", title: t("about", "About"), icon: "info.circle.fill")
@@ -72,6 +73,7 @@ struct AppSettingsView: View {
                 Group {
                     switch section {
                     case "browser": browser
+                    case "session": ScrollView { BrowserSessionSettingsCard(manager: manager) }
                     case "finder": finder
                     case "appearance": appearance
                     case "about": about
@@ -154,6 +156,7 @@ struct AppSettingsView: View {
     private var sectionTitle: String {
         switch section {
         case "browser": t("browserCompanion", "Browser Companion")
+        case "session": BrowserSessionCopy.value("session", language: manager.interfaceLanguage)
         case "finder": t("finderQuickActions", "Finder Quick Actions")
         case "appearance": t("appearance", "Appearance")
         case "about": t("about", "About")
@@ -164,6 +167,7 @@ struct AppSettingsView: View {
     private var sectionSubtitle: String {
         switch section {
         case "browser": t("browserSettingsSub", "Browser companions and signed-in sessions")
+        case "session": t("browserSessionSub", "Use local cookies only when required")
         case "finder": t("finderQuickActionsSub", "Send selected Finder files directly to the app’s media tools")
         case "appearance": t("appearanceSettingsSub", "Language and visual style across the app")
         case "about": t("aboutSettingsSub", "Product information and privacy")
@@ -327,6 +331,7 @@ struct AppSettingsView: View {
         let settingsWindow = NSApplication.shared.keyWindow
         manager.installChromeCompanion()
         settingsWindow?.orderOut(nil)
+        WindowActivationCoordinator.shared.reconcile()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
             openWindow(id: "chrome-install-guide")
             NSApplication.shared.activate(ignoringOtherApps: true)
@@ -393,6 +398,7 @@ struct AppSettingsView: View {
         FinderQuickActionSetup.registerServices()
         FinderQuickActionSetup.openSystemSettings()
         settingsWindow?.orderOut(nil)
+        WindowActivationCoordinator.shared.reconcile()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             openWindow(id: "finder-quick-actions-guide")
             NSApplication.shared.activate(ignoringOtherApps: true)
@@ -481,7 +487,7 @@ struct AppSettingsView: View {
 
 private struct BrowserSessionSettingsCard: View {
     @ObservedObject var manager: DownloadManager
-    @State private var isExpanded = false
+    @State private var isExpanded = true
 
     private func t(_ key: String, _ fallback: String) -> String {
         AppText.value(key, language: manager.interfaceLanguage, fallback: fallback)
@@ -570,8 +576,7 @@ private struct BrowserSessionSettingsCard: View {
                             .labelsHidden().frame(width: 125)
                         }
                         HStack {
-                            TextField(t("cookieProfile", "Profile"), text: $manager.browserCookieProfile)
-                                .textFieldStyle(.roundedBorder)
+                            BrowserProfileControl(manager: manager)
                             Button {
                                 manager.testBrowserSession()
                             } label: {

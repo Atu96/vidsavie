@@ -83,6 +83,12 @@ Video sites change often. One successful download doesn't mean every video on th
 
 Downloads and media processing run on your Mac. The app still connects to the source sites to fetch content and downloads tools when you update them. You don't need a separate account for this app.
 
+New installations use **Automatic** browser-session usage and Chrome's **Default** profile. YouTube is tried without cookies first; the app may retry with your browser session after a recognized authentication error. This avoids making public videos depend on cookie access unnecessarily. Updates preserve saved settings, including an explicit automatic or custom profile.
+
+Open **Settings → Browser session…** to choose a different browser/profile or test access. A failed cookie lookup is not proof that Chrome moved its files or that you need Full Disk Access; review the reported cause before changing permissions. Some videos still require sign-in. Working windows appear in the Dock and ⌘Tab while open; closing the last one returns VidSavie to the menu bar without stopping background work.
+
+On some macOS installations, browser-data access may require a privacy permission. Automatic usage does not bypass macOS protection. If access is denied, review Privacy & Security for VidSavie; Full Disk Access grants broad access beyond browser cookies, so enable it only if you trust the app and need it. The app does not grant permissions itself.
+
 Please only download content you have permission to save and use. If something fails, you can copy the error log from the app when reporting it. Remove any personal information first, and never share cookies or passwords.
 
 ## If you'd like to support it

@@ -5,6 +5,8 @@ import AppKit
 final class QuitConfirmationDelegate: NSObject, NSApplicationDelegate {
     private var isPresenting = false
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
+
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard !isPresenting else { return .terminateCancel }
         isPresenting = true

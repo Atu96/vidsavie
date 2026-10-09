@@ -33,18 +33,28 @@ final class DownloadManager: ObservableObject {
     @Published var visualTheme = AppPreferences.theme(UserDefaults.standard.string(forKey: PreferenceKeys.visualTheme)) {
         didSet { UserDefaults.standard.set(visualTheme, forKey: PreferenceKeys.visualTheme) }
     }
-    @Published var browserCookiePolicy = BrowserCookiePolicy(
-        rawValue: AppPreferences.string(PreferenceKeys.browserCookiePolicy, default: BrowserCookiePolicy.smart.rawValue)
-    ) ?? .smart {
-        didSet { UserDefaults.standard.set(browserCookiePolicy.rawValue, forKey: PreferenceKeys.browserCookiePolicy) }
+    @Published var browserCookiePolicy = AppPreferences.cookiePolicy(UserDefaults.standard.string(forKey: PreferenceKeys.browserCookiePolicy)) {
+        didSet {
+            UserDefaults.standard.set(browserCookiePolicy.rawValue, forKey: PreferenceKeys.browserCookiePolicy)
+            clearBrowserSessionResult()
+        }
     }
     @Published var browserCookieSource = BrowserCookieSource(
         rawValue: AppPreferences.string(PreferenceKeys.browserCookieSource, default: BrowserCookieSource.chrome.rawValue)
     ) ?? .chrome {
-        didSet { UserDefaults.standard.set(browserCookieSource.rawValue, forKey: PreferenceKeys.browserCookieSource) }
+        didSet {
+            UserDefaults.standard.set(browserCookieSource.rawValue, forKey: PreferenceKeys.browserCookieSource)
+            clearBrowserSessionResult()
+        }
     }
-    @Published var browserCookieProfile = AppPreferences.string(PreferenceKeys.browserCookieProfile, default: "") {
-        didSet { UserDefaults.standard.set(browserCookieProfile, forKey: PreferenceKeys.browserCookieProfile) }
+    @Published var browserCookieProfile = AppPreferences.browserProfile(
+        UserDefaults.standard.string(forKey: PreferenceKeys.browserCookieProfile),
+        source: BrowserCookieSource(rawValue: AppPreferences.string(PreferenceKeys.browserCookieSource, default: "chrome")) ?? .chrome
+    ) {
+        didSet {
+            UserDefaults.standard.set(browserCookieProfile, forKey: PreferenceKeys.browserCookieProfile)
+            clearBrowserSessionResult()
+        }
     }
     @Published private(set) var supportToolsStatus = ""
     @Published private(set) var isUpdatingSupportTools = false
@@ -52,6 +62,8 @@ final class DownloadManager: ObservableObject {
     @Published private(set) var supportToolsInstallPhase: SupportToolsInstallPhase?
     @Published private(set) var supportToolsLastUpdateFailed = false
     @Published private(set) var browserSessionStatus = ""
+    @Published private(set) var browserSessionTestPassed = false
+    @Published private(set) var browserSessionDiagnostic: BrowserSessionDiagnostic?
     @Published private(set) var isTestingBrowserSession = false
     @Published private(set) var isReceivingLink = false
 
@@ -213,17 +225,41 @@ final class DownloadManager: ObservableObject {
         guard !isTestingBrowserSession else { return }
         isTestingBrowserSession = true
         browserSessionStatus = ""
+        browserSessionTestPassed = false
+        browserSessionDiagnostic = nil
         let configuration = browserSessionConfiguration
         Task { [weak self] in
             guard let self else { return }
             do {
                 let browserName = try await engine.testBrowserSession(configuration)
-                browserSessionStatus = "\(browserName) · session ready"
+                guard configuration == browserSessionConfiguration else {
+                    isTestingBrowserSession = false
+                    return
+                }
+                browserSessionTestPassed = true
+                browserSessionStatus = "\(browserName) · " + BrowserSessionCopy.value("ready", language: interfaceLanguage)
             } catch {
-                browserSessionStatus = error.localizedDescription
+                guard configuration == browserSessionConfiguration else {
+                    isTestingBrowserSession = false
+                    return
+                }
+                let diagnostic = BrowserSessionDiagnostic.classify(error.localizedDescription)
+                browserSessionDiagnostic = diagnostic
+                let key = diagnostic == .missingProfile ? "missing" : diagnostic == .accessDenied ? "denied" : "failed"
+                if let probeError = error as? BrowserProfileProbeError, case .denied = probeError {
+                    browserSessionStatus = BrowserAccessCopy.value("blocked", language: interfaceLanguage)
+                } else {
+                    browserSessionStatus = BrowserSessionCopy.value(key, language: interfaceLanguage)
+                }
             }
             isTestingBrowserSession = false
         }
+    }
+
+    private func clearBrowserSessionResult() {
+        browserSessionStatus = ""
+        browserSessionTestPassed = false
+        browserSessionDiagnostic = nil
     }
 
     func applyPreferences(_ update: PreferencesUpdate) {

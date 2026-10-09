@@ -18,6 +18,12 @@ Media profile from 2.2.45: both bootstrap and managed updater use `Resources/Too
 
 ### macOS presentation
 
+Working-window activation (2.2.52): WindowActivationCoordinator registers Settings, media tools, repair and setup windows without replacing their delegates. Opening a working window promotes NSApplication to regular (Dock/Cmd-Tab) and activates it. Closing the last registered window or deliberately ordering it out returns to accessory; minimized windows still count, and switching focus never hides the icon. Closing windows does not terminate the menu-bar app or its downloads. LSUIElement remains the startup default. Theme changes do not repeatedly activate windows. Source-contract/build validation is distinct from native visual verification.
+
+Browser session setup (2.2.51): Settings has a dedicated sidebar destination, separate from companion installation and support-tool updates. BrowserProfileControl shares an explicit NSOpenPanel directory chooser with SessionRepairView; it stores only the selected profile path and reads no cookie contents. Automatic selection remains available, and manual paths remain supported. Choosing a folder is not a persistent privacy grant to yt-dlp. Session tests contact YouTube without downloading media; typed diagnostics distinguish missing database, access/decryption denial and other failures, with nine-language safe copy and no raw test error shown. Success does not guarantee sign-in or all-video access. Results for a changed configuration are discarded.
+
+BrowserProfileProbe (2.2.52) performs bounded metadata-only directory enumeration before cookie-using page attempts/tests, after any verified direct-media path has been attempted. POSIX EPERM/EACCES and Cocoa read-permission errors are preserved as access denial, not discarded as missing profiles. It searches only profile containers/Network directories to depth two, at most 128 directories, and never reads database values, Local State, preferences or history. Default is an explicit user shortcut, not an automatic persisted choice. Privacy navigation appears for access failures and does not grant permissions or edit TCC; Full Disk Access is explained as broad and optional, not a requirement for all users. These checks cannot prove child-process access, successful decryption or platform downloads. Session results clear when configuration changes.
+
 Main header/Support/media launchers use AppHoverButtonStyle from 2.2.50: tint-aware overlays and glow only, stable geometry, no scale/offset, no overlay hit interception. Disabled controls suppress feedback; Reduce Motion avoids animation. Keep these semantics when revising visual chrome.
 
 Settings split-column hosts are keyed by effective `settingsColorScheme` from 2.2.48, to refresh AppKit-backed environment snapshots during theme transitions. Keep section and filename-toggle state in enclosing AppSettingsView; do not key the entire settings owner or generate random identities. Root and column environments share one resolved scheme. This addresses reported mixed light surfaces/dark text; static tests do not certify live transitions.
@@ -125,6 +131,8 @@ Dependency direction is:
 Adapters never call localhost and never own settings persistence.
 
 ## Invariants
+
+- Fresh browser sessions use Automatic/Smart policy. Chrome's absent profile preference defaults to Default; other browsers retain automatic discovery. Explicit saved empty/custom profiles and Always/Never remain unchanged. Centralized pure preference helpers own this contract. The user reported a successful YouTube download in Automatic and later clarified that Full Disk Access was also needed on their newer OS; no trace establishes the successful tier. Do not treat changing policy as a fix for permissions or prescribe Full Disk Access solely from a missing-database string.
 
 - Fresh installs default to English in both AppPreferences and companion settings. Valid saved languages, including explicit System/auto, are preserved. Native language selection is centralized in AppPreferences.language; do not restore separate locale-dependent first-run fallbacks.
 

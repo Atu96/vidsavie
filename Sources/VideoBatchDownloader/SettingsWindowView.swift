@@ -48,6 +48,7 @@ private struct WindowCenteringView: NSViewRepresentable {
 
     private func configure(_ window: NSWindow?, coordinator: Coordinator) {
         guard let window else { return }
+        WindowActivationCoordinator.shared.register(window)
         window.appearance = AppAppearance.windowAppearance(for: theme)
         window.title = "VidSavie"
         window.titleVisibility = .hidden
@@ -67,7 +68,6 @@ private struct WindowCenteringView: NSViewRepresentable {
         coordinator.centered = true
         window.setContentSize(NSSize(width: 860, height: 760))
         window.center()
-        window.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        WindowActivationCoordinator.shared.bringToFront(window)
     }
 }

@@ -23,6 +23,7 @@ swiftc \
   Sources/VideoBatchDownloader/URLNormalizer.swift \
   Sources/VideoBatchDownloader/ProgressProtocol.swift \
   Sources/VideoBatchDownloader/BrowserSession.swift \
+  Sources/VideoBatchDownloader/BrowserProfileProbe.swift \
   Sources/VideoBatchDownloader/FileNameTemplate.swift \
   Sources/VideoBatchDownloader/DownloadCommandBuilder.swift \
   Sources/VideoBatchDownloader/MediaToolCore.swift \

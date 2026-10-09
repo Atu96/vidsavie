@@ -40,7 +40,9 @@ final class SessionRepairCoordinator {
             controller.showWindow(nil)
         }
 
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        if let window = windowController?.window {
+            WindowActivationCoordinator.shared.bringToFront(window)
+        }
     }
 
     func close() {
@@ -112,8 +114,7 @@ struct SessionRepairView: View {
                     Image(systemName: "person.crop.circle")
                         .foregroundStyle(accentGradient)
                         .frame(width: 26)
-                    TextField(t("cookieProfile", "Profile (blank uses default)"), text: $manager.browserCookieProfile)
-                        .textFieldStyle(.roundedBorder)
+                    BrowserProfileControl(manager: manager)
                 }
                 .padding(13)
             }
@@ -125,8 +126,8 @@ struct SessionRepairView: View {
                     if manager.isTestingBrowserSession {
                         ProgressView().controlSize(.small)
                     } else {
-                        Image(systemName: manager.browserSessionStatus.contains("ready") ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                            .foregroundStyle(manager.browserSessionStatus.contains("ready") ? Color.green : Color.orange)
+                        Image(systemName: manager.browserSessionTestPassed ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                            .foregroundStyle(manager.browserSessionTestPassed ? Color.green : Color.orange)
                     }
                     Text(manager.isTestingBrowserSession
                          ? t("checkingSession", "Checking browser session…")

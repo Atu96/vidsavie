@@ -14,6 +14,41 @@ private struct TestSuite {
 struct CoreTestMain {
     static func main() throws {
         var suite = TestSuite()
+        suite.expect(AppPreferences.cookiePolicy(nil) == .smart, "fresh session policy is Automatic")
+        suite.expect(AppPreferences.cookiePolicy("always") == .always, "saved Always policy is preserved")
+        suite.expect(AppPreferences.cookiePolicy("never") == .never, "saved Never policy is preserved")
+        suite.expect(AppPreferences.browserProfile(nil, source: .chrome) == "Default", "fresh Chrome selects Default")
+        suite.expect(AppPreferences.browserProfile("", source: .chrome) == "", "explicit automatic profile survives upgrade")
+        suite.expect(AppPreferences.browserProfile("Profile 2", source: .chrome) == "Profile 2", "saved custom profile is preserved")
+        suite.expect(AppPreferences.browserProfile(nil, source: .firefox).isEmpty, "Firefox keeps automatic profile discovery")
+        suite.expect(BrowserProfileProbe.diagnostic(for: NSError(domain: NSPOSIXErrorDomain, code: 1)) == .denied, "EPERM is access denial, not missing profile")
+        suite.expect(BrowserProfileProbe.diagnostic(for: NSError(domain: NSPOSIXErrorDomain, code: 13)) == .denied, "EACCES is access denial")
+        suite.expect(BrowserProfileProbe.diagnostic(for: NSError(domain: NSCocoaErrorDomain, code: NSFileReadNoPermissionError)) == .denied, "Cocoa privacy denial")
+        suite.expect(BrowserProfileProbe.diagnostic(for: NSError(domain: NSPOSIXErrorDomain, code: 2)) == .missing, "ENOENT is missing")
+        let fixtureHome = FileManager.default.temporaryDirectory.appendingPathComponent("VidSavieProfileFixture-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: fixtureHome, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: fixtureHome) }
+        let chromeRoot = BrowserProfileProbe.root(source: .chrome, home: fixtureHome)
+        let chromeProfile = chromeRoot.appendingPathComponent("Default")
+        try FileManager.default.createDirectory(at: chromeProfile, withIntermediateDirectories: true)
+        _ = FileManager.default.createFile(atPath: chromeProfile.appendingPathComponent("Cookies").path, contents: Data())
+        let autoFixture = BrowserSessionConfiguration(policy: .smart, source: .chrome, profile: "")
+        suite.expect((try? BrowserProfileProbe.check(autoFixture, home: fixtureHome)) != nil, "metadata scan finds synthetic Default profile")
+        let namedFixture = BrowserSessionConfiguration(policy: .smart, source: .chrome, profile: "Default")
+        suite.expect(BrowserProfileProbe.searchRoot(configuration: namedFixture, home: fixtureHome).path == chromeProfile.path, "named profile search root")
+        let pathFixture = BrowserSessionConfiguration(policy: .smart, source: .chrome, profile: chromeProfile.path)
+        suite.expect((try? BrowserProfileProbe.check(pathFixture, home: fixtureHome)) != nil, "absolute profile metadata scan")
+        do {
+            try BrowserProfileProbe.check(BrowserSessionConfiguration(policy: .smart, source: .chrome, profile: "Profile 1"), home: fixtureHome)
+            suite.expect(false, "absent synthetic profile must fail")
+        } catch {
+            suite.expect(error as? BrowserProfileProbeError == .missing, "absent profile does not imply permission failure")
+        }
+        suite.expect(BrowserSessionDiagnostic.classify("could not find chrome cookies database") == .missingProfile, "missing cookie database diagnostic")
+        suite.expect(BrowserSessionDiagnostic.classify("Operation not permitted") == .accessDenied, "privacy denial diagnostic")
+        suite.expect(BrowserSessionDiagnostic.classify("failed to decrypt") == .accessDenied, "decryption diagnostic")
+        suite.expect(BrowserSessionDiagnostic.classify("HTTP Error 503") == .other, "network failure not misclassified as cookies")
+        suite.expect(BrowserSessionIssueClassifier.classify(url: "https://www.youtube.com/watch?v=x", processOutput: "could not find chrome cookies database") == .cookieAccess, "plural cookies database routes to repair")
 
         suite.expect(AppPreferences.language(nil) == "en", "fresh app language is English")
         suite.expect(AppPreferences.language("vi") == "vi", "existing Vietnamese preference stays unchanged")

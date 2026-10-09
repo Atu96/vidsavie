@@ -1,5 +1,13 @@
 # System map
 
+Fresh-session defaults (2.2.53): AppPreferences.cookiePolicy(nil) → smart/Automatic; AppPreferences.browserProfile(nil, .chrome) → Default. Existing valid choices, including blank automatic discovery and Always/Never, are preserved. YouTube tries cookie-free extraction first in Automatic; platform/authentication policy remains BrowserSession's responsibility.
+
+Profile lookup vs privacy: BrowserProfileProbe → bounded folder metadata → typed denied/missing/unreadable → BrowserSessionDiagnostic/BrowserAccessCopy. Cookie-consuming page attempts/test preflight here; direct verified media remains cookie-free. No cookie database bytes read by the probe. Explicit Default shortcut, privacy navigation on denial; no silent grants or settings changes.
+
+Dock/Cmd-Tab: WindowActivationCoordinator owns registered working-window visibility → regular/accessory activation policy. Settings/media/repair/setup register; closing the last hides Dock, while minimization/focus changes preserve app switching and the background engine. Closing a window is not quitting the app.
+
+Browser session ownership: Settings sidebar → BrowserSessionSettingsCard → shared BrowserProfileControl directory chooser; repair uses the same control. DownloadManager owns test state, BrowserSessionDiagnostic owns failure classification, BrowserSessionCopy owns localized safe text. Missing “cookies database” routes to cookieAccess repair. No cookie export or automated real-session test. Folder selection cannot guarantee subprocess privacy permission.
+
 Use this map to route a task or failure to the correct owner. Source paths are relative to the repository root. Version-specific statements describe when a behavior was introduced, not the current public installer. See GitHub Releases for published builds.
 
 Public contributor guidance: README.md in this directory; architecture: ARCHITECTURE.md. Local owner handoff notes are not required for a fresh clone.

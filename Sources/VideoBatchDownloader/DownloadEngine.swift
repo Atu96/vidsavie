@@ -172,6 +172,7 @@ final class DownloadEngine {
         // extractor attempt. This is a final fallback, not a replacement for
         // the direct error: if it also fails, both tiers remain visible.
         let initiallyUseCookies = browserSession.shouldUseCookiesInitially(for: url)
+        if initiallyUseCookies { try BrowserProfileProbe.check(browserSession) }
         var attempt = try await runDownloadAttempt(
             url: url,
             refererURL: nil,
@@ -200,6 +201,7 @@ final class DownloadEngine {
             browserSession: browserSession
         )
         if retryWithCookies || refreshDouyinCookies {
+            try BrowserProfileProbe.check(browserSession)
             // A fresh process makes yt-dlp copy the browser cookie database
             // again. The brief pause lets a just-opened Douyin page finish
             // rotating its ephemeral anti-bot token, without adding a loop.
@@ -247,8 +249,10 @@ final class DownloadEngine {
         guard configuration.policy != .never else {
             throw DownloadEngineError.processFailed("Browser session is disabled")
         }
+        try BrowserProfileProbe.check(configuration)
         let result = try await runner.run(executable: ytdlpPath, arguments: [
             "--cookies-from-browser", configuration.cookieSpecification,
+            "--socket-timeout", "15", "--retries", "1",
             "--simulate",
             "--skip-download",
             "--no-playlist",

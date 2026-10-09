@@ -35,14 +35,14 @@ private struct FinderGuideWindowAccessor: NSViewRepresentable {
     }
 
     private func configure(_ window: NSWindow?, coordinator: Coordinator) {
+        if let window { WindowActivationCoordinator.shared.register(window) }
         guard let window, !coordinator.configured else { return }
         coordinator.configured = true
         window.title = "Finder Quick Actions"
         window.isReleasedWhenClosed = false
         window.level = .floating
         window.center()
-        window.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        WindowActivationCoordinator.shared.bringToFront(window)
     }
 }
 

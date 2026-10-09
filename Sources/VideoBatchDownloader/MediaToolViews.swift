@@ -241,6 +241,7 @@ private struct MediaToolWindowCenteringView: NSViewRepresentable {
 
     private func configure(_ window: NSWindow?, coordinator: Coordinator) {
         guard let window else { return }
+        WindowActivationCoordinator.shared.register(window)
         window.appearance = AppAppearance.windowAppearance(for: theme)
         window.title = title
         window.isReleasedWhenClosed = false
@@ -248,7 +249,6 @@ private struct MediaToolWindowCenteringView: NSViewRepresentable {
         guard !coordinator.centered else { return }
         coordinator.centered = true
         window.center()
-        window.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        WindowActivationCoordinator.shared.bringToFront(window)
     }
 }

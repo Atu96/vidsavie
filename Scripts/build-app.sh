@@ -28,7 +28,7 @@ cp -R "$PROJECT_DIR/ChromeExtension" "$APP_DIR/Contents/Resources/ChromeExtensio
 rm -rf "$APP_DIR/Contents/Resources/YtDlpPlugins"
 cp -R "$PROJECT_DIR/Resources/YtDlpPlugins" "$APP_DIR/Contents/Resources/YtDlpPlugins"
 find "$APP_DIR/Contents/Resources/YtDlpPlugins" -type d -name '__pycache__' -prune -exec rm -rf {} +
-rm -rf "$APP_DIR/Contents/Resources/Tools" "$APP_DIR/Contents/Resources/ThirdParty"
+rm -rf "$APP_DIR/Contents/Resources/Tools" "$APP_DIR/Contents/Resources/ThirdParty" "$APP_DIR/Contents/Resources/Toolchain"
 mkdir -p "$APP_DIR/Contents/Resources/Tools"
 cp "$PROJECT_DIR/.build/portable-tools/yt-dlp" "$APP_DIR/Contents/Resources/Tools/yt-dlp"
 cp "$PROJECT_DIR/.build/portable-tools/ffmpeg" "$APP_DIR/Contents/Resources/Tools/ffmpeg"

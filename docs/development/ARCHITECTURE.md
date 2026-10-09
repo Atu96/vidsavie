@@ -10,6 +10,8 @@ The macOS menu bar app is the product and download engine. The browser extension
 
 ### Build boundary and artifact retention
 
+Packaging replaces generated resource directories before copying; in particular Toolchain must not nest within an older Toolchain directory on repeated builds. Deployment replaces the signed app bundle wholesale, not by merging over an older installation, since unsealed leftover files invalidate the signature. Keep recoverable backups and verify after replacement; user data lives separately and must not be cleared to fix bundle signing.
+
 Ordinary app builds compile Swift only and package prebuilt checksum-verified tools from `.build/portable-tools`, downloading the pinned release when the cache is absent. The separate media source-build recipe is not invoked by `build-app.sh` or `build-dmg.sh`. Keep this separation: rebuilding the app does not mean rebuilding FFmpeg, and end users never compile it. The current media update feed is maintainer-published; automatic upstream/provider version discovery is not implemented.
 
 For cleanup retain the incremental Swift cache, current app build, portable binaries, exact media source inputs/output, rollback backup and current distribution binary/source assets. Obsolete isolated compiler work directories, old branded app build copies and old DMGs may be removed after inspecting exact targets. Never include installed apps, Application Support, browser data or resumable user downloads in build-cache cleanup. Documentation-only edits do not require a new app build/version.

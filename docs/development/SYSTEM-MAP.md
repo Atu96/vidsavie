@@ -1,5 +1,7 @@
 # System map
 
+Published reference: v2.2.53 (155), Apple Silicon installer and matching checksum in GitHub Releases. Original source tag 0fddc365c255a5074ed6e80ab550f2091cc74dcf. Verify the current Latest before assuming this snapshot remains current; main may contain later documentation changes. Native behavior/user reports, synthetic regressions and binary audit status remain distinct.
+
 Fresh-session defaults (2.2.53): AppPreferences.cookiePolicy(nil) → smart/Automatic; AppPreferences.browserProfile(nil, .chrome) → Default. Existing valid choices, including blank automatic discovery and Always/Never, are preserved. YouTube tries cookie-free extraction first in Automatic; platform/authentication policy remains BrowserSession's responsibility.
 
 Profile lookup vs privacy: BrowserProfileProbe → bounded folder metadata → typed denied/missing/unreadable → BrowserSessionDiagnostic/BrowserAccessCopy. Cookie-consuming page attempts/test preflight here; direct verified media remains cookie-free. No cookie database bytes read by the probe. Explicit Default shortcut, privacy navigation on denial; no silent grants or settings changes.
